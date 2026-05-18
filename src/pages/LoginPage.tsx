@@ -1,5 +1,5 @@
 import { useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/authContext";
 
@@ -43,6 +43,7 @@ function LoginPage() {
                             type="email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
+                            required
                         />
                     </label>
 
@@ -62,7 +63,12 @@ function LoginPage() {
                         </button>
                     </label>
 
-                    {error && <p className="error">{error}</p>}
+                    <p className="auth-footer">
+                        Don't have an account? 
+                        <Link to="/register" className="auth-link"> Register</Link>
+                    </p>
+
+                    {error && <p className="auth-error">{error}</p>}
 
                     <button type="submit" disabled={isLoading}>
                         {isLoading ? "Logging in..." : "Log in"}
