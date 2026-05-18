@@ -80,6 +80,13 @@ button {
   cursor: pointer;
 }
 
+.auth-link {
+  color: #30c1ff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #30c1ff;
+}
+
 @media (max-width: 37.5rem) {
   .app-header {
     flex-direction: column;
@@ -149,7 +156,7 @@ button {
   cursor: not-allowed;
 }
 
-.error-message {
+.auth-error {
   margin: 0;
   color: #fca5a5;
 }
