@@ -1,0 +1,155 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.app-header {
+  width: 100%;
+  min-height: 4rem;
+  padding: 1rem clamp(1rem, 5vw, 2rem);
+  border-bottom: 0.0625rem solid #1e293b;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.app-logo {
+  font-size: clamp(1.375rem, 4vw, 1.75rem);
+  font-weight: 700;
+}
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 3vw, 1.25rem);
+  color: #cbd5e1;
+}
+
+.app-nav a {
+  padding: 0.5rem 0;
+}
+
+.app-main {
+  width: min(100%, 75rem);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  outline-offset: 0.1875rem;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 0.125rem solid #38bdf8;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media (max-width: 37.5rem) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .app-nav {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .app-nav a {
+    width: 100%;
+    padding: 0.625rem 0;
+  }
+}
+
+
+.auth-page {
+  min-height: calc(100vh - 4rem);
+  display: grid;
+  place-items: center;
+}
+
+.auth-card {
+  width: min(100%, 28rem);
+  padding: clamp(1.25rem, 5vw, 2rem);
+  border: 0.0625rem solid #1e293b;
+  border-radius: 1rem;
+  background: #111827;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 0.5rem;
+  color: #cbd5e1;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.75rem 0.875rem;
+  border: 0.0625rem solid #334155;
+  border-radius: 0.75rem;
+  background: #020617;
+  color: #f8fafc;
+}
+
+.auth-form button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: #38bdf8;
+  color: #020617;
+  font-weight: 700;
+}
+
+.auth-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error-message {
+  margin: 0;
+  color: #fca5a5;
+}
