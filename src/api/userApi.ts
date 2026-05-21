@@ -1,12 +1,5 @@
 import { apiRequest } from "./client";
-
-
-export type User = {
-    user_id: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-};
+import type { User } from "../types/user";
 
 export function getCurrentUser() {
     return apiRequest<User>("/users/me");

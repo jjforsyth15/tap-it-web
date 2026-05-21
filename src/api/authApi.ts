@@ -1,18 +1,6 @@
-import { apiRequest } from "./client";
+import type { RegisterData, LoginResponse } from "../types/auth";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-type RegisterData = {
-    email: string;
-    password: string;
-    first_name: string;
-    last_name: string;
-};
-
-type LoginResponse = {
-    access_token: string;
-    token_type: string;
-};
 
 export async function registerUser(data: RegisterData) {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {

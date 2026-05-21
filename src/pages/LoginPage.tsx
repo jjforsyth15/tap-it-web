@@ -1,10 +1,11 @@
 import { useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/authContext";
 
 function LoginPage() {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,6 +13,7 @@ function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
+    const next = searchParams.get("next");
     const { login } = useAuth();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -23,7 +25,7 @@ function LoginPage() {
             const data = await loginUser(email, password);
             login(data.access_token);
 
-            navigate("/dashboard");
+            navigate(next || "/dashboard");
         } catch (err) {
             setError(err instanceof Error ? err.message : "Login failed");
         } finally {
