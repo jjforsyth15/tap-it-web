@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPublicProfile } from "../api/profileApi";
+import "../styles/PublicProfilePage.css";
 
 type ProfileLink = {
     label: string;
@@ -47,26 +48,44 @@ export default function PublicProfilePage() {
         return <div>{"Profile not found"}</div>;
 
     return (
-        <div>
-            <h1>{profile.profile_name}</h1>
+        <div className="public-profile-page">
+            <div className="public-profile-content">
+                <div className="profile-avatar">
+                    {profile.profile_name.charAt(0).toUpperCase()}
+                </div>
 
-            <p>{profile.bio}</p>
+            <h1>{profile.profile_name}</h1>
+            
+
+            {profile.bio && (
+                <p className="profile-bio">{profile.bio}</p>
+            )}
 
             {profile.website_url && (
-                <a href={profile.website_url} target="_blank" rel="noopener noreferrer">
-                    Website
+                <a 
+                    href={profile.website_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="profile-main-link"
+                >
+                    Visit Website
                 </a>
             )}
 
-            <div> 
-                {profile.links?.map((link, index) => (
-                    <div key={index}>
-                        <a href={link.url} target="_blank" rel="noopener noreferrer">
-                            {link.label}
-                        </a>
-                    </div>
+            <div className="profile-links"> 
+                {profile.links?.map((link) => (
+                    <a 
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="profile-link"
+                    >
+                        {link.label}
+                    </a>
                 ))}
             </div>
         </div>
+    </div>
     );
 }

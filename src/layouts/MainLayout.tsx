@@ -1,13 +1,9 @@
-import { type ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { Outlet } from "react-router-dom";
 
 
-type MainLayoutProps = {
-    children: ReactNode;
-};
-
-function MainLayout({ children }: MainLayoutProps) {
+function MainLayout() {
     const navigate = useNavigate();
     const { isLoggedIn, logout } = useAuth();
 
@@ -17,7 +13,7 @@ function MainLayout({ children }: MainLayoutProps) {
     }
 
     return (
-        <div>
+        <>
             <header className="app-header">
                 <Link to="/" className="app-nav">TapIt</Link>
 
@@ -35,8 +31,10 @@ function MainLayout({ children }: MainLayoutProps) {
                     )}
                 </nav>
             </header>
-            <main className="app-main">{children}</main>
-        </div>
+            <main className="app-main">
+                <Outlet />
+            </main>
+        </>
     );
 }
 

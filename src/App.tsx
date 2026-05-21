@@ -12,21 +12,21 @@ import PublicProfilePage from "./pages/PublicProfilePage";
 import ActivateCardPage from "./pages/ActivateCardPage";
 
 
+
 function App() {
 
   return (
     <BrowserRouter>
-      <MainLayout>   
-          <Routes>
+      <Routes>
 
-            <Route path="/public/:profileId" element={<PublicProfilePage />} />
+        <Route path="/public/:profileId" element={<PublicProfilePage />} />
 
+      <Route element={<MainLayout />}>   
             // Public Only routes
             <Route element={<PublicOnlyRoute />}>
               <Route path="/login" element={<LoginPage/>}/>
               <Route path="/register" element={<RegisterPage/>}/>
               <Route path="/" element={<HomePage/>} />
-
             </Route>
 
             // Protected routes
@@ -35,8 +35,8 @@ function App() {
               <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
             </Route>
 
-          </Routes>
-        </MainLayout>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
