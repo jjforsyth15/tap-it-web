@@ -2,19 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPublicProfile } from "../api/profileApi";
 import "../styles/PublicProfilePage.css";
-
-type ProfileLink = {
-    label: string;
-    url: string;
-};
-
-type PublicProfile = {
-    profile_id: string;
-    profile_name: string;
-    bio?: string;
-    website_url?: string;
-    links?: ProfileLink[];
-};
+import type { PublicProfile } from "../types/profile";
 
 export default function PublicProfilePage() {
     const { profileId } = useParams();

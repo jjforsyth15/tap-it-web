@@ -6,10 +6,10 @@ export default function PublicOnlyRoute() {
     const location = useLocation();
 
     const searchParams = new URLSearchParams(location.search);
-    const next = searchParams.get("next") || location.pathname;
+    const next = searchParams.get("next") || "/dashboard";
 
     if (isLoggedIn) {
-        return <Navigate to={next || "/dashboard"} replace />;
+        return <Navigate to={next} replace />;
     }
 
     return <Outlet />;

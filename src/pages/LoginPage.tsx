@@ -13,11 +13,11 @@ function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const next = searchParams.get("next");
+    
     const { login } = useAuth();
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
         setIsLoading(true);
         setError("");
 
@@ -25,7 +25,8 @@ function LoginPage() {
             const data = await loginUser(email, password);
             login(data.access_token);
 
-            navigate(next || "/dashboard");
+            const next = searchParams.get("next")  || "/dashboard";
+            navigate(next);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Login failed");
         } finally {
@@ -44,7 +45,7 @@ function LoginPage() {
                         <input
                             type="email"
                             value={email}
-                            onChange={(event) => setEmail(event.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </label>
@@ -54,7 +55,7 @@ function LoginPage() {
                         <input
                             type={showPassword ? "text" : "password"}
                             value={password}
-                            onChange={(event) => setPassword(event.target.value)}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                         <button className="show-password-button"
