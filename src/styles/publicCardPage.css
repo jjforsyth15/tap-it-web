@@ -1,0 +1,68 @@
+.public-card-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  background: #ffffff;
+}
+
+.public-card-box {
+  width: 100%;
+  max-width: 22rem;
+  text-align: center;
+}
+
+.tapit-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.public-card-box h1 {
+  margin: 0 0 0.75rem;
+  color: #111111;
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+
+.public-card-box p {
+  margin: 0 0 0.8rem;
+  color: #555555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.public-card-name {
+  color: #111111 !important;
+  font-weight: 600;
+}
+
+.public-card-muted {
+  color: #777777 !important;
+  font-size: 0.85rem !important;
+}
+
+.loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 auto 1.25rem;
+  border: 0.2rem solid #eeeeee;
+  border-top-color: #111111;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

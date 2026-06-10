@@ -1,7 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { PublicCardResponse } from "../types/card";
 import { getPublicCard } from "../api/cardApi";
+import "../styles/PublicCardPage.css";
+
 
 function PublicCardPage() { 
     const { card_code } = useParams();
@@ -13,7 +15,6 @@ function PublicCardPage() {
 
     useEffect(() => {
         async function fetchCard() {
-
             if (!card_code) {
                 setError("Card code is missing");
                 setIsLoading(false);
@@ -22,7 +23,6 @@ function PublicCardPage() {
 
             try {
                 const data = await getPublicCard(card_code);
-
                 setCardData(data);
             } catch (err) {
                 setError(err instanceof Error ? err.message : "Failed to load card");
@@ -34,7 +34,9 @@ function PublicCardPage() {
         fetchCard();
     }, [card_code]);
 
-    useEffect(() => { 
+    useEffect(() => {
+        if (!cardData) return;
+
         if (cardData?.card_status === "inactive")
             navigate(`/activate-card/${cardData.card_code}`);
 
@@ -45,21 +47,57 @@ function PublicCardPage() {
 
 
     if (isLoading) 
-        return <p>Loading...</p>;
+        return (
+            <main className="public-card-page">
+                <section className="public-card-box">
+                    <div className="tapit-logo">TapIt</div>
+                    <div className="loading-spinner"/>
+                    <h1>Loading card...</h1>
+                    <p>Getting this TapIt card ready.</p>
+                </section>
+            </main>
+        );
 
     if (error) 
-        return <p>{error}</p>;
+        return (
+            <main className="public-card-page">
+                <section className="public-card-box">
+                    <div className="tapit-logo">TapIt</div>
+                    <h1>Unable to load card</h1>
+                    <p>{error}</p>
+                </section>
+            </main>
+        );
 
     if (cardData?.card_status === "lost" || cardData?.card_status === "disabled" || cardData?.card_status === "deactivated") {
         return (
-            <main>
-                <h1>{cardData?.card_name}</h1>
-                <p>This TapIt card is unavailable.</p>
+            <main className="public-card-page">
+                <section className="public-card-box">
+                    <div className="tapit-logo">TapIt</div>
+                    <h1>This card is unavailable</h1>
+                    
+                    {cardData.card_name && <p className="public-card-name">{cardData.card_name}</p>}
+                    <p>
+                        This TapIt card is currently {cardData.card_status}.
+                    </p>
+
+                    <p className="public-card-muted">
+                        Please contact the card owner or support for more information.
+                    </p>
+                </section>
             </main>
         );
     }
 
-    return <p>Redirecting...</p>;
+    return (
+        <main className="public-card-page">
+            <section className="public-card-box">
+                <div className="tapit-logo">TapIt</div>
+                <h1>Redirecting...</h1>
+                <p>Taking you to the right place.</p>
+            </section>
+        </main>
+    );            
 }
 
 export default PublicCardPage;
