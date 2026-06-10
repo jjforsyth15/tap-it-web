@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { activateCard } from "../api/cardApi";
-import { useState } from "react";
+import { activateCard, getCardActivationStatus } from "../api/cardApi";
+import type { CardActivationStatus } from "../types/card";
+import { useState, useEffect } from "react";
 import "../styles/ActivateCardPage.css";
 
 
@@ -11,19 +12,50 @@ export default function ActivateCardPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
+    const [card, setCard] = useState<CardActivationStatus | null>(null);
+    const [activating, setActivating] = useState(false);
+    const [success, setSuccess] = useState("");
+
+    useEffect(() => {
+        async function checkActivationStatus() {
+            if (!cardCode) {
+                setError("Missing card code");
+                setIsLoading(false);
+                return;
+            }
+
+            try {
+                const activateStatus = await getCardActivationStatus(cardCode);
+                setCard(activateStatus);
+            } catch (err) {
+                err instanceof Error ? setError(err.message) : setError("Unable to load card activation details");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        checkActivationStatus();
+    }, [cardCode]);
+
     async function handleActivateCard() {
         if (!cardCode) {
             setError("Card code is missing");
             return;
         }
 
+        setActivating(true);
+        setError("");
+        setSuccess("");
+
         try {
             setIsLoading(true);
-            setError("");
 
             const data = await activateCard(cardCode);
+            setSuccess("Card activated successfully! Redirecting to your profile...");
 
-            navigate(`/public/${data.profile_id}`);            
+            setTimeout(() => {
+                navigate(`/public/${data.profile_id}`);
+            }, 1500);
         } catch (error) {
             console.error("Error activating card:", error);
 
@@ -34,35 +66,76 @@ export default function ActivateCardPage() {
 
         } finally {
             setIsLoading(false);
+            setActivating(false);
         }
     };
 
+    if (isLoading) {
+        return (
+            <main className="activate-page">
+                <section className="activate-card">
+                    <h1>Loading card details...</h1>
+                </section>
+            </main>
+        );
+    }
+
+    if (error) {
+        return (
+            <main className="activate-page">
+                <section className="activate-card">
+                    <h1>Unable to activate card</h1>
+                    <p className="activate-subtitle">{error}</p>
+                </section>
+            </main>
+        );
+    }
+
+     if (success) {
+        return (
+            <main className="activate-page">
+                <section className="activate-card">
+                    <h1>Card Activated</h1>
+                    <p className="activate-subtitle">{success}</p>
+                </section>
+            </main>
+        );
+    }
+
     return (
-        <div className="activate-page">
-            <div className="activate-card">
-                <h1>Activate Card</h1>
+        <main className="activate-page">
+            <section className="activate-card">
+                <h1>Activate TapIt Card</h1>
 
                 <p className="activate-subtitle">
-                    Press activate to activate this card and link it to your profile. You can then share your profile with others so they can tap your card and connect with you!
+                    This card is assigned to your account and is ready to be activated.
                 </p>
 
                 <div className="card-code-box">
                     <p className="card-code-label">Card Code:</p>
-                    <p className="card-code">{cardCode}</p>
+                    <p className="card-code">{card?.card_code}</p>
                 </div>
 
-            {error && (
-                <p className="activate-error">{error}</p>
-            )}
+                {card?.card_name && (
+                    <div className="card-code-box">
+                        <p className="card-code-label">Card Name:</p>
+                        <p className="card-code">{card?.card_name}</p>
+                    </div>
+                )}
 
-            <button 
-                onClick={handleActivateCard} 
-                disabled={isLoading}
-                className="activate-button"
-            >
-                {isLoading ? "Activating..." : error ? "Try Again" : "Activate this card"}
-            </button>
-        </div>
-    </div>
+                {success && <p className="success-message">{success}</p>}
+                {error && <p className="activate-error">{error}</p>}
+
+                {card?.can_activate && (
+                    <button 
+                        className="activate-button"
+                        onClick={handleActivateCard} 
+                        disabled={activating}
+                    >
+                        {activating ? "Activating..." : error ? "Try Again" : "Activate this card"}
+                    </button>
+                )}
+        </section>
+    </main>
     );
 }
