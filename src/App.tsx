@@ -11,6 +11,7 @@ import DashboardPage from "./pages/DashboardPage";
 import PublicProfilePage from "./pages/PublicProfilePage";
 import ActivateCardPage from "./pages/ActivateCardPage";
 import PublicCardPage from "./pages/PublicCardPage";
+import ProfileManagementPage from "./pages/ProfileManagementPage";
 
 
 
@@ -24,16 +25,17 @@ function App() {
         <Route path="/cards/:card_code" element={<PublicCardPage />} />
 
       <Route element={<MainLayout />}>   
-            // Public Only routes
+            {/* // Public Only routes */}
             <Route element={<PublicOnlyRoute />}>
               <Route path="/login" element={<LoginPage/>}/>
               <Route path="/register" element={<RegisterPage/>}/>
               <Route path="/" element={<HomePage/>} />
             </Route>
 
-            // Protected routes
+            {/* // Protected routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/dashboard/profiles/:profileId" element={<ProfileManagementPage />} />
               <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
             </Route>
 

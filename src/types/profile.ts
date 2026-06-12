@@ -27,3 +27,8 @@ export type Profile = {
     created_at: string;
     updated_at: string;
 };
+
+export type ProfileLinkCreate = {
+    label: string;
+    url: string;
+};
