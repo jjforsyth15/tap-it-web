@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getCurrentUser} from "../api/userApi";
 import type { User } from "../types/user";
-import type { Profile, PublicProfile } from "../types/profile";
+import type { Profile } from "../types/profile";
 import { getMyProfiles } from "../api/profileApi";
+import { useNavigate } from "react-router-dom";
+import "../styles/DashboardPage.css";
 
 function DashboardPage() {
     const [user, setUser] = useState<User | null>(null);
@@ -10,6 +12,8 @@ function DashboardPage() {
     const [error, setError] = useState("");
 
     const [profiles, setProfiles] = useState<Profile[]>([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadUser() {
@@ -48,17 +52,34 @@ function DashboardPage() {
 
                     <h2>My Profiles</h2>
 
-                    {profiles.length === 0 ? (
-                        <p>You don't have any profiles yet. Create one to get started!</p>
-                    ) : (
-                        <ul>
-                            {profiles.map((profile) => (
-                                <li key={profile.profile_id}>
+                    <div className="profile-grid">
+                        {profiles.length === 0 ? (
+                            <p>You don't have any profiles yet. Create one now!</p>
+                        ) : (
+                            profiles.map((profile) => (
+                                <div 
+                                key={profile.profile_id} 
+                                className="profile-card"
+                                onClick={() => navigate(`/dashboard/profiles/${profile.profile_id}`)}
+                                >
                                     <h3>{profile.profile_name}</h3>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+
+                                    <span className="profile-status">
+                                        {profile.profile_status}
+                                    </span>
+
+                                    {profile.bio && <p className="profile-bio">{profile.bio}</p>}
+                                </div>
+                            ))
+                        )}
+                    </div>
+
+                    <button
+                        className="create-profile-button"
+                        onClick={() => navigate("/dashboard/profiles/create")}
+                    >
+                        + Create Profile
+                    </button>
                 </>
             )}
         </section>
