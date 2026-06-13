@@ -43,7 +43,7 @@ function DashboardPage() {
     }
 
     return (
-        <section>
+        <section className="dashboard-page">
             <h1>Dashboard</h1>
 
             {user && (
@@ -62,13 +62,23 @@ function DashboardPage() {
                                 className="profile-card"
                                 onClick={() => navigate(`/dashboard/profiles/${profile.profile_id}`)}
                                 >
-                                    <h3>{profile.profile_name}</h3>
+                                    <h2>{profile.profile_name}</h2>
 
                                     <span className="profile-status">
                                         {profile.profile_status}
                                     </span>
 
                                     {profile.bio && <p className="profile-bio">{profile.bio}</p>}
+
+                                    <a 
+                                    href={`/public/${profile.profile_id}`} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="view-public-profile-button"
+                                    onClick={(e) => e.stopPropagation()}
+                                    >
+                                        View Public Page
+                                    </a>
                                 </div>
                             ))
                         )}
