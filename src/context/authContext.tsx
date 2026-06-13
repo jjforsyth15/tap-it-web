@@ -1,12 +1,8 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { clearAuthToken, getAuthToken, saveAuthToken } from "../utils/authStorage";
+import { AUTH_EXPIRED_EVENT } from "../api/client";
+import type { AuthContextType } from "../types/auth";
 
-
-type AuthContextType = {
-    isLoggedIn: boolean;
-    login: (token: string) => void;
-    logout: () => void;
-};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -26,6 +22,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
         clearAuthToken();
         setIsLoggedIn(false);
     }
+
+    useEffect(() => {
+        function handleAuthExpired() {
+            logout();
+            setIsLoggedIn(false);
+        }
+
+        window.addEventListener(AUTH_EXPIRED_EVENT, handleAuthExpired);
+
+        return () => {
+            window.removeEventListener(AUTH_EXPIRED_EVENT, handleAuthExpired);
+        };
+    }, []);
 
     const authContextValue: AuthContextType = {
         isLoggedIn,

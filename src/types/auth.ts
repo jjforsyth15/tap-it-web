@@ -9,3 +9,9 @@ export type LoginResponse = {
     access_token: string;
     token_type: string;
 };
+
+export type AuthContextType = {
+    isLoggedIn: boolean;
+    login: (token: string) => void;
+    logout: () => void;
+};
