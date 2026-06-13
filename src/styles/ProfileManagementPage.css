@@ -1,0 +1,111 @@
+.success-message {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #e8f7ee;
+    color: #176b3a;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 24px;
+}
+
+.confirm-modal {
+    width: 100%;
+    max-width: 380px;
+    background: white;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-modal h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    color: #111;
+}
+
+.confirm-modal p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.cancel-button,
+.delete-confirm-button {
+    flex: 1;
+    border: none;
+    border-radius: 999px;
+    padding: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background: #f1f1f1;
+    color: #333;
+}
+
+.delete-confirm-button {
+    background: #dc2626;
+    color: white;
+}
+
+.confirm-modal input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.save-button {
+    flex: 1;
+    border: none;
+    border-radius: 999px;
+    padding: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #111;
+    color: white;
+}
+
+.add-link-button {
+    margin-top: 12px;
+}
+
+.confirm-modal select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: white;
+}
+
+.form-error {
+    margin-top: 12px;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 500;
+}

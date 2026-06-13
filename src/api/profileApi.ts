@@ -17,9 +17,15 @@ export async function getProfile(profileId: string) {
     return apiRequest<Profile>(`/profiles/${profileId}`);
 }
 
-export async function CreateProfileLink(profileId: string, linkData: ProfileLinkCreate) {
+export async function createProfileLink(profileId: string, linkData: ProfileLinkCreate) {
     return apiRequest(`/profile_links/${profileId}/links`, {
         method: "POST",
         body: JSON.stringify(linkData),
+    });
+}
+
+export async function deleteProfileLink(linkId: string) {
+    return apiRequest(`/profile_links/links/${linkId}`, {
+        method: "DELETE"
     });
 }
