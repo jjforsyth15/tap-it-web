@@ -1,4 +1,4 @@
-.public-card-page {
+.publicCardPage {
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -7,13 +7,13 @@
   background: #ffffff;
 }
 
-.public-card-box {
+.publicCardBox {
   width: 100%;
   max-width: 22rem;
   text-align: center;
 }
 
-.tapit-logo {
+.tapitLogo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -27,31 +27,31 @@
   letter-spacing: 0.02em;
 }
 
-.public-card-box h1 {
+.publicCardBox h1 {
   margin: 0 0 0.75rem;
   color: #111111;
   font-size: 1.75rem;
   line-height: 1.15;
 }
 
-.public-card-box p {
+.publicCardBox p {
   margin: 0 0 0.8rem;
   color: #555555;
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
-.public-card-name {
+.publicCardName {
   color: #111111 !important;
   font-weight: 600;
 }
 
-.public-card-muted {
+.publicCardMuted {
   color: #777777 !important;
   font-size: 0.85rem !important;
 }
 
-.loading-spinner {
+.loadingSpinner {
   width: 2rem;
   height: 2rem;
   margin: 0 auto 1.25rem;

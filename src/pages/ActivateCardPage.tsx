@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { activateCard, getCardActivationStatus } from "../api/cardApi";
 import type { CardActivationStatus } from "../types/card";
 import { useState, useEffect } from "react";
-import "../styles/ActivateCardPage.css";
+import styles from "../styles/ActivateCardPage.module.css";
 
 
 export default function ActivateCardPage() {
@@ -72,8 +72,8 @@ export default function ActivateCardPage() {
 
     if (isLoading) {
         return (
-            <main className="activate-page">
-                <section className="activate-card">
+            <main className={styles.activatePage}>
+                <section className={styles.activateCard}>
                     <h1>Loading card details...</h1>
                 </section>
             </main>
@@ -82,10 +82,10 @@ export default function ActivateCardPage() {
 
     if (error) {
         return (
-            <main className="activate-page">
-                <section className="activate-card">
+            <main className={styles.activatePage}>
+                <section className={styles.activateCard}>
                     <h1>Unable to activate card</h1>
-                    <p className="activate-subtitle">{error}</p>
+                    <p className={styles.activateSubtitle}>{error}</p>
                 </section>
             </main>
         );
@@ -93,42 +93,42 @@ export default function ActivateCardPage() {
 
      if (success) {
         return (
-            <main className="activate-page">
-                <section className="activate-card">
+            <main className={styles.activatePage}>
+                <section className={styles.activateCard}>
                     <h1>Card Activated</h1>
-                    <p className="activate-subtitle">{success}</p>
+                    <p className={styles.activateSubtitle}>{success}</p>
                 </section>
             </main>
         );
     }
 
     return (
-        <main className="activate-page">
-            <section className="activate-card">
+        <main className={styles.activatePage}>
+            <section className={styles.activateCard}>
                 <h1>Activate TapIt Card</h1>
 
-                <p className="activate-subtitle">
+                <p className={styles.activateSubtitle}>
                     This card is assigned to your account and is ready to be activated.
                 </p>
 
-                <div className="card-code-box">
-                    <p className="card-code-label">Card Code:</p>
-                    <p className="card-code">{card?.card_code}</p>
+                <div className={styles.cardCodeBox}>
+                    <p className={styles.cardCodeLabel}>Card Code:</p>
+                    <p className={styles.cardCode}>{card?.card_code}</p>
                 </div>
 
                 {card?.card_name && (
-                    <div className="card-code-box">
-                        <p className="card-code-label">Card Name:</p>
-                        <p className="card-code">{card?.card_name}</p>
+                    <div className={styles.cardCodeBox}>
+                        <p className={styles.cardCodeLabel}>Card Name:</p>
+                        <p className={styles.cardCode}>{card?.card_name}</p>
                     </div>
                 )}
 
-                {success && <p className="success-message">{success}</p>}
-                {error && <p className="activate-error">{error}</p>}
+                {success && <p className={styles.activateSubtitle}>{success}</p>}
+                {error && <p className={styles.activateError}>{error}</p>}
 
                 {card?.can_activate && (
                     <button 
-                        className="activate-button"
+                        className={styles.activateButton}
                         onClick={handleActivateCard} 
                         disabled={activating}
                     >

@@ -1,47 +1,47 @@
-.activate-page {
+.activatePage {
     display: flex;
     justify-content: center;
     padding: 3rem 1.5rem;
     background: white;
 }
 
-.activate-card {
+.activateCard {
     width: 100%;
     max-width: 21.25rem;
     text-align: center;
 }
 
-.activate-card h1 {
+.activateCard h1 {
     font-size: 1.625rem;
     margin-bottom: 0.5rem;
     color: #111;
 }
 
-.activate-subtitle {
+.activateSubtitle {
     font-size: 0.875rem;
     color: #555;
     line-height: 1.4;
     margin-bottom: 1.5rem;
 }
 
-.card-code-box {
+.cardCodeBox {
     margin-bottom: 1.5rem;
 }
 
-.card-code-label {
+.cardCodeLabel {
     font-size: 0.75rem;
     color: #777;
     margin-bottom: 0.375rem;
 }
 
-.card-code {
+.cardCode {
     font-size: 1.0625rem;
     font-weight: 600;
     letter-spacing: 0.0625rem;
     color: #111;
 }
 
-.activate-button {
+.activateButton {
     width: 100%;
     padding: 0.8125rem;
     border: none;
@@ -53,16 +53,16 @@
     cursor: pointer;
 }
 
-.activate-button:hover {
+.activateButton:hover {
     background-color: #333;
 }
 
-.activate-button:disabled {
+.activateButton:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-.activate-error {
+.activateError {
     color: #c62828;
     font-size: 0.8125rem;
     margin-bottom: 0.75rem;

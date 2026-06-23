@@ -4,7 +4,7 @@ import type { User } from "../types/user";
 import type { Profile } from "../types/profile";
 import { getMyProfiles } from "../api/profileApi";
 import { useNavigate } from "react-router-dom";
-import "../styles/DashboardPage.css";
+import styles from "../styles/DashboardPage.module.css";
 
 function DashboardPage() {
     const [user, setUser] = useState<User | null>(null);
@@ -43,38 +43,36 @@ function DashboardPage() {
     }
 
     return (
-        <section className="dashboard-page">
+        <section className={styles.dashboardPage}>
             <h1>Dashboard</h1>
 
             {user && (
                 <>
-                    <p>Welcome, {user.first_name}</p>
-
                     <h2>My Profiles</h2>
 
-                    <div className="profile-grid">
+                    <div className={styles.profileGrid}>
                         {profiles.length === 0 ? (
                             <p>You don't have any profiles yet. Create one now!</p>
                         ) : (
                             profiles.map((profile) => (
                                 <div 
                                 key={profile.profile_id} 
-                                className="profile-card"
+                                className={styles.profileCard}
                                 onClick={() => navigate(`/dashboard/profiles/${profile.profile_id}`)}
                                 >
                                     <h2>{profile.profile_name}</h2>
 
-                                    <span className="profile-status">
+                                    <span className={styles.profileStatus}>
                                         {profile.profile_status}
                                     </span>
 
-                                    {profile.bio && <p className="profile-bio">{profile.bio}</p>}
+                                    {profile.bio && <p className={styles.profileBio}>{profile.bio}</p>}
 
                                     <a 
                                     href={`/public/${profile.profile_id}`} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="view-public-profile-button"
+                                    className={styles.viewPublicProfileButton}
                                     onClick={(e) => e.stopPropagation()}
                                     >
                                         View Public Page
@@ -85,8 +83,8 @@ function DashboardPage() {
                     </div>
 
                     <button
-                        className="create-profile-button"
-                        onClick={() => navigate("/dashboard/profiles/create")}
+                        className={styles.createProfileButton}
+                        onClick={() => navigate("/profiles/new")}
                     >
                         + Create Profile
                     </button>

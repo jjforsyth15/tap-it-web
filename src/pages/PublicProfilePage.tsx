@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPublicProfile } from "../api/profileApi";
-import "../styles/PublicProfilePage.css";
+import styles from "../styles/PublicProfilePage.module.css";
 import type { PublicProfile } from "../types/profile";
 
 export default function PublicProfilePage() {
@@ -36,9 +36,9 @@ export default function PublicProfilePage() {
         return <div>{"Profile not found"}</div>;
 
     return (
-        <div className="public-profile-page">
-            <div className="public-profile-content">
-                <div className="profile-avatar">
+        <div className={styles.publicProfilePage}>
+            <div className={styles.publicProfileContent}>
+                <div className={styles.profileAvatar}>
                     {profile.profile_name.charAt(0).toUpperCase()}
                 </div>
 
@@ -46,7 +46,7 @@ export default function PublicProfilePage() {
             
 
             {profile.bio && (
-                <p className="profile-bio">{profile.bio}</p>
+                <p className={styles.profileBio}>{profile.bio}</p>
             )}
 
             {profile.website_url && (
@@ -54,20 +54,20 @@ export default function PublicProfilePage() {
                     href={profile.website_url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="profile-main-link"
+                    className={styles.profileMainLink}
                 >
                     Visit Website
                 </a>
             )}
 
-            <div className="profile-links"> 
+            <div className={styles.profileLinks}> 
                 {profile.links?.map((link) => (
                     <a 
                         key={link.url}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="profile-link"
+                        className={styles.profileLink}
                     >
                         {link.label}
                     </a>
