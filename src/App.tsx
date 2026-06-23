@@ -12,7 +12,7 @@ import PublicProfilePage from "./pages/PublicProfilePage";
 import ActivateCardPage from "./pages/ActivateCardPage";
 import PublicCardPage from "./pages/PublicCardPage";
 import ProfileManagementPage from "./pages/ProfileManagementPage";
-
+import CreateProfilePage from "./pages/CreateProfilePage";
 
 
 function App() {
@@ -37,6 +37,7 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/dashboard/profiles/:profileId" element={<ProfileManagementPage />} />
               <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
+              <Route path="/profiles/new" element={<CreateProfilePage />} />
             </Route>
 
         </Route>

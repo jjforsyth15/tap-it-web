@@ -1,5 +1,5 @@
 import { apiRequest } from "./client";
-import type { Profile, PublicProfile, ProfileLink, ProfileLinkCreate } from "../types/profile";
+import type { Profile, PublicProfile, ProfileLink, ProfileLinkCreate, CreateProfileRequest, CreateProfileResponse } from "../types/profile";
 
 export async function getPublicProfile(profileId: string) {
     return apiRequest<PublicProfile>(`/profiles/public/${profileId}`);    
@@ -7,6 +7,13 @@ export async function getPublicProfile(profileId: string) {
 
 export async function getMyProfiles() {
     return apiRequest<Profile[]>(`/profiles/me`);
+}
+
+export async function createProfile(profileData: CreateProfileRequest) {
+    return apiRequest<CreateProfileResponse>("/profiles/create_profile", {
+        method: "POST",
+        body: JSON.stringify(profileData),
+    });
 }
 
 export async function getProfileLinks(profileId: string) {

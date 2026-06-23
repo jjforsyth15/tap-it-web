@@ -1,3 +1,14 @@
+export type CreateProfileRequest = {
+    profile_name: string;
+    bio?: string;
+    profile_image_url?: string;
+}
+
+export type CreateProfileResponse = {
+    message: string;
+    profile: Profile;
+};
+
 export type ProfileLink = {
     link_id: string;
     profile_id: string;
