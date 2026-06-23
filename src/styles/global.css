@@ -48,6 +48,8 @@ select {
   align-items: center;
   gap: clamp(0.75rem, 3vw, 1.25rem);
   color: #cbd5e1;
+  font-weight: 600;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
 }
 
 .app-nav a {

@@ -1,34 +1,34 @@
-.dashboard-page {
+.dashboardPage {
     width: min(100%, 72rem);
     margin: 0 auto;
     padding: clamp(1.25rem, 4vw, 2.5rem);
     box-sizing: border-box;
 }
 
-.dashboard-page h1,
-.dashboard-page h2,
-.dashboard-page p {
+.dashboardPage h1,
+.dashboardPage h2,
+.dashboardPage p {
     color: #ffffff;
 }
 
-.dashboard-page h1 {
+.dashboardPage h1 {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     line-height: 1.1;
 }
 
-.dashboard-page h2 {
+.dashboardPage h2 {
     font-size: clamp(1.25rem, 3vw, 1.75rem);
     line-height: 1.2;
 }
 
-.profile-grid {
+.profileGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: clamp(1rem, 2vw, 1.5rem);
     width: 100%;
 }
 
-.profile-card {
+.profileCard {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -42,12 +42,12 @@
     box-sizing: border-box;
 }
 
-.profile-card:hover {
+.profileCard:hover {
     transform: translateY(-0.125rem);
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
 }
 
-.profile-card h2 {
+.profileCard h2 {
     margin: 0;
     color: #111;
     font-size: clamp(1.125rem, 2.5vw, 1.35rem);
@@ -56,7 +56,7 @@
     overflow-wrap: anywhere;
 }
 
-.profile-status {
+.profileStatus {
     align-self: flex-start;
     display: inline-block;
     padding: 0.25em 0.75em;
@@ -68,7 +68,7 @@
     text-transform: capitalize;
 }
 
-.profile-bio {
+.profileBio {
     margin: 0;
     color: #666;
     font-size: 0.95rem;
@@ -76,7 +76,7 @@
     overflow-wrap: anywhere;
 }
 
-.create-profile-button {
+.createProfileButton {
     margin-top: 1.5rem;
     width: 100%;
     padding: 0.9em 1.25em;
@@ -89,7 +89,7 @@
     font-weight: 600;
 }
 
-.view-public-profile-button {
+.viewPublicProfileButton {
     align-self: flex-start;
     margin-top: auto;
     padding: 0.7em 1.1em;
@@ -103,6 +103,6 @@
     transition: background 0.2s ease;
 }
 
-.view-public-profile-button:hover {
+.viewPublicProfileButton:hover {
     background: #333;
 }
