@@ -112,122 +112,163 @@ export default function ProfileManagementPage() {
         return <p>Profile not found</p>;
 
     return (
-        <main>
-            <h1>{profile.profile_name}</h1>
+    <main className="profile-management-page">
+        <section className="profile-management-header">
+            <div>
+                <p className="eyebrow">Profile Management</p>
+                <h1>{profile.profile_name}</h1>
 
-            <p>Status: {profile.profile_status}</p>
+                {profile.bio && (
+                    <p className="profile-bio">{profile.bio}</p>
+                )}
 
-            {successMessage && <p className="success-message">{successMessage}</p>}
+                <a 
+                    href={`/public/${profile.profile_id}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="view-public-profile-button"
+                    onClick={(e) => e.stopPropagation()}
+                    >
+                        View Public Page
+                </a>
+            </div>
 
-            {profile.bio && <p>{profile.bio}</p>}
+            <span className={`status-badge status-${profile.profile_status}`}>
+                {profile.profile_status}
+            </span>
+        </section>
 
-            <section>
-                <h2>Links</h2>
+        {successMessage && (
+            <p className="success-message">{successMessage}</p>
+        )}
 
-                {links.length === 0 ? (
-                    <div>
-                        <p>No links added yet.</p>
-                        <p>Add one here.</p>
-                    </div>
-                ) : (
-                    <ul>
-                        {links.map(link => (
-                            <li key={link.link_id}>
-                                <strong>{link.label}</strong>
-                                {" - "}
-                                <a 
-                                href={link.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
+        <section className="links-panel">
+            <div className="section-header">
+                <div>
+                    <h2>Links</h2>
+                    <p>Manage the links shown on this public profile.</p>
+                </div>
+
+                <button
+                    className="primary-button"
+                    onClick={() => setShowAddLinkModal(true)}
+                >
+                    + Add Link
+                </button>
+            </div>
+
+            {links.length === 0 ? (
+                <div className="empty-state">
+                    <h3>No links added yet</h3>
+                    <p>Add your first link to start building this profile.</p>
+                </div>
+            ) : (
+                <div className="link-list">
+                    {links.map(link => (
+                        <article className="link-card" key={link.link_id}>
+                            <div>
+                                <h3>{link.label}</h3>
+                                <a
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     {link.url}
                                 </a>
-                                <button onClick={() => setLinkToDelete(link.link_id)}>
-                                    Delete
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-                <button className="add-link-button" onClick={() => setShowAddLinkModal(true)}>
-                    + Add Link
-                </button>
+                            </div>
 
-                {showAddLinkModal && (
-                    <div className="modal-backdrop">
-                        <div className="confirm-modal">
-                            <h2>Add New Link</h2>
-
-                            {formError && <p className="form-error">{formError}</p>}
-
-                            <select
-                                value={selectedLabel}
-                                onChange={(e) => {
-                                    setSelectedLabel(e.target.value);
-                                }}
+                            <button
+                                className="danger-text-button"
+                                onClick={() => setLinkToDelete(link.link_id)}
                             >
-                                {linkLabelOptions.map((label) => (
-                                    <option key={label} value={label}>
-                                        {label}
-                                    </option>
-                                ))}
-                            </select>
-                            {selectedLabel === "Other" && (
-                                <input
-                                    type="text"
-                                    placeholder="Custom Link Label"
-                                    value={customLabel}
-                                    onChange={(e) => setCustomLabel(e.target.value)}
-                                />
-                            )}
+                                Delete
+                            </button>
+                        </article>
+                    ))}
+                </div>
+            )}
+        </section>
 
-                            <input
-                                type="url"
-                                placeholder="Link URL"
-                                value={newLink.url}
-                                onChange={(e) => setNewLink({...newLink, url: e.target.value})}
-                            />
-                            <div className="modal-actions">
-                                <button className="cancel-button" onClick={() => {
-                                    setShowAddLinkModal(false); 
-                                    setNewLink({label: "", url: ""})
-                                    setFormError("");
-                                    setCustomLabel("");
-                                    setSelectedLabel(linkLabelOptions[0]);
-                                    }
-                                }
-                                >
-                                    Cancel
-                                </button>
-                                <button className="save-button" onClick={() => {
-                                    handleAddLink();
-                                }}>
-                                    Save Link
-                                </button>
-                            </div>
-                        </div>
+        {showAddLinkModal && (
+            <div className="modal-backdrop">
+                <div className="confirm-modal">
+                    <h2>Add New Link</h2>
+
+                    {formError && <p className="form-error">{formError}</p>}
+
+                    <select
+                        value={selectedLabel}
+                        onChange={(e) => setSelectedLabel(e.target.value)}
+                    >
+                        {linkLabelOptions.map((label) => (
+                            <option key={label} value={label}>
+                                {label}
+                            </option>
+                        ))}
+                    </select>
+
+                    {selectedLabel === "Other" && (
+                        <input
+                            type="text"
+                            placeholder="Custom Link Label"
+                            value={customLabel}
+                            onChange={(e) => setCustomLabel(e.target.value)}
+                        />
+                    )}
+
+                    <input
+                        type="url"
+                        placeholder="Link URL"
+                        value={newLink.url}
+                        onChange={(e) => setNewLink({ ...newLink, url: e.target.value })}
+                    />
+
+                    <div className="modal-actions">
+                        <button
+                            className="cancel-button"
+                            onClick={() => {
+                                setShowAddLinkModal(false);
+                                setNewLink({ label: "", url: "" });
+                                setFormError("");
+                                setCustomLabel("");
+                                setSelectedLabel(linkLabelOptions[0]);
+                            }}
+                        >
+                            Cancel
+                        </button>
+
+                        <button className="save-button" onClick={handleAddLink}>
+                            Save Link
+                        </button>
                     </div>
-                )}
+                </div>
+            </div>
+        )}
 
+        {linkToDelete && (
+            <div className="modal-backdrop">
+                <div className="confirm-modal">
+                    <h2>Delete link?</h2>
+                    <p>Are you sure you want to delete this link? This action cannot be undone.</p>
 
-                {linkToDelete && (
-                    <div className="modal-backdrop">
-                        <div className="confirm-modal">
-                            <h2>Delete link?</h2>
-                            <p>Are you sure you want to delete this link? This action cannot be undone.</p>
+                    <div className="modal-actions">
+                        <button
+                            className="cancel-button"
+                            onClick={() => setLinkToDelete(null)}
+                        >
+                            Cancel
+                        </button>
 
-                            <div className="modal-actions">
-                                <button className="cancel-button" onClick={() => setLinkToDelete(null)}>
-                                    Cancel
-                                </button>
-                                <button className="delete-confirm-button" onClick={() => handleDeleteLink(linkToDelete)}>
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
+                        <button
+                            className="delete-confirm-button"
+                            onClick={() => handleDeleteLink(linkToDelete)}
+                        >
+                            Delete
+                        </button>
                     </div>
-                )}
-            </section>
-        </main>
-    );
+                </div>
+            </div>
+        )}
+    </main>
+);
 }
