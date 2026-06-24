@@ -36,3 +36,10 @@ export async function deleteProfileLink(linkId: string) {
         method: "DELETE"
     });
 }
+
+export async function updateProfile(profileId: string, profileData: Partial<Profile>) {
+    return apiRequest<CreateProfileResponse>(`/profiles/${profileId}/update_profile`, {
+        method: "PATCH",
+        body: JSON.stringify(profileData),
+    });
+}
