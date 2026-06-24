@@ -19,11 +19,11 @@
 
 .eyebrow {
     margin: 0 0 0.4rem;
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 750;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #6b7280;
+    color: #000000;
     text-decoration: underline;
 }
 
@@ -80,6 +80,7 @@
 
 .itemPanel {
     padding: 1.5rem;
+    margin-bottom: 1.25rem;
     background: white;
     border: 0.0625rem solid #e5e7eb;
     border-radius: 1.25rem;
@@ -324,7 +325,7 @@
 }
 
 .bioTextarea {
-    width: 100%;
+    width: 40rem;
     min-height: 8rem;
     padding: 0.875rem;
     font: inherit;
@@ -333,7 +334,7 @@
     border-radius: 0.75rem;
     resize: vertical;
     background: #fff;
-    color: #111827;
+    color: #0c51e6;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -386,4 +387,10 @@
     font-weight: 600;
     color: #111827;
     text-decoration: underline;
+}
+
+.cardCode {
+    margin: 0.25rem 0 0.5rem;
+    font-size: 0.9rem;
+    color: #4b5563;
 }
