@@ -54,3 +54,10 @@ export async function uploadAvatar(profileId: string, file: File) {
         headers: {},
     });
 }
+
+export async function reorderProfileLinks(links: { link_id: string; display_order: number }[]) {
+    return apiRequest(`/profile_links/reorder`, {
+        method: "PATCH",
+        body: JSON.stringify({ links }),
+    });
+}

@@ -1,7 +1,11 @@
 import type { ProfileLink, ProfileLinkCreate } from '../../types/profile';
 import styles from '../../styles/ProfileManagementPage.module.css'
-import { useState } from 'react';
-import { createProfileLink, deleteProfileLink } from '../../api/profileApi';
+import { useState, useEffect } from 'react';
+import { createProfileLink, deleteProfileLink, reorderProfileLinks } from '../../api/profileApi';
+
+import { DndContext, closestCenter, type DragEndEvent } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import SortableLinkCard from './SortableLinkCard';
 
 type ProfileLinksProps = {
     links : ProfileLink[];
@@ -30,6 +34,11 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
 
     const [selectedLabel, setSelectedLabel] = useState(linkLabelOptions[0]);
     const [customLabel, setCustomLabel] = useState("");
+    const [orderedLinks, setOrderedLinks] = useState<ProfileLink[]>(links);
+
+    useEffect(() => {
+        setOrderedLinks(links);
+    }, [links]);
 
     async function handleAddLink() {
         const label = selectedLabel === "Other" ? customLabel : selectedLabel;
@@ -84,6 +93,32 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
         }
     }
 
+    async function handleDragEnd(event: DragEndEvent) {
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) return;
+
+        const oldIndex = orderedLinks.findIndex(link => link.link_id === active.id);
+        const newIndex = orderedLinks.findIndex(link => link.link_id === over.id);
+        
+        const reorderedLinks = arrayMove(orderedLinks, oldIndex, newIndex);
+
+        const previousLinks = orderedLinks;
+        setOrderedLinks(reorderedLinks);
+
+        try {
+            await reorderProfileLinks(
+                reorderedLinks.map((link, index) => ({
+                    link_id: link.link_id,
+                    display_order: index,
+                }))
+            );
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to reorder links");
+            setOrderedLinks(previousLinks);
+        }
+    }
+
 
     return (
         <>
@@ -102,35 +137,32 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                         </button>
                     </div>
 
-                    {links.length === 0 ? (
+                    {orderedLinks.length === 0 ? (
                         <div className={styles.emptyState}>
                             <h3>No links added yet</h3>
                             <p>Add your first link to start building this profile.</p>
                         </div>
                     ) : (
-                        <div className={styles.itemList}>
-                            {links.map(link => (
-                                <article className={styles.itemCard} key={link.link_id}>
-                                    <div>
-                                        <h3>{link.label}</h3>
-                                        <a
-                                            href={link.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            {link.url}
-                                        </a>
-                                    </div>
 
-                                    <button
-                                        className={styles.dangerTextButton}
-                                        onClick={() => setLinkToDelete(link.link_id)}
-                                    >
-                                        Delete
-                                    </button>
-                                </article>
-                            ))}
-                        </div>
+                        // 
+                        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                            <SortableContext 
+                                items={orderedLinks.map(link => link.link_id)} 
+                                strategy={verticalListSortingStrategy}
+                            >                                    
+                                <div className={styles.itemList}>
+                                    {orderedLinks.map(link => (
+                                        <SortableLinkCard
+                                            key={link.link_id}
+                                            link={link}
+                                            onDelete={() => setLinkToDelete(link.link_id)}
+                                        />
+                                    ))}
+                                </div>
+                            </SortableContext>
+                        </DndContext>
+
+                        // 
                     )}
             </section>
 

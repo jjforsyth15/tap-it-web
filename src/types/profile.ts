@@ -14,6 +14,7 @@ export type ProfileLink = {
     profile_id: string;
     label: string;
     url: string;
+    display_order: number;
     created_at: string;
     updated_at: string;
 };
