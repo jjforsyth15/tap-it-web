@@ -1,10 +1,10 @@
-.profile-management-page {
+.profileManagementPage {
     width: min(100% - 2rem, 56rem);
     margin: 0 auto;
     padding: 2.5rem 0;
 }
 
-.profile-management-header {
+.profileManagementHeader {
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
@@ -27,21 +27,21 @@
     text-decoration: underline;
 }
 
-.profile-management-header h1 {
+.profileManagementHeader h1 {
     margin: 0;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     line-height: 1.1;
     color: #111827;
 }
 
-.profile-bio {
+.profileBio {
     max-width: 42rem;
     margin: 0.75rem 0 1rem 0.75rem;
     color: #4b5563;
     line-height: 1.6;
 }
 
-.status-badge {
+.statusBadge {
     flex-shrink: 0;
     padding: 0.4rem 0.75rem;
     border-radius: 999rem;
@@ -52,23 +52,23 @@
     color: #374151;
 }
 
-.status-active {
+.statusactive {
     background: #e8f7ee;
     color: #176b3a;
 }
 
-.status-inactive {
+.statusinactive {
     background: #fff7ed;
     color: #9a3412;
 }
 
-.status-disabled,
-.status-archived {
+.statusDisabled,
+.statusArchived {
     background: #f3f4f6;
     color: #4b5563;
 }
 
-.success-message {
+.successMessage {
     margin: 0 0 1.25rem;
     padding: 0.75rem 1rem;
     border-radius: 0.75rem;
@@ -78,7 +78,7 @@
     font-weight: 600;
 }
 
-.links-panel {
+.linksPanel {
     padding: 1.5rem;
     background: white;
     border: 0.0625rem solid #e5e7eb;
@@ -86,7 +86,7 @@
     box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.05);
 }
 
-.section-header {
+.sectionHeader {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -94,22 +94,22 @@
     margin-bottom: 1.25rem;
 }
 
-.section-header h2 {
+.sectionHeader h2 {
     margin: 0;
     font-size: 1.35rem;
     color: #111827;
 }
 
-.section-header p {
+.sectionHeader p {
     margin: 0.35rem 0 0;
     color: #6b7280;
     font-size: 0.95rem;
 }
 
-.primary-button,
-.cancel-button,
-.delete-confirm-button,
-.save-button {
+.primaryButton,
+.cancelButton,
+.deleteConfirmButton,
+.saveButton {
     border: none;
     border-radius: 999rem;
     padding: 0.75rem 1rem;
@@ -118,19 +118,19 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
-.primary-button,
-.save-button {
+.primaryButton,
+.saveButton {
     background: #111827;
     color: white;
 }
 
-.primary-button:hover,
-.save-button:hover {
+.primaryButton:hover,
+.saveButton:hover {
     transform: translateY(-0.1rem);
     box-shadow: 0 0.6rem 1.25rem rgba(0, 0, 0, 0.16);
 }
 
-.empty-state {
+.emptyState {
     padding: 2rem;
     text-align: center;
     border: 0.1rem dashed #d1d5db;
@@ -138,22 +138,22 @@
     background: #fafafa;
 }
 
-.empty-state h3 {
+.emptyState h3 {
     margin: 0 0 0.35rem;
     color: #111827;
 }
 
-.empty-state p {
+.emptyState p {
     margin: 0;
     color: #6b7280;
 }
 
-.link-list {
+.linkList {
     display: grid;
     gap: 0.85rem;
 }
 
-.link-card {
+.linkCard {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -164,13 +164,13 @@
     background: #ffffff;
 }
 
-.link-card h3 {
+.linkCard h3 {
     margin: 0 0 0.3rem;
     font-size: 1rem;
     color: #111827;
 }
 
-.link-card a {
+.linkCard a {
     display: inline-block;
     max-width: 100%;
     color: #2563eb;
@@ -179,11 +179,11 @@
     text-decoration: none;
 }
 
-.link-card a:hover {
+.linkCard a:hover {
     text-decoration: underline;
 }
 
-.danger-text-button {
+.dangerTextButton {
     border: none;
     background: transparent;
     color: #dc2626;
@@ -192,11 +192,11 @@
     padding: 0.5rem;
 }
 
-.danger-text-button:hover {
+.dangerTextButton:hover {
     text-decoration: underline;
 }
 
-.modal-backdrop {
+.modalBackdrop {
     position: fixed;
     inset: 0;
     display: flex;
@@ -207,7 +207,7 @@
     z-index: 1000;
 }
 
-.confirm-modal {
+.confirmModal {
     width: min(100%, 24rem);
     padding: 1.5rem;
     background: white;
@@ -215,21 +215,21 @@
     box-shadow: 0 1.125rem 3rem rgba(0, 0, 0, 0.2);
 }
 
-.confirm-modal h2 {
+.confirmModal h2 {
     margin: 0 0 0.5rem;
     font-size: 1.4rem;
     color: #111827;
 }
 
-.confirm-modal p {
+.confirmModal p {
     margin: 0;
     font-size: 0.9rem;
     color: #555;
     line-height: 1.5;
 }
 
-.confirm-modal input,
-.confirm-modal select {
+.confirmModal input,
+.confirmModal select {
     width: 100%;
     padding: 0.75rem;
     margin-top: 0.75rem;
@@ -240,37 +240,37 @@
     background: white;
 }
 
-.modal-actions {
+.modalActions {
     display: flex;
     gap: 0.75rem;
     margin-top: 1.5rem;
 }
 
-.cancel-button,
-.delete-confirm-button,
-.save-button {
+.cancelButton,
+.deleteConfirmButton,
+.saveButton {
     flex: 1;
 }
 
-.cancel-button {
+.cancelButton {
     background: #f3f4f6;
     color: #374151;
 }
 
-.cancel-button:hover {
+.cancelButton:hover {
     background: #e5e7eb;
 }
 
-.delete-confirm-button {
+.deleteConfirmButton {
     background: #dc2626;
     color: white;
 }
 
-.delete-confirm-button:hover {
+.deleteConfirmButton:hover {
     background: #b91c1c;
 }
 
-.form-error {
+.formError {
     margin-top: 0.75rem;
     color: #dc2626;
     font-size: 0.9rem;
@@ -278,27 +278,27 @@
 }
 
 @media (max-width: 40rem) {
-    .profile-management-header,
-    .section-header,
-    .link-card {
+    .profileManagementHeader,
+    .sectionHeader,
+    .linkCard {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .primary-button {
+    .primaryButton {
         width: 100%;
     }
 
-    .status-badge {
+    .statusBadge {
         width: fit-content;
     }
 
-    .modal-actions {
+    .modalActions {
         flex-direction: column-reverse;
     }
 }
 
-.view-public-profile-button {
+.viewPublicProfileButton {
     align-self: flex-start;
     margin-top: auto;
     padding: 0.5em 1.1em;
@@ -312,6 +312,6 @@
     transition: background 0.2s ease;
 }
 
-.view-public-profile-button:hover {
+.viewPublicProfileButton:hover {
     background: #333;
 }

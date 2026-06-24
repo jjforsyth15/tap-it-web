@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createProfileLink, deleteProfileLink, getProfile, getProfileLinks } from "../api/profileApi";
 import type { Profile, ProfileLink, ProfileLinkCreate } from "../types/profile";
-import "../styles/ProfileManagementPage.css";
+import styles from "../styles/ProfileManagementPage.module.css";
 
 export default function ProfileManagementPage() {
     const { profileId } = useParams();
@@ -25,6 +25,14 @@ export default function ProfileManagementPage() {
         "Portfolio",
         "Other"
     ];
+
+    const statusClassMap = {
+    active: styles.statusActive,
+    inactive: styles.statusInactive,
+    disabled: styles.statusDisabled,
+    archived: styles.statusArchived,
+    };
+    
     const [selectedLabel, setSelectedLabel] = useState(linkLabelOptions[0]);
     const [customLabel, setCustomLabel] = useState("");
 
@@ -112,45 +120,45 @@ export default function ProfileManagementPage() {
         return <p>Profile not found</p>;
 
     return (
-    <main className="profile-management-page">
-        <section className="profile-management-header">
+    <main className={styles.profileManagementPage}>
+        <section className={styles.profileManagementHeader}>
             <div>
-                <p className="eyebrow">Profile Management</p>
+                <p className={styles.eyebrow}>Profile Management</p>
                 <h1>{profile.profile_name}</h1>
 
                 {profile.bio && (
-                    <p className="profile-bio">{profile.bio}</p>
+                    <p className={styles.profileBio}>{profile.bio}</p>
                 )}
 
                 <a 
                     href={`/public/${profile.profile_id}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="view-public-profile-button"
+                    className={styles.viewPublicProfileButton}
                     onClick={(e) => e.stopPropagation()}
                     >
                         View Public Page
                 </a>
             </div>
 
-            <span className={`status-badge status-${profile.profile_status}`}>
+            <span className={`${styles.statusBadge} ${statusClassMap[profile.profile_status]}`}>
                 {profile.profile_status}
             </span>
         </section>
 
         {successMessage && (
-            <p className="success-message">{successMessage}</p>
+            <p className={styles.successMessage}>{successMessage}</p>
         )}
 
-        <section className="links-panel">
-            <div className="section-header">
+        <section className={styles.linksPanel}>
+            <div className={styles.sectionHeader}>
                 <div>
                     <h2>Links</h2>
                     <p>Manage the links shown on this public profile.</p>
                 </div>
 
                 <button
-                    className="primary-button"
+                    className={styles.primaryButton}
                     onClick={() => setShowAddLinkModal(true)}
                 >
                     + Add Link
@@ -158,14 +166,14 @@ export default function ProfileManagementPage() {
             </div>
 
             {links.length === 0 ? (
-                <div className="empty-state">
+                <div className={styles.emptyState}>
                     <h3>No links added yet</h3>
                     <p>Add your first link to start building this profile.</p>
                 </div>
             ) : (
-                <div className="link-list">
+                <div className={styles.linkList}>
                     {links.map(link => (
-                        <article className="link-card" key={link.link_id}>
+                        <article className={styles.linkCard} key={link.link_id}>
                             <div>
                                 <h3>{link.label}</h3>
                                 <a
@@ -178,7 +186,7 @@ export default function ProfileManagementPage() {
                             </div>
 
                             <button
-                                className="danger-text-button"
+                                className={styles.dangerTextButton}
                                 onClick={() => setLinkToDelete(link.link_id)}
                             >
                                 Delete
@@ -190,11 +198,11 @@ export default function ProfileManagementPage() {
         </section>
 
         {showAddLinkModal && (
-            <div className="modal-backdrop">
-                <div className="confirm-modal">
+            <div className={styles.modalBackdrop}>
+                <div className={styles.confirmModal}>
                     <h2>Add New Link</h2>
 
-                    {formError && <p className="form-error">{formError}</p>}
+                    {formError && <p className={styles.formError}>{formError}</p>}
 
                     <select
                         value={selectedLabel}
@@ -223,9 +231,9 @@ export default function ProfileManagementPage() {
                         onChange={(e) => setNewLink({ ...newLink, url: e.target.value })}
                     />
 
-                    <div className="modal-actions">
+                    <div className={styles.modalActions}>
                         <button
-                            className="cancel-button"
+                            className={styles.cancelButton}
                             onClick={() => {
                                 setShowAddLinkModal(false);
                                 setNewLink({ label: "", url: "" });
@@ -237,7 +245,7 @@ export default function ProfileManagementPage() {
                             Cancel
                         </button>
 
-                        <button className="save-button" onClick={handleAddLink}>
+                        <button className={styles.saveButton} onClick={handleAddLink}>
                             Save Link
                         </button>
                     </div>
@@ -246,21 +254,21 @@ export default function ProfileManagementPage() {
         )}
 
         {linkToDelete && (
-            <div className="modal-backdrop">
-                <div className="confirm-modal">
+            <div className={styles.modalBackdrop}>
+                <div className={styles.confirmModal}>
                     <h2>Delete link?</h2>
                     <p>Are you sure you want to delete this link? This action cannot be undone.</p>
 
-                    <div className="modal-actions">
+                    <div className={styles.modalActions}>
                         <button
-                            className="cancel-button"
+                            className={styles.cancelButton}
                             onClick={() => setLinkToDelete(null)}
                         >
                             Cancel
                         </button>
 
                         <button
-                            className="delete-confirm-button"
+                            className={styles.deleteConfirmButton}
                             onClick={() => handleDeleteLink(linkToDelete)}
                         >
                             Delete
