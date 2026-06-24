@@ -43,3 +43,14 @@ export async function updateProfile(profileId: string, profileData: Partial<Prof
         body: JSON.stringify(profileData),
     });
 }
+
+export async function uploadAvatar(profileId: string, file: File) {
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    return apiRequest(`/profiles/${profileId}/avatar`, {
+        method: "POST",
+        body: formData,
+        headers: {},
+    });
+}
