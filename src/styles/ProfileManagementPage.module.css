@@ -334,13 +334,13 @@
     border-radius: 0.75rem;
     resize: vertical;
     background: #fff;
-    color: #0c51e6;
+    color: #000000;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .bioTextarea:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: #000000;
     box-shadow: 0 0 0 0.1875rem rgba(37, 99, 235, 0.15);
 }
 
