@@ -19,3 +19,13 @@ export type CardActivationStatus = {
     card_status: string;
     can_activate: boolean;
 }
+
+export type CardResponse = {
+    profile_id: string;
+    card_id: string;
+    card_name: string;
+    card_code: string;
+    pointing_url: string;
+    card_status: string;
+    created_at: string;
+}

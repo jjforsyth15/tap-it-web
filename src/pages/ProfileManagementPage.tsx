@@ -4,6 +4,7 @@ import { createProfileLink, deleteProfileLink, getProfile, getProfileLinks, upda
 import type { Profile, ProfileLink, ProfileLinkCreate } from "../types/profile";
 import type { CardResponse } from "../types/card";
 import styles from "../styles/ProfileManagementPage.module.css";
+import { getProfileCards } from "../api/cardApi";
 
 export default function ProfileManagementPage() {
     const { profileId } = useParams();
@@ -55,12 +56,14 @@ export default function ProfileManagementPage() {
             }
 
             try {
-                const [profileData, linksData] = await Promise.all([
+                const [profileData, linksData, cardsData] = await Promise.all([
                     getProfile(profileId),
-                    getProfileLinks(profileId)
+                    getProfileLinks(profileId),
+                    getProfileCards(profileId)
                 ]);
                 setProfile(profileData);
                 setLinks(linksData);
+                setCards(cardsData);
             } catch (err) {
                 setError(err instanceof Error ? err.message : "Failed to load profile");
             } finally {
@@ -147,6 +150,7 @@ export default function ProfileManagementPage() {
                     <p className={styles.eyebrow}>Profile Management</p>
                     <h1>{profile.profile_name}</h1>
 
+                    <h2 className={styles.bioHeader}>Bio</h2>
                     {isEditingBio ? (
                             <textarea
                                 className={styles.bioTextarea}
@@ -156,7 +160,6 @@ export default function ProfileManagementPage() {
                             />
                     ) : (
                         <>
-                            <h2 className={styles.bioHeader}>Bio</h2>
                             <p className={styles.profileBio}>
                                 {profile.bio || "No bio added yet."}
                             </p>
@@ -277,8 +280,9 @@ export default function ProfileManagementPage() {
                     >
                         + Request New Card
                     </button>
+                </div>
 
-                    {cards.length === 0 ? (
+                {cards.length === 0 ? (
                     <div className={styles.emptyState}>
                         <h3>No cards added yet</h3>
                         <p>Add your first card to start sharing this profile.</p>
@@ -289,14 +293,23 @@ export default function ProfileManagementPage() {
                                 <article className={styles.itemCard} key={card.card_id}>
                                     <div>
                                         <h3>{card.card_name}</h3>
-                                        <p>Card Code: {card.card_code}</p>
-                                        <p>Status: {card.card_status}</p>
+                                        <p className={styles.cardCode}>Card Code: {card.card_code}</p>
+                                        <span
+                                            className={`${styles.statusBadge} ${styles[`status${card.card_status}`]}`}
+                                            >
+                                                {card.card_status}
+                                            </span>          
                                     </div>
+
+                                    <button
+                                        className={styles.dangerTextButton}
+                                    >
+                                        Deactivate
+                                    </button>
                                 </article>
                             ))}
                         </div>
-                    )}
-                </div>
+                    )} 
             </section>
 
             {showAddLinkModal && (
@@ -380,7 +393,6 @@ export default function ProfileManagementPage() {
                 </div>
             )}
 
-            
         </main>
     );
 }
