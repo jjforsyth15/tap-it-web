@@ -14,6 +14,9 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
     const [isEditingBio, setIsEditingBio] = useState(false);
     const [bioInput, setBioInput] = useState(profile.bio || "");
 
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [nameInput, setNameInput] = useState(profile.profile_name || "");
+
     const statusClassMap = {
         active: styles.statusActive,
         inactive: styles.statusInactive,
@@ -35,11 +38,63 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
         }
     }
 
+    async function handleSaveName() {
+        try {
+            const updatedProfile = await updateProfile(profile.profile_id, {profile_name: nameInput});
+
+            onProfileUpdated(updatedProfile.profile);
+            setIsEditingName(false);
+            setSuccessMessage("Profile name updated successfully");
+            setTimeout(() => setSuccessMessage(""), 3000);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to update profile name");
+        }
+    }
+
     return (
         <section className={styles.profileManagementHeader}>
                 <div>
-                    <p className={styles.eyebrow}>Profile Management</p>
-                    <h1>{profile.profile_name}</h1>
+                    <h2 className={styles.bioHeader}>Profile Name</h2>
+                    {isEditingName ? (
+                        <input
+                            className={styles.profileNameInput}
+                            value={nameInput}
+                            onChange={(e) => setNameInput(e.target.value)}
+                            placeholder="Enter a name for your profile..."
+                        />
+                    ) : (
+                        <h1>{profile.profile_name}</h1>
+                    )}
+
+                    <div className={styles.nameActions}>
+                        {isEditingName ? (
+                            <>
+                                <button
+                                    className={styles.editBioButton}
+                                    onClick={handleSaveName}
+                                >
+                                    Save
+                                </button>
+
+                                <button
+                                    className={styles.editBioButton}
+                                    onClick={() => {
+                                        setNameInput(profile.profile_name || "");
+                                        setIsEditingName(false);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </>
+                        ) : (
+                            <button
+                                className={styles.editBioButton}
+                                onClick={() => setIsEditingName(true)}
+                            >
+                                Edit Name
+                            </button>
+                        )}
+                    </div>
 
                     <h2 className={styles.bioHeader}>Bio</h2>
                     {isEditingBio ? (

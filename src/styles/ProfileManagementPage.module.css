@@ -302,7 +302,7 @@
 .viewPublicProfileButton {
     align-self: flex-start;
     margin-top: auto;
-    padding: 0.5em 1.1em;
+    padding: 1em 1.2em;
     border-radius: 999rem;
     background: #111;
     color: white;
@@ -351,13 +351,13 @@
 }
 
 .profileBio {
-    min-height: 8rem;
+    min-height: 2rem;
 }
 
 .editBioButton {
     display: inline-flex;
     align-items: center;
-    padding: 0 0.5rem;
+    padding: 0 0.5rem 2rem;
     margin-top: auto;
     margin-bottom: 1rem;
     border: none;
@@ -417,4 +417,23 @@
 .itemCardContent {
   flex: 1;
   text-align: left;
+}
+
+.profileNameInput {
+    width: 100%;
+    max-width: 32rem;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 0.35rem 0.5rem;
+    border: 0.0625rem solid #d1d5db;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    color: #111827;
+}
+
+.nameActions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
