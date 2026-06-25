@@ -57,9 +57,6 @@ export default function ProfileManagementPage() {
     if (loading) 
         return <p>Loading... Profile</p>;
 
-    if (error)
-        return <p>Error: {error}</p>;
-
     if (!profile)
         return <p>Profile not found</p>;
 
@@ -75,6 +72,10 @@ export default function ProfileManagementPage() {
 
             {successMessage && (
                 <p className={styles.successMessage}>{successMessage}</p>
+            )}
+
+            {error && (
+                <p className={styles.errorMessage}>{error}</p>
             )}
 
             <ProfileLinks

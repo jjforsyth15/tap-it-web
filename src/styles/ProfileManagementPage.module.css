@@ -78,6 +78,16 @@
     font-weight: 600;
 }
 
+.errorMessage {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: #fef2f2;
+    color: #dc2626;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
 .itemPanel {
     padding: 1.5rem;
     margin-bottom: 1.25rem;

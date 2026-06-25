@@ -35,10 +35,17 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to update bio");
+            setTimeout(() => setError(""), 3000);
         }
     }
 
     async function handleSaveName() {
+        if (!nameInput.trim()) {
+            setError("Profile name cannot be empty");
+            setTimeout(() => setError(""), 3000);
+            return;
+        }
+        
         try {
             const updatedProfile = await updateProfile(profile.profile_id, {profile_name: nameInput});
 
@@ -48,6 +55,7 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to update profile name");
+            setTimeout(() => setError(""), 3000);
         }
     }
 
@@ -60,7 +68,6 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
                             className={styles.profileNameInput}
                             value={nameInput}
                             onChange={(e) => setNameInput(e.target.value)}
-                            placeholder="Enter a name for your profile..."
                         />
                     ) : (
                         <h1>{profile.profile_name}</h1>
