@@ -162,3 +162,54 @@ button {
   margin: 0;
   color: #fca5a5;
 }
+
+.logoutButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.75rem 1.5rem;
+
+    border: 0.0625rem solid #d1d5db;
+    border-radius: 0.75rem;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.logoutButton:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    color: #111827;
+
+    transform: translateY(-0.0625rem);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+}
+
+.logoutButton:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.logoutButton:focus-visible {
+    outline: 0.1875rem solid rgba(59, 130, 246, 0.35);
+    outline-offset: 0.125rem;
+}
+
+.logoutButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}

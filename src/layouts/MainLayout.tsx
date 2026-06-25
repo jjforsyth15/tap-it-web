@@ -21,7 +21,9 @@ function MainLayout() {
                     {isLoggedIn ? (
                         <>
                             <Link to="/dashboard">Dashboard</Link>
-                            <button onClick={handleLogout}>Logout</button>  
+                            <button onClick={handleLogout} className="logoutButton">
+                                Logout
+                            </button>
                         </>
                     ) : (
                         <>
