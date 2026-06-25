@@ -23,6 +23,8 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
 
     const currentAvatar = avatarPreview || profile.profile_image_url;
 
+    const [showRemoveAvatarModal, setShowRemoveAvatarModal] = useState(false);
+
     const statusClassMap = {
         active: styles.statusActive,
         inactive: styles.statusInactive,
@@ -134,168 +136,203 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
     }
 
     return (
-        <section className={styles.profileManagementHeader}>
-            <div>
-                <div className={styles.avatarSection}>
-                    <div 
-                        className={styles.avatarContainer}
-                        onClick={() => {
-                            if (!isUploadingAvatar)
-                                fileInputRef.current?.click();
-                        }}
-                    >
-                        {currentAvatar ? (
-                            <img
-                                src={currentAvatar}
-                                alt={`${profile.profile_name} avatar`}
-                                className={styles.profileAvatar}
-                            />
-                        ) : (
-                            <div className={styles.avatarFallback}>
-                                {profile.profile_name.charAt(0).toUpperCase()}
-                            </div>
-                        )}
+        <>
+            <section className={styles.profileManagementHeader}>
+                <div>
+                    <div className={styles.avatarSection}>
+                        <div 
+                            className={styles.avatarContainer}
+                            onClick={() => {
+                                if (!isUploadingAvatar)
+                                    fileInputRef.current?.click();
+                            }}
+                        >
+                            {currentAvatar ? (
+                                <img
+                                    src={currentAvatar}
+                                    alt={`${profile.profile_name} avatar`}
+                                    className={styles.profileAvatar}
+                                />
+                            ) : (
+                                <div className={styles.avatarFallback}>
+                                    {profile.profile_name.charAt(0).toUpperCase()}
+                                </div>
+                            )}
 
-                        <div className={styles.avatarOverlay}>
-                            {isUploadingAvatar ? "Uploading..." : "Change Photo"}
+                            <div className={styles.avatarOverlay}>
+                                {isUploadingAvatar ? "Uploading..." : "Change Photo"}
+                            </div>
+
+                            
                         </div>
 
-                        
+                        {currentAvatar && (
+                            <button 
+                                type="button"
+                                className={styles.removeAvatarButton}
+                                onClick={() => setShowRemoveAvatarModal(true)}
+                            >
+                                Remove Photo
+                            </button>
+                        )}
+
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            className={styles.hiddenFileInput}
+                            onChange={handleAvatarChange}
+                        />
                     </div>
 
-                    {currentAvatar && (
-                        <button 
-                            type="button"
-                            className={styles.removeAvatarButton}
-                            onClick={handleRemoveAvatar}
-                        >
-                            Remove Photo
-                        </button>
-                    )}
-
-                    <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        className={styles.hiddenFileInput}
-                        onChange={handleAvatarChange}
-                    />
-                </div>
-
-            
-                <h2 className={styles.bioHeader}>Profile Name</h2>
-                {isEditingName ? (
-                    <input
-                        className={styles.profileNameInput}
-                        value={nameInput}
-                        onChange={(e) => setNameInput(e.target.value)}
-                    />
-                ) : (
-                    <h1>{profile.profile_name}</h1>
-                )}
-
-                <div className={styles.nameActions}>
+                
+                    <h2 className={styles.bioHeader}>Profile Name</h2>
                     {isEditingName ? (
-                        <>
-                            <button
-                                className={styles.editBioButton}
-                                onClick={handleSaveName}
-                            >
-                                Save
-                            </button>
-
-                            <button
-                                className={styles.editBioButton}
-                                onClick={() => {
-                                    setNameInput(profile.profile_name || "");
-                                    setIsEditingName(false);
-                                }}
-                            >
-                                Cancel
-                            </button>
-                            
-                            {/* Added character limit info */}
-                            <p className={styles.characterLimitInfo}>
-                                {nameInput.length} / 100 characters
-                            </p>
-                        </>
-                    ) : (
-                        <button
-                            className={styles.editBioButton}
-                            onClick={() => setIsEditingName(true)}
-                        >
-                            Edit Name
-                        </button>
-                    )}
-                </div>
-
-                <h2 className={styles.bioHeader}>Bio</h2>
-                {isEditingBio ? (
-                        <textarea
-                            className={styles.bioTextarea}
-                            value={bioInput}
-                            onChange={(e) => setBioInput(e.target.value)}
-                            placeholder="Write a short bio to describe your profile..."
+                        <input
+                            className={styles.profileNameInput}
+                            value={nameInput}
+                            onChange={(e) => setNameInput(e.target.value)}
                         />
-                ) : (
-                    <>
-                        <p className={styles.profileBio}>
-                            {profile.bio || "No bio added yet."}
-                        </p>
-                    </>
-                )}
+                    ) : (
+                        <h1>{profile.profile_name}</h1>
+                    )}
 
-                <div className={styles.bioEditActions}>
-                    {isEditingBio ? (
-                        <>
-                            <button 
-                                type="button"
+                    <div className={styles.nameActions}>
+                        {isEditingName ? (
+                            <>
+                                <button
+                                    className={styles.editBioButton}
+                                    onClick={handleSaveName}
+                                >
+                                    Save
+                                </button>
+
+                                <button
+                                    className={styles.editBioButton}
+                                    onClick={() => {
+                                        setNameInput(profile.profile_name || "");
+                                        setIsEditingName(false);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                
+                                {/* Added character limit info */}
+                                <p className={styles.characterLimitInfo}>
+                                    {nameInput.length} / 100 characters
+                                </p>
+                            </>
+                        ) : (
+                            <button
                                 className={styles.editBioButton}
-                                onClick={handleSaveBio}
+                                onClick={() => setIsEditingName(true)}
                             >
-                                Save
+                                Edit Name
                             </button>
+                        )}
+                    </div>
 
+                    <h2 className={styles.bioHeader}>Bio</h2>
+                    {isEditingBio ? (
+                            <textarea
+                                className={styles.bioTextarea}
+                                value={bioInput}
+                                onChange={(e) => setBioInput(e.target.value)}
+                                placeholder="Write a short bio to describe your profile..."
+                            />
+                    ) : (
+                        <>
+                            <p className={styles.profileBio}>
+                                {profile.bio || "No bio added yet."}
+                            </p>
+                        </>
+                    )}
+
+                    <div className={styles.bioEditActions}>
+                        {isEditingBio ? (
+                            <>
+                                <button 
+                                    type="button"
+                                    className={styles.editBioButton}
+                                    onClick={handleSaveBio}
+                                >
+                                    Save
+                                </button>
+
+                                <button 
+                                    type="button"
+                                    className={styles.editBioButton}
+                                    onClick={() => {
+                                        setBioInput(profile.bio || "");
+                                        setIsEditingBio(false);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+
+                                <p className={styles.characterLimitInfo}>
+                                    {bioInput.length} / 1000 characters
+                                </p>
+                            </>
+                        ) : (
                             <button 
                                 type="button"
                                 className={styles.editBioButton}
-                                onClick={() => {
-                                    setBioInput(profile.bio || "");
-                                    setIsEditingBio(false);
-                                }}
+                                onClick={() => setIsEditingBio(true)}
+                            >
+                                {profile.bio ? "Edit Bio" : "Add Bio"}
+                            </button>
+                        )}
+                    </div>
+
+                    <a 
+                        href={`/public/${profile.profile_id}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.viewPublicProfileButton}
+                        onClick={(e) => e.stopPropagation()}
+                        >
+                            View Public Page
+                    </a>
+                </div>
+
+                <span className={`${styles.statusBadge} ${statusClassMap[profile.profile_status]}`}>
+                    {profile.profile_status}
+                </span>
+            </section>
+
+            {showRemoveAvatarModal && (
+                <div className={styles.modalBackdrop}>
+                    <div className={styles.confirmModal}>
+                        <h2>Remove Profile Picture?</h2>
+                        <p>
+                            Are you sure you want to remove your profile picture? 
+                            This action cannot be undone.
+                        </p>
+
+                        <div className={styles.modalActions}>
+                            <button
+                                type="button"
+                                className={styles.cancelButton}
+                                onClick={() => setShowRemoveAvatarModal(false)}
                             >
                                 Cancel
                             </button>
 
-                            <p className={styles.characterLimitInfo}>
-                                {bioInput.length} / 1000 characters
-                            </p>
-                        </>
-                    ) : (
-                        <button 
-                            type="button"
-                            className={styles.editBioButton}
-                            onClick={() => setIsEditingBio(true)}
-                        >
-                            {profile.bio ? "Edit Bio" : "Add Bio"}
-                        </button>
-                    )}
+                            <button
+                                type="button"
+                                className={styles.deleteConfirmButton}
+                                onClick={async () => {
+                                    await handleRemoveAvatar();
+                                    setShowRemoveAvatarModal(false);
+                                }}
+                            >
+                                Remove Picture
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-                <a 
-                    href={`/public/${profile.profile_id}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={styles.viewPublicProfileButton}
-                    onClick={(e) => e.stopPropagation()}
-                    >
-                        View Public Page
-                </a>
-            </div>
-
-            <span className={`${styles.statusBadge} ${statusClassMap[profile.profile_status]}`}>
-                {profile.profile_status}
-            </span>
-        </section>
+            )}
+        </>
     )
 }
