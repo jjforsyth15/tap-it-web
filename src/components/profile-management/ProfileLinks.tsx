@@ -125,7 +125,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
             <section className={styles.itemPanel}>
                     <div className={styles.sectionHeader}>
                         <div>
-                            <h2>Links</h2>
+                            <h2>Links - {orderedLinks.length}</h2>
                             <p>Manage the links shown on the public profile.</p>
                         </div>
 

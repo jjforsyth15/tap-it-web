@@ -10,7 +10,7 @@ export default function ProfileCards({ cards }: ProfileCardsProps) {
         <section className={styles.itemPanel}>
                 <div className={styles.sectionHeader}>
                     <div>
-                        <h2>Cards</h2>
+                        <h2>Cards - {cards.length}</h2>
                         <p>Manage the cards associated with this profile.</p>
                     </div>
                     
