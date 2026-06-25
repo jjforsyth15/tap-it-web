@@ -70,3 +70,29 @@
 .profileLink:hover {
     background-color: #f6f6f6;
 }
+
+.publicProfileAvatar,
+.publicProfileAvatarFallback {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+}
+
+.publicProfileAvatar {
+    object-fit: cover;
+    border: 0.125rem solid #e5e7eb;
+}
+
+.publicProfileAvatarFallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+

@@ -38,26 +38,24 @@ export default function PublicProfilePage() {
     return (
         <div className={styles.publicProfilePage}>
             <div className={styles.publicProfileContent}>
-                <div className={styles.profileAvatar}>
-                    {profile.profile_name.charAt(0).toUpperCase()}
-                </div>
+
+                {profile.profile_image_url ? (
+                    <img 
+                        src={profile.profile_image_url}
+                        alt={`${profile.profile_name} profile picture`}
+                        className={styles.publicProfileAvatar}
+                    />
+                ) : (
+                    <div className={styles.publicProfileAvatarFallback}>
+                        {profile.profile_name.charAt(0).toUpperCase()}
+                    </div>
+                )}
 
             <h1>{profile.profile_name}</h1>
             
 
             {profile.bio && (
                 <p className={styles.profileBio}>{profile.bio}</p>
-            )}
-
-            {profile.website_url && (
-                <a 
-                    href={profile.website_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={styles.profileMainLink}
-                >
-                    Visit Website
-                </a>
             )}
 
             <div className={styles.profileLinks}> 
