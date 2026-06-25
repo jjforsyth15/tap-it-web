@@ -61,3 +61,8 @@ export async function reorderProfileLinks(links: { link_id: string; display_orde
     });
 }
 
+export async function deleteProfileAvatar(profileId: string) {
+    return apiRequest<CreateProfileResponse>(`/profiles/${profileId}/avatar`, {
+        method: "DELETE"
+    });
+}

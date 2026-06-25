@@ -1,7 +1,7 @@
 import styles from '../../styles/ProfileManagementPage.module.css'
 import type { Profile } from '../../types/profile'
 import { useRef, useState } from 'react'
-import { updateProfile, uploadAvatar } from '../../api/profileApi'
+import { deleteProfileAvatar, updateProfile, uploadAvatar } from '../../api/profileApi'
 
 type ProfileHeaderProps = {
     profile: Profile;
@@ -20,6 +20,8 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
     const [avatarPreview, setAvatarPreview] = useState(profile.profile_image_url || "");
     const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    const currentAvatar = avatarPreview || profile.profile_image_url;
 
     const statusClassMap = {
         active: styles.statusActive,
@@ -116,31 +118,60 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
         }
     }
 
+    async function handleRemoveAvatar() {
+        try {
+            const updatedProfile = await deleteProfileAvatar(profile.profile_id);
+
+            setAvatarPreview("");
+            onProfileUpdated(updatedProfile.profile);
+
+            setSuccessMessage("Profile picture removed successfully");
+            setTimeout(() => setSuccessMessage(""), 3000);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to remove profile picture");
+            setTimeout(() => setError(""), 3000);
+        }
+    }
+
     return (
         <section className={styles.profileManagementHeader}>
             <div>
-                <div 
-                    className={styles.avatarContainer}
-                    onClick={() => {
-                        if (!isUploadingAvatar)
-                            fileInputRef.current?.click();
-                    }}
-                >
-                    {avatarPreview ? (
-                        <img
-                            src={avatarPreview}
-                            alt={`${profile.profile_name} avatar`}
-                            className={styles.profileAvatar}
-                        />
-                    ) : (
-                        <div className={styles.avatarFallback}>
-                            {profile.profile_name.charAt(0).toUpperCase()}
-                        </div>
-                    )}
+                <div className={styles.avatarSection}>
+                    <div 
+                        className={styles.avatarContainer}
+                        onClick={() => {
+                            if (!isUploadingAvatar)
+                                fileInputRef.current?.click();
+                        }}
+                    >
+                        {currentAvatar ? (
+                            <img
+                                src={currentAvatar}
+                                alt={`${profile.profile_name} avatar`}
+                                className={styles.profileAvatar}
+                            />
+                        ) : (
+                            <div className={styles.avatarFallback}>
+                                {profile.profile_name.charAt(0).toUpperCase()}
+                            </div>
+                        )}
 
-                    <div className={styles.avatarOverlay}>
-                        {isUploadingAvatar ? "Uploading..." : "Change Photo"}
+                        <div className={styles.avatarOverlay}>
+                            {isUploadingAvatar ? "Uploading..." : "Change Photo"}
+                        </div>
+
+                        
                     </div>
+
+                    {currentAvatar && (
+                        <button 
+                            type="button"
+                            className={styles.removeAvatarButton}
+                            onClick={handleRemoveAvatar}
+                        >
+                            Remove Photo
+                        </button>
+                    )}
 
                     <input
                         ref={fileInputRef}
