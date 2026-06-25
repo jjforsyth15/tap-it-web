@@ -46,12 +46,11 @@ export async function updateProfile(profileId: string, profileData: Partial<Prof
 
 export async function uploadAvatar(profileId: string, file: File) {
     const formData = new FormData();
-    formData.append("avatar", file);
+    formData.append("file", file);
 
-    return apiRequest(`/profiles/${profileId}/avatar`, {
+    return apiRequest<CreateProfileResponse>(`/profiles/${profileId}/avatar`, {
         method: "POST",
         body: formData,
-        headers: {},
     });
 }
 
@@ -61,3 +60,4 @@ export async function reorderProfileLinks(links: { link_id: string; display_orde
         body: JSON.stringify({ links }),
     });
 }
+
