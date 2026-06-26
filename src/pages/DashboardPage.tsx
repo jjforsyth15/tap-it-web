@@ -3,9 +3,7 @@ import { getCurrentUser} from "../api/userApi";
 import type { User } from "../types/user";
 import type { Profile } from "../types/profile";
 import { getMyProfiles, reorderProfiles } from "../api/profileApi";
-import { useNavigate } from "react-router-dom";
 import styles from "../styles/DashboardPage.module.css";
-import ProfileCard from "../components/dashboard/ProfileCard";
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
 
@@ -18,8 +16,6 @@ function DashboardPage() {
     const [error, setError] = useState("");
 
     const [profiles, setProfiles] = useState<Profile[]>([]);
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadUser() {
