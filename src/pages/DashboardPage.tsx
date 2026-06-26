@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import { getCurrentUser} from "../api/userApi";
 import type { User } from "../types/user";
 import type { Profile } from "../types/profile";
-import { getMyProfiles } from "../api/profileApi";
+import { getMyProfiles, reorderProfiles } from "../api/profileApi";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/DashboardPage.module.css";
+import ProfileCard from "../components/dashboard/ProfileCard";
+import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
+import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
+
+import SortableProfileCard from "../components/dashboard/SortableProfileCards";
+import CreateProfileCard from "../components/dashboard/CreateProfileCard";
 
 function DashboardPage() {
     const [user, setUser] = useState<User | null>(null);
@@ -34,6 +40,28 @@ function DashboardPage() {
         loadUser();
     }, []);
 
+    async function handleDragEnd(event: DragEndEvent) {
+        const { active, over } = event;
+
+        if(!over || active.id === over.id) return;
+
+        const oldIndex = profiles.findIndex(profile => profile.profile_id === active.id);
+        const newIndex = profiles.findIndex(profile => profile.profile_id === over.id);
+
+        const reorderedProfiles = arrayMove(profiles, oldIndex, newIndex);
+
+        setProfiles(reorderedProfiles);
+
+        try { 
+            await reorderProfiles(reorderedProfiles.map((profile, index) => ({
+                profile_id: profile.profile_id,
+                display_order: index,
+            })));
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to reorder profiles");
+        }
+    }
+
     if (isLoading) {
         return <p>Loading...</p>;
     }
@@ -51,43 +79,26 @@ function DashboardPage() {
                     <h2>My Profiles</h2>
 
                     <div className={styles.profileGrid}>
-                        {profiles.length === 0 ? (
-                            <p>You don't have any profiles yet. Create one now!</p>
-                        ) : (
-                            profiles.map((profile) => (
-                                <div 
-                                key={profile.profile_id} 
-                                className={styles.profileCard}
-                                onClick={() => navigate(`/dashboard/profiles/${profile.profile_id}`)}
-                                >
-                                    <h2>{profile.profile_name}</h2>
 
-                                    <span className={styles.profileStatus}>
-                                        {profile.profile_status}
-                                    </span>
+                        <CreateProfileCard />
 
-                                    {profile.bio && <p className={styles.profileBio}>{profile.bio}</p>}
-
-                                    <a 
-                                    href={`/public/${profile.profile_id}`} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className={styles.viewPublicProfileButton}
-                                    onClick={(e) => e.stopPropagation()}
-                                    >
-                                        View Public Page
-                                    </a>
-                                </div>
-                            ))
-                        )}
+                        <DndContext
+                            collisionDetection={closestCenter}
+                            onDragEnd={handleDragEnd}
+                        >
+                            <SortableContext
+                                items={profiles.map(profile => profile.profile_id)}
+                                strategy={rectSortingStrategy}
+                            >
+                                {profiles.map(profile => (
+                                    <SortableProfileCard
+                                        key={profile.profile_id}
+                                        profile={profile}
+                                    />
+                                ))}
+                            </SortableContext>
+                        </DndContext>
                     </div>
-
-                    <button
-                        className={styles.createProfileButton}
-                        onClick={() => navigate("/profiles/new")}
-                    >
-                        + Create Profile
-                    </button>
                 </>
             )}
         </section>

@@ -45,3 +45,11 @@ export type ProfileLinkCreate = {
     url: string;
 };
 
+export type DashboardProfile = {
+    profile_id: string;
+    profile_name: string;
+    profile_status: ProfileStatus;
+    profile_image_url: string | null;
+    link_count?: number;
+    card_count?: number;
+}

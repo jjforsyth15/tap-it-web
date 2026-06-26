@@ -21,27 +21,6 @@
     line-height: 1.2;
 }
 
-.profileGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: clamp(1rem, 2vw, 1.5rem);
-    width: 100%;
-}
-
-.profileCard {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    min-height: 14rem;
-    padding: clamp(1rem, 3vw, 1.5rem);
-    border: 0.0625rem solid #e5e5e5;
-    border-radius: 1rem;
-    background: white;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    box-sizing: border-box;
-}
-
 .createProfileButton:hover,
 .profileCard:hover {
     transform: translateY(-0.125rem);
@@ -54,26 +33,6 @@
     font-size: clamp(1.125rem, 2.5vw, 1.35rem);
     font-weight: 700;
     line-height: 1.2;
-    overflow-wrap: anywhere;
-}
-
-.profileStatus {
-    align-self: flex-start;
-    display: inline-block;
-    padding: 0.25em 0.75em;
-    border-radius: 999rem;
-    background: #f5f5f5;
-    color: #333;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: capitalize;
-}
-
-.profileBio {
-    margin: 0;
-    color: #666;
-    font-size: 0.95rem;
-    line-height: 1.5;
     overflow-wrap: anywhere;
 }
 
@@ -90,20 +49,256 @@
     font-weight: 600;
 }
 
-.viewPublicProfileButton {
-    align-self: flex-start;
-    margin-top: auto;
-    padding: 0.7em 1.1em;
-    border-radius: 999rem;
-    background: #111;
-    color: white;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1;
-    text-decoration: none;
-    transition: background 0.2s ease;
+.profileGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 3rem 1rem;
+    padding-top: 2.5rem;
 }
 
-.viewPublicProfileButton:hover {
-    background: #333;
+.profileCardHeader h2 {
+    margin: 0.25rem 0 0;
+    font-size: 1.75rem;
 }
+
+.profileCardEyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: none;
+}
+
+.statusActive {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.statusInactive {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.statusDisabled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.statusArchived {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.createProfileCard {
+    border-style: dashed;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.createProfileIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999rem;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #111827;
+}
+
+.createProfileCard p {
+    margin: 0.35rem 0 0;
+    color: #6b7280;
+}
+
+.profileCardIdentity {
+    display: block;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+.profileCardIdentity h2 {
+    overflow-wrap: anywhere;
+}
+
+.profileCard {
+    position: relative;
+    min-height: 17rem;
+    padding: 4.25rem 1.25rem 1.25rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1.25rem;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    overflow: visible;
+}
+
+.profileCardHeader {
+    display: block;
+    text-align: center;
+}
+
+.profileCardIdentity > div {
+    display: block;
+}
+
+.profileName {
+    margin: 0;
+    color: #111827;
+    text-align: center;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.profileCardAvatar,
+.profileCardAvatarFallback {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 5rem;
+    height: 5rem;
+    border-radius: 999rem;
+    border: 0.35rem solid #ffffff;
+    box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.14);
+}
+
+.profileCardAvatar {
+    object-fit: cover;
+    background: #ffffff;
+}
+
+.profileCardAvatarFallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    font-size: 2.4rem;
+    font-weight: 800;
+}
+
+.statusBadge {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+
+    padding: 0.25rem 0.7rem;
+    border-radius: 999rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.profileCardStats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.profileCardStat {
+    padding: 1rem;
+    border-radius: 0.9rem;
+    background: #f9fafb;
+}
+
+.profileCardStatValue {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+.profileCardStatLabel {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.profileCardActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.primaryButton {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    background: #111827;
+    color: white;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.primaryButton:hover {
+    background: #1f2937;
+    transform: translateY(-0.125rem) scale(1.02);
+    box-shadow: 0 0.35rem 0.8rem rgba(17, 24, 39, 0.25);
+}
+
+.primaryButton:active {
+    transform: translateY(0);
+    box-shadow: 0 0.15rem 0.35rem rgba(17, 24, 39, 0.2);
+}
+
+.primaryButton:focus-visible {
+    outline: 0.15rem solid #3b82f6;
+    outline-offset: 0.15rem;
+}
+
+.profileDragHandle {
+    user-select: none;
+    -webkit-user-drag: none;
+    touch-action: none;
+    cursor: grab;
+    transition: background-color 0.15s ease,
+                color 0.15s ease,
+                transform 0.15s ease;
+}
+
+.profileDragHandle:active {
+    cursor: grabbing;
+}
+
+.profileDragHandle:hover {
+    background: transparent;
+    color: #111827;
+    transform: scale(1.025);
+}
+
+.draggingProfileCard {
+    opacity: 0.65;
+    z-index: 10;
+}
+
+.sortableProfileCard {
+    position: relative;
+}
+

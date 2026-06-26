@@ -66,3 +66,10 @@ export async function deleteProfileAvatar(profileId: string) {
         method: "DELETE"
     });
 }
+
+export async function reorderProfiles(profiles: { profile_id: string; display_order: number }[]) {
+    return apiRequest(`/profiles/reorder`, {
+        method: "PATCH",
+        body: JSON.stringify({ profiles }),
+    });
+}
