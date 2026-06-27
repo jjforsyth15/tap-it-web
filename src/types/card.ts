@@ -12,7 +12,6 @@ export type PublicCardResponse = {
     profile_id?: string;
 };
 
-
 export type CardActivationStatus = {
     card_code: string;
     card_name: string;
@@ -21,11 +20,29 @@ export type CardActivationStatus = {
 }
 
 export type CardResponse = {
-    profile_id: string;
     card_id: string;
+    profile_id: string;
     card_name: string;
     card_code: string;
     pointing_url: string;
     card_status: string;
     created_at: string;
+    activated_at?: string;
+    updated_at: string;
+}
+
+export type CardUpdateRequest = {
+    card_name?: string;
+    profile_id?: string;
+    card_status?: string;
+}
+
+export type CardCreateRequest = {
+    profile_id?: string;
+    card_name: string;
+}
+
+export type CardCreateResponse = {
+    message: string;
+    card: CardResponse;
 }

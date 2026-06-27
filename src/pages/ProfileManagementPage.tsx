@@ -86,7 +86,12 @@ export default function ProfileManagementPage() {
                 setError={setError}
             />
 
-            <ProfileCards cards={cards} />
+            <ProfileCards 
+                cards={cards} 
+                setCards={setCards}
+                setSuccessMessage={setSuccessMessage}
+                setError={setError}
+            />
 
         </main>
     );
