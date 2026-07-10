@@ -3,20 +3,26 @@ import { useState } from 'react'
 import styles from '../../styles/ProfileManagementPage.module.css'
 import { updateCard, deactivateCard } from '../../api/cardApi'
 import type { CardUpdateRequest } from '../../types/card'
+import type { Profile } from '../../types/profile'
 
 type ProfileCardsProps = {
     cards : CardResponse[];
+    profiles: Profile[];
     setCards: React.Dispatch<React.SetStateAction<CardResponse[]>>;
     setSuccessMessage: (message: string) => void;
     setError: (message: string) => void;
 }
 
-export default function ProfileCards({ cards, setCards, setSuccessMessage, setError }: ProfileCardsProps) {
+export default function ProfileCards({ cards, profiles, setCards, setSuccessMessage, setError }: ProfileCardsProps) {
     const [editingCardId, setEditingCardId] = useState<string | null>(null);
     const [cardNameInput, setCardNameInput] = useState("");
     const [cardToDeactivate, setCardToDeactivate] = useState<CardResponse | null>(null);
     const [cardLost, setCardLost] = useState<CardResponse | null>(null);
     const [cardStatusToEdit, setCardStatusToEdit] = useState<CardResponse | null>(null);
+
+    const [cardToReassign, setCardToReassign] = useState<CardResponse | null>(null);
+    const [newProfileId, setNewProfileId] = useState("");
+
 
     async function handleSaveCardName(cardId: string) {
         if (cardNameInput.trim() === "") {
@@ -75,21 +81,9 @@ export default function ProfileCards({ cards, setCards, setSuccessMessage, setEr
     }
 
     async function handleUpdateCardStatus(cardId: string, newStatus: string) {
-        let cardToUpdate: CardUpdateRequest;
-
-        if (newStatus == "deactivated" || newStatus == "lost") {
-             cardToUpdate = {
-                card_status: newStatus,
-                profile_id: "",
-            };
-        }
-
-        else {
-             cardToUpdate = {
+        const cardToUpdate: CardUpdateRequest = {
             card_status: newStatus,
-            };
-        }
-        
+        };        
 
         try {
             const response = await updateCard(cardId, cardToUpdate);
@@ -117,7 +111,30 @@ export default function ProfileCards({ cards, setCards, setSuccessMessage, setEr
             setTimeout(() => setError(""), 3000);
         }
     }
-    
+
+
+    async function handleReassignCard(cardId: string, newProfileId: string) {
+        const cardToUpdate: CardUpdateRequest = {
+            profile_id: newProfileId,
+        };
+
+        try {
+            const response = await updateCard(cardId, cardToUpdate);
+
+            setCards(currentCards =>
+                currentCards.filter(currentCard =>
+                    currentCard.card_id !== cardId
+                )
+            );
+        } catch (error) {
+            setError("Failed to reassign card. Please try again.");
+            setTimeout(() => setError(""), 3000);
+        } finally {
+            setCardToReassign(null);
+            setNewProfileId("");
+        }
+    }
+
     return (
         <section className={styles.itemPanel}>
                 <div className={styles.sectionHeader}>
@@ -126,11 +143,11 @@ export default function ProfileCards({ cards, setCards, setSuccessMessage, setEr
                         <p>Manage the cards associated with this profile.</p>
                     </div>
                     
-                    <button
+                    {/* <button
                         className={styles.primaryButton}
                     >
                         + Request New Card
-                    </button>
+                    </button> */}
                 </div>
 
                 {cards.length === 0 ? (
@@ -196,6 +213,16 @@ export default function ProfileCards({ cards, setCards, setSuccessMessage, setEr
                                                     >
                                                         Edit Name
                                                     </button>
+
+                                                    <button
+                                                        className={styles.editBioButton}
+                                                        onClick={() => {
+                                                            setCardToReassign(card);
+                                                            setNewProfileId("");
+                                                        }}
+                                                    >
+                                                        Reassign
+                                                    </button>
                                                 </>
                                             )}
                                         </div>
@@ -206,6 +233,59 @@ export default function ProfileCards({ cards, setCards, setSuccessMessage, setEr
                         </div>
                     )
                 }
+
+                {cardToReassign && (
+                    <div className={styles.modalBackdrop}>
+                        <div className={styles.confirmModal}>
+                            <h3>Reassign Card</h3>
+                            <p>
+                                Choose a new profile to reassign <strong>{cardToReassign.card_name}</strong> to:
+                            </p>
+
+                            <select
+                                className={styles.modalSelect}
+                                value={newProfileId}
+                                onChange={(e) => setNewProfileId(e.target.value)}
+                            >
+                                <option value="">Select a profile</option>
+
+                                {profiles.filter(profile => 
+                                        profile.profile_id !== cardToReassign.profile_id
+                                    ).map(profile => (
+                                        <option 
+                                            key={profile.profile_id} 
+                                            value={profile.profile_id}
+                                        >
+                                            {profile.profile_name}
+                                        </option>
+                                    ))}
+                            </select>
+
+                            <div className={styles.modalActions}>
+                                <button
+                                    className={styles.cancelButton}
+                                    onClick={() => {
+                                        setCardToReassign(null)
+                                        setNewProfileId("");
+                                        }
+                                    }
+                                >
+                                    Cancel
+                                </button>
+
+                                <button 
+                                    className={styles.primaryButton}
+                                    disabled={!newProfileId}
+                                    onClick={() => {
+                                        handleReassignCard(cardToReassign.card_id, newProfileId);
+                                    }}
+                                >
+                                    Reassign
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {cardStatusToEdit && (
                     <div className={styles.modalBackdrop}>

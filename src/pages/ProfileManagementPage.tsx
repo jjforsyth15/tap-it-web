@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getProfile, getProfileLinks } from "../api/profileApi";
+import { getMyProfiles, getProfile, getProfileLinks } from "../api/profileApi";
 import type { Profile, ProfileLink } from "../types/profile";
 import type { CardResponse } from "../types/card";
 import styles from "../styles/ProfileManagementPage.module.css";
-import { getProfileCards } from "../api/cardApi";
+import { getActiveProfileCards, getProfileCards } from "../api/cardApi";
 import ProfileHeader from "../components/profile-management/ProfileHeaderSection";
 import ProfileLinks from "../components/profile-management/ProfileLinks";
 import ProfileCards from "../components/profile-management/ProfileCards";
@@ -20,6 +20,7 @@ export default function ProfileManagementPage() {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [links, setLinks] = useState<ProfileLink[]>([]);
     const [cards, setCards] = useState<CardResponse[]>([]);
+    const [profiles, setProfiles] = useState<Profile[]>([]);
     
 
     useEffect(() => {
@@ -34,14 +35,16 @@ export default function ProfileManagementPage() {
             }
 
             try {
-                const [profileData, linksData, cardsData] = await Promise.all([
+                const [profileData, linksData, cardsData, profilesData] = await Promise.all([
                     getProfile(profileId),
                     getProfileLinks(profileId),
-                    getProfileCards(profileId)
+                    getActiveProfileCards(profileId),
+                    getMyProfiles()
                 ]);
                 setProfile(profileData);
                 setLinks(linksData);
                 setCards(cardsData);
+                setProfiles(profilesData);
             } catch (err) {
                 setError(err instanceof Error ? err.message : "Failed to load profile");
             } finally {
@@ -88,6 +91,7 @@ export default function ProfileManagementPage() {
 
             <ProfileCards 
                 cards={cards} 
+                profiles={profiles}
                 setCards={setCards}
                 setSuccessMessage={setSuccessMessage}
                 setError={setError}
