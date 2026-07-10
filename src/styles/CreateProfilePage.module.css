@@ -32,6 +32,10 @@
     margin-top: 1.5rem;
 }
 
+.profileBio {
+    max-width: 32rem;
+}
+
 .profileName,
 .profileBio,
 .profileImageUrl {

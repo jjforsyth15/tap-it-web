@@ -16,6 +16,7 @@ export type CardActivationStatus = {
     card_code: string;
     card_name: string;
     card_status: string;
+    profile_id?: string;
     can_activate: boolean;
 }
 
@@ -43,6 +44,16 @@ export type CardCreateRequest = {
 }
 
 export type CardCreateResponse = {
+    message: string;
+    card: CardResponse;
+}
+
+export type CardActivationRequest = {
+    card_code: string;
+    new_profile_id?: string;
+}
+
+export type CardAdjustmentResponse = {
     message: string;
     card: CardResponse;
 }
