@@ -6,12 +6,15 @@ import type {
     CardResponse, 
     CardCreateRequest, 
     CardCreateResponse,
-    CardUpdateRequest 
+    CardUpdateRequest,
+    CardActivationRequest,
+    CardAdjustmentResponse
 } from "../types/card";
 
-export async function activateCard(cardCode: string) {
-    return apiRequest<ActivateCardResponse>(`/cards/${cardCode}/activate`, {
+export async function activateCard(activationRequest: CardActivationRequest) {
+    return apiRequest<CardAdjustmentResponse>(`/cards/${activationRequest.card_code}/activate`, {
         method: "PATCH",
+        body: JSON.stringify(activationRequest)
     });
 }
 
@@ -25,6 +28,10 @@ export async function getCardActivationStatus(cardCode: string) {
 
 export async function getProfileCards(profileId: string) {
     return apiRequest<CardResponse[]>(`/cards/profile/${profileId}`);
+}
+
+export async function getActiveProfileCards(profileId: string) {
+    return apiRequest<CardResponse[]>(`/cards/profile/${profileId}/active`);
 }
 
 export async function getUserCards() {

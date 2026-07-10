@@ -12,7 +12,7 @@ function LoginPage() {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-
+    const next = searchParams.get("next")  || "/dashboard";
     
     const { login } = useAuth();
 
@@ -25,7 +25,6 @@ function LoginPage() {
             const data = await loginUser(email, password);
             login(data.access_token);
 
-            const next = searchParams.get("next")  || "/dashboard";
             navigate(next);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Login failed");
@@ -68,7 +67,7 @@ function LoginPage() {
 
                     <p className="auth-footer">
                         Don't have an account? 
-                        <Link to="/register" className="auth-link"> Register</Link>
+                        <Link to={`/register${next ? `?next=${encodeURIComponent(next)}` : ""}`} className="auth-link"> Register</Link>
                     </p>
 
                     {error && <p className="auth-error">{error}</p>}

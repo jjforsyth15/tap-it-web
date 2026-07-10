@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { CreateProfileRequest } from "../types/profile";
 import { createProfile } from "../api/profileApi";
 import styles from "../styles/CreateProfilePage.module.css";
+import { useSearchParams } from "react-router-dom";
 
 export default function CreateProfilePage() {
     const [profileData, setProfileData] = useState<CreateProfileRequest>({profile_name: "", bio: "", profile_image_url: ""});
@@ -10,6 +11,8 @@ export default function CreateProfilePage() {
     const [successMessage, setSuccessMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
 
     async function handleCreateProfile(e: React.FormEvent) {
         e.preventDefault();
@@ -20,8 +23,9 @@ export default function CreateProfilePage() {
         try {
             const response = await createProfile(profileData);
 
+            const next = searchParams.get("next")  || `/dashboard/profiles/${response.profile.profile_id}`;
             setSuccessMessage(`Profile created successfully!`);
-            navigate(`/dashboard/profiles/${response.profile.profile_id}`);
+            navigate(next);
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);

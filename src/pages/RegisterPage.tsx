@@ -3,6 +3,7 @@ import { registerUser } from "../api/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/authContext";
+import { useSearchParams } from "react-router-dom";
 
 function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -13,7 +14,10 @@ function RegisterPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const { login } = useAuth();
+    const next = searchParams.get("next") || "/dashboard";
+
 
     async function handleRegister(e: React.FormEvent) {
         e.preventDefault();
@@ -30,7 +34,7 @@ function RegisterPage() {
 
             const loginData = await loginUser(email, password);
             login(loginData.access_token);
-            navigate("/dashboard");
+            navigate(next);
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);
@@ -90,7 +94,7 @@ function RegisterPage() {
 
                     <p className="auth-footer">
                         Already have an account? 
-                        <Link to="/login" className="auth-link"> Log in</Link>
+                        <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ""}`} className="auth-link"> Log in</Link>
                     </p>
 
                     <button 
