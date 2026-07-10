@@ -75,9 +75,21 @@ export default function ProfileCards({ cards, setCards, setSuccessMessage, setEr
     }
 
     async function handleUpdateCardStatus(cardId: string, newStatus: string) {
-        const cardToUpdate: CardUpdateRequest = {
+        let cardToUpdate: CardUpdateRequest;
+
+        if (newStatus == "deactivated" || newStatus == "lost") {
+             cardToUpdate = {
+                card_status: newStatus,
+                profile_id: "",
+            };
+        }
+
+        else {
+             cardToUpdate = {
             card_status: newStatus,
-        };
+            };
+        }
+        
 
         try {
             const response = await updateCard(cardId, cardToUpdate);
@@ -97,6 +109,8 @@ export default function ProfileCards({ cards, setCards, setSuccessMessage, setEr
 
             setCardStatusToEdit(null);
             setSuccessMessage("Card status updated successfully.");
+            setCardToDeactivate(null);
+            setCardLost(null);
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
             setError("Failed to update card status. Please try again.");
