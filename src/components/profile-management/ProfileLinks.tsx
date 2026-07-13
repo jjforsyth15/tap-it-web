@@ -21,6 +21,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
     const [showAddLinkModal, setShowAddLinkModal] = useState(false);
     const [newLink, setNewLink] = useState<ProfileLinkCreate>({label: "", url: ""});
     const [formError, setFormError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const linkLabelOptions = [
         "LinkedIn",
@@ -41,6 +42,9 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
     }, [links]);
 
     async function handleAddLink() {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         const label = selectedLabel === "Other" ? customLabel : selectedLabel;
         
         if (!newLink.url.trim()) {
@@ -75,10 +79,14 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (err) {
             setFormError(err instanceof Error ? err.message : "Failed to add link");
+            setIsSubmitting(false);
         }
     }
 
     async function handleDeleteLink(linkId: string) {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         if (!linkToDelete) return;
 
         try {
@@ -90,6 +98,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to delete link");
+            setIsSubmitting(false);
         }
     }
 
@@ -131,6 +140,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
 
                         <button
                             className={styles.primaryButton}
+                            disabled={isSubmitting}
                             onClick={() => setShowAddLinkModal(true)}
                         >
                             + Add Link
@@ -203,6 +213,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                             <div className={styles.modalActions}>
                                 <button
                                     className={styles.cancelButton}
+                                    disabled={isSubmitting}
                                     onClick={() => {
                                         setShowAddLinkModal(false);
                                         setNewLink({ label: "", url: "" });
@@ -231,6 +242,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                             <div className={styles.modalActions}>
                                 <button
                                     className={styles.cancelButton}
+                                    disabled={isSubmitting}
                                     onClick={() => setLinkToDelete(null)}
                                 >
                                     Cancel
@@ -238,6 +250,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
 
                                 <button
                                     className={styles.deleteConfirmButton}
+                                    disabled={isSubmitting}
                                     onClick={() => handleDeleteLink(linkToDelete)}
                                 >
                                     Delete

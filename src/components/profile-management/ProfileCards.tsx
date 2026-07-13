@@ -19,14 +19,30 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
     const [cardToDeactivate, setCardToDeactivate] = useState<CardResponse | null>(null);
     const [cardLost, setCardLost] = useState<CardResponse | null>(null);
     const [cardStatusToEdit, setCardStatusToEdit] = useState<CardResponse | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [cardToReassign, setCardToReassign] = useState<CardResponse | null>(null);
     const [newProfileId, setNewProfileId] = useState("");
 
 
     async function handleSaveCardName(cardId: string) {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         if (cardNameInput.trim() === "") {
             setError("Card name cannot be empty.");
+            return;
+        }
+
+        if (cardNameInput.length > 50) {
+            setError("Card name cannot exceed 50 characters.");
+            return;
+        }
+
+        if (cardNameInput === cards.find(card => card.card_id === cardId)?.card_name) {
+            setEditingCardId(null);
+            setCardNameInput("");
+            setIsSubmitting(false);
             return;
         }
 
@@ -49,8 +65,11 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
             setTimeout(() => setSuccessMessage(""), 3000);
 
         } catch (error) {
+            setIsSubmitting(false);
             setError("Failed to update card name. Please try again.");
             setTimeout(() => setError(""), 3000);
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
@@ -76,11 +95,15 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
     }
 
     function handleCancelEditCard() {
+        if (isSubmitting) return;
         setEditingCardId(null);
         setCardNameInput("");
     }
 
     async function handleUpdateCardStatus(cardId: string, newStatus: string) {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         const cardToUpdate: CardUpdateRequest = {
             card_status: newStatus,
         };        
@@ -107,13 +130,19 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
             setCardLost(null);
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
+            setIsSubmitting(false);
             setError("Failed to update card status. Please try again.");
             setTimeout(() => setError(""), 3000);
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
 
     async function handleReassignCard(cardId: string, newProfileId: string) {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+        
         const cardToUpdate: CardUpdateRequest = {
             profile_id: newProfileId,
         };
@@ -126,10 +155,15 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                     currentCard.card_id !== cardId
                 )
             );
+
+            setSuccessMessage(`Card reassigned to profile successfully.`);
+            setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
+            setIsSubmitting(false);
             setError("Failed to reassign card. Please try again.");
             setTimeout(() => setError(""), 3000);
         } finally {
+            setIsSubmitting(false);
             setCardToReassign(null);
             setNewProfileId("");
         }
@@ -179,6 +213,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
                                             <button
                                                 className={`${styles.statusBadgeButton} ${styles[`status${card.card_status}`]}`}
+                                                disabled={isSubmitting}
                                                 onClick={() => setCardStatusToEdit(card)}
                                             >
                                                 {card.card_status}
@@ -190,6 +225,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                                                 <>
                                                     <button
                                                         className={styles.editBioButton}
+                                                        disabled={isSubmitting}
                                                         onClick={() => handleSaveCardName(card.card_id)}
                                                     >
                                                         Save
@@ -197,6 +233,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
                                                     <button
                                                         className={styles.editBioButton}
+                                                        disabled={isSubmitting}
                                                         onClick={() => handleCancelEditCard()}
                                                     >
                                                         Cancel
@@ -206,6 +243,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                                                 <>
                                                     <button
                                                         className={styles.editBioButton}
+                                                        disabled={isSubmitting}
                                                         onClick={() => {
                                                             setEditingCardId(card.card_id);
                                                             setCardNameInput(card.card_name);
@@ -216,9 +254,9 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
                                                     <button
                                                         className={styles.editBioButton}
+                                                        disabled={isSubmitting}
                                                         onClick={() => {
                                                             setCardToReassign(card);
-                                                            setNewProfileId("");
                                                         }}
                                                     >
                                                         Reassign
@@ -264,9 +302,11 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                             <div className={styles.modalActions}>
                                 <button
                                     className={styles.cancelButton}
+                                    disabled={isSubmitting}
                                     onClick={() => {
                                         setCardToReassign(null)
                                         setNewProfileId("");
+                                        setIsSubmitting(false);
                                         }
                                     }
                                 >
@@ -275,7 +315,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
                                 <button 
                                     className={styles.primaryButton}
-                                    disabled={!newProfileId}
+                                    disabled={!newProfileId || isSubmitting}
                                     onClick={() => {
                                         handleReassignCard(cardToReassign.card_id, newProfileId);
                                     }}
@@ -299,6 +339,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                             <div className={styles.statusOptionList}>
                                 <button
                                     className={styles.statusOptionButton}
+                                    disabled={isSubmitting}
                                     onClick={() => setCardToDeactivate(cardStatusToEdit)}
                                 >
                                     Inactive
@@ -306,6 +347,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
                                 <button
                                     className={styles.statusOptionButton}
+                                    disabled={isSubmitting}
                                     onClick={() => setCardLost(cardStatusToEdit)}
                                 >
                                     Lost
@@ -315,6 +357,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                             <div className={styles.modalActions}>
                                 <button
                                     className={styles.cancelButton}
+                                    disabled={isSubmitting}
                                     onClick={() => setCardStatusToEdit(null)}
                                 >
                                     Cancel
@@ -334,6 +377,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                             <div className={styles.modalActions}>
                                 <button
                                     className={styles.cancelButton}
+                                    disabled={isSubmitting}
                                     onClick={() => setCardToDeactivate(null)}
                                 >
                                     Cancel
@@ -341,6 +385,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
                                 <button
                                     className={styles.deleteConfirmButton}
+                                    disabled={isSubmitting}
                                     onClick={() => handleUpdateCardStatus(cardToDeactivate.card_id, "deactivated")}
                                 >
                                     Deactivate
@@ -360,6 +405,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                             <div className={styles.modalActions}>
                                 <button
                                     className={styles.cancelButton}
+                                    disabled={isSubmitting}
                                     onClick={() => setCardLost(null)}
                                 >
                                     Cancel
@@ -367,6 +413,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
                                 <button
                                     className={styles.deleteConfirmButton}
+                                    disabled={isSubmitting}
                                     onClick={() => handleUpdateCardStatus(cardLost.card_id, "lost")}
                                 >
                                     Mark as Lost
