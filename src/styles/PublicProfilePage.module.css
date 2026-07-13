@@ -96,3 +96,9 @@
     font-weight: 700;
 }
 
+.profileNotFound {
+    font-size: 1.25rem;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 5rem;
+}
