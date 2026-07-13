@@ -48,7 +48,7 @@ export async function uploadAvatar(profileId: string, file: File) {
     const formData = new FormData();
     formData.append("file", file);
 
-    return apiRequest<CreateProfileResponse>(`/profiles/${profileId}/avatar`, {
+    return apiRequest<CreateProfileResponse>(`/profile_images/${profileId}/avatar`, {
         method: "POST",
         body: formData,
     });
@@ -62,7 +62,7 @@ export async function reorderProfileLinks(links: { link_id: string; display_orde
 }
 
 export async function deleteProfileAvatar(profileId: string) {
-    return apiRequest<CreateProfileResponse>(`/profiles/${profileId}/avatar`, {
+    return apiRequest<CreateProfileResponse>(`/profile_images/${profileId}/avatar`, {
         method: "DELETE"
     });
 }
