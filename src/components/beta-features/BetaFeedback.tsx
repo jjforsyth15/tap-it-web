@@ -140,6 +140,8 @@ export default function BetaFeedback() {
                                     <p className={styles.currentPage}>Registration</p>
                                 ) : currentPage.startsWith("/public/") ? (
                                     <p className={styles.currentPage}>Public Profile Page</p>
+                                ) : currentPage.trim() == "/" ? (
+                                    <p className={styles.currentPage}>Home Page</p>
                                 ) : (
                                     <p className={styles.currentPage}>{currentPage}</p>
                                 )}
