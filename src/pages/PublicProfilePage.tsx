@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getPublicProfile } from "../api/profileApi";
 import styles from "../styles/PublicProfilePage.module.css";
 import type { PublicProfile } from "../types/profile";
+import BetaFeedback from "../components/beta-features/BetaFeedback";
 
 export default function PublicProfilePage() {
     const { profileId } = useParams();
@@ -33,7 +34,7 @@ export default function PublicProfilePage() {
         return <div>Loading...</div>;
 
     if (!profile) 
-        return <div>{"Profile not found"}</div>;
+        return <div className={styles.profileNotFound}>{"Profile not found"}</div>;
 
     return (
         <div className={styles.publicProfilePage}>
@@ -72,6 +73,7 @@ export default function PublicProfilePage() {
                 ))}
             </div>
         </div>
+        <BetaFeedback />
     </div>
     );
 }

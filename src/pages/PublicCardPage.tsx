@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import type { PublicCardResponse } from "../types/card";
 import { getPublicCard } from "../api/cardApi";
 import styles from "../styles/PublicCardPage.module.css";
+import BetaFeedback from "../components/beta-features/BetaFeedback";
 
 
 function PublicCardPage() { 
@@ -85,6 +86,7 @@ function PublicCardPage() {
                         Please contact the card owner or support for more information.
                     </p>
                 </section>
+                <BetaFeedback />
             </main>
         );
     }
