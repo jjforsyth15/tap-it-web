@@ -1,5 +1,4 @@
 import { getAuthToken, clearAuthToken } from "../utils/authStorage";
-import { getApiErrorMessage } from "../utils/errorHandling";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
