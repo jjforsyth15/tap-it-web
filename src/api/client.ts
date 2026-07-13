@@ -1,4 +1,5 @@
 import { getAuthToken, clearAuthToken } from "../utils/authStorage";
+import { getApiErrorMessage } from "../utils/errorHandling";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -24,7 +25,11 @@ export async function apiRequest<T>(endpoint: string, options: RequestInit = {})
     }
 
     if (!response.ok) {
-        throw new Error(data?.detail || 'API request failed');
+        const errorMessage = Array.isArray(data.detail)
+            ? data.detail[0]?.msg
+            : data?.detail;
+            
+        throw new Error(errorMessage || "Something went wrong.");
     }
 
     return data;
