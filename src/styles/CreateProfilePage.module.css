@@ -124,3 +124,214 @@
     }
 
 }
+
+
+.profileImageUpload {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.profileImagePreview {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #d9d9d9;
+    background: #f5f5f5;
+    flex-shrink: 0;
+}
+
+.profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profileImageFallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #666;
+    background: #ececec;
+    text-transform: uppercase;
+}
+
+.profileImageActions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.hiddenFileInput {
+    display: none;
+}
+
+.removeImageButton {
+    background: none;
+    border: none;
+    color: #c62828;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.removeImageButton:hover {
+    color: #8e1d1d;
+}
+
+.imageHelpText {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+@media (max-width: 40rem) {
+    .profileImageUpload {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profileImageActions {
+        align-items: center;
+    }
+}
+
+
+.avatarSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.25rem 0;
+}
+
+.profileAvatar,
+.avatarFallback {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.profileAvatar {
+    object-fit: cover;
+    border: 0.125rem solid #e5e7eb;
+}
+
+.avatarFallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.hiddenFileInput {
+    display: none;
+}
+
+.profileAvatar,
+.avatarFallback:hover {
+    background: linear-gradient(135deg, #1e40af, #5b21b6);
+    cursor: pointer;
+}
+
+
+
+.avatarContainer {
+    position: relative;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.profileAvatar,
+.avatarFallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.profileAvatar {
+    object-fit: cover;
+    transition: filter 0.2s ease;
+}
+
+.avatarFallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+
+    font-size: 2.5rem;
+    font-weight: 700;
+
+    transition: filter 0.2s ease;
+}
+
+.avatarContainer:hover .profileAvatar,
+.avatarContainer:hover .avatarFallback {
+    filter: brightness(55%);
+}
+
+.avatarOverlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    pointer-events: none;
+}
+
+.avatarContainer:hover .avatarOverlay {
+    opacity: 1;
+}
+
+.removeAvatarButton {
+    border: none;
+    background: none;
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.removeAvatarButton:hover {
+    color: #991b1b;
+    text-decoration: underline;
+}
+
+.avatarSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
