@@ -4,7 +4,7 @@ import { getMyProfiles, getProfile, getProfileLinks } from "../api/profileApi";
 import type { Profile, ProfileLink } from "../types/profile";
 import type { CardResponse } from "../types/card";
 import styles from "../styles/ProfileManagementPage.module.css";
-import { getActiveProfileCards, getProfileCards } from "../api/cardApi";
+import { getActiveProfileCards } from "../api/cardApi";
 import ProfileHeader from "../components/profile-management/ProfileHeaderSection";
 import ProfileLinks from "../components/profile-management/ProfileLinks";
 import ProfileCards from "../components/profile-management/ProfileCards";

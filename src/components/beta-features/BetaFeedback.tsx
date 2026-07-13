@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "../../styles/BetaFeedback.module.css";
 import { submitBetafeedback } from "../../api/betaApi";
-import { useAuth } from "../../context/authContext";
 import type { User } from "../../types/user";
 import { getCurrentUser } from "../../api/userApi";
 
@@ -14,8 +13,8 @@ export default function BetaFeedback() {
     const [description, setDescription] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
-    const [notLoggedIn, setNotLoggedIn] = useState(false);
-    const [publicPage, setPublicPage] = useState(false);
+    const [, setNotLoggedIn] = useState(false);
+    const [, setPublicPage] = useState(false);
     const [contactInfo, setContactInfo] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [contactMethod, setContactMethod] = useState<"none" | "email" | "phone">("none");

@@ -1,7 +1,7 @@
 import type { CardResponse } from '../../types/card'
 import { useState } from 'react'
 import styles from '../../styles/ProfileManagementPage.module.css'
-import { updateCard, deactivateCard } from '../../api/cardApi'
+import { updateCard } from '../../api/cardApi'
 import type { CardUpdateRequest } from '../../types/card'
 import type { Profile } from '../../types/profile'
 
@@ -73,26 +73,26 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
         }
     }
 
-    async function handleDeactivateCard() {
-        if (!cardToDeactivate) return;
+    // async function handleDeactivateCard() {
+    //     if (!cardToDeactivate) return;
 
-        try {
-            await deactivateCard(cardToDeactivate.card_id);
+    //     try {
+    //         await deactivateCard(cardToDeactivate.card_id);
 
-            setCards(prevCards =>
-                prevCards.filter(card =>
-                    card.card_id !== cardToDeactivate.card_id
-                )
-            );
+    //         setCards(prevCards =>
+    //             prevCards.filter(card =>
+    //                 card.card_id !== cardToDeactivate.card_id
+    //             )
+    //         );
 
-            setCardToDeactivate(null);
-            setSuccessMessage("Card deactivated successfully.");
-            setTimeout(() => setSuccessMessage(""), 3000);
-        } catch (error) {
-            setError("Failed to deactivate card. Please try again.");
-            setTimeout(() => setError(""), 3000);
-        }
-    }
+    //         setCardToDeactivate(null);
+    //         setSuccessMessage("Card deactivated successfully.");
+    //         setTimeout(() => setSuccessMessage(""), 3000);
+    //     } catch (error) {
+    //         setError("Failed to deactivate card. Please try again.");
+    //         setTimeout(() => setError(""), 3000);
+    //     }
+    // }
 
     function handleCancelEditCard() {
         if (isSubmitting) return;
@@ -148,7 +148,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
         };
 
         try {
-            const response = await updateCard(cardId, cardToUpdate);
+            await updateCard(cardId, cardToUpdate);
 
             setCards(currentCards =>
                 currentCards.filter(currentCard =>

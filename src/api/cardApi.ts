@@ -1,6 +1,5 @@
 import { apiRequest } from "./client";
-import type { 
-    ActivateCardResponse, 
+import type {  
     PublicCardResponse, 
     CardActivationStatus, 
     CardResponse, 
