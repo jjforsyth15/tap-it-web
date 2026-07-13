@@ -36,9 +36,7 @@ function RegisterPage() {
             login(loginData.access_token);
             navigate(next);
         } catch (err) {
-            if (err instanceof Error) {
-                setError(err.message);
-            }
+            setError(err instanceof Error ? err.message : "Failed to register. Please try again.");
         } finally {
             setIsLoading(false);
         }
