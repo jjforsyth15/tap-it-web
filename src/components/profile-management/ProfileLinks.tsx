@@ -72,6 +72,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
             setFormError("");
             setSelectedLabel(linkLabelOptions[0]);
             setCustomLabel("");
+            setIsSubmitting(false);
 
             await loadProfile();
 
@@ -94,6 +95,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
             await loadProfile();
 
             setLinkToDelete(null);
+            setIsSubmitting(false);
             setSuccessMessage("Link deleted successfully");
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (err) {

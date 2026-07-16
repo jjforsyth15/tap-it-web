@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { Outlet } from "react-router-dom";
 import BetaFeedback from "../components/beta-features/BetaFeedback";
-
+import styles from "../styles/MainLayout.module.css";
 
 function MainLayout() {
     const navigate = useNavigate();
@@ -15,32 +15,36 @@ function MainLayout() {
 
     return (
         <>
-            <header className="app-header">
-                <Link to="/" className="app-nav">TapIt</Link>
+            <header className={styles.appHeader}>
+                <Link to="/" className={styles.appBrand}>
+                    TapIt
+                </Link>
 
-                <h3 className="app-subtitle">Beta 1</h3>
+                {/* <h3 className={styles.appSubtitle}>Beta 1</h3> */}
 
-                <nav className="app-nav">
+                <nav className={styles.appNav}>
                     {isLoggedIn ? (
                         <>
                             <Link to="/dashboard">Dashboard</Link>
-                            <button onClick={handleLogout} className="logoutButton">
+                            <button type="button" onClick={handleLogout} className={styles.logoutButton}>
                                 Logout
                             </button>
                         </>
                     ) : (
                         <>
-                            <Link to="/login">Login</Link>
-                            <Link to="/register">Register</Link>
+                            <div className={styles.appNavLink}>
+                                <Link to="/login">Login</Link>
+                                <Link to="/register">Register</Link>
+                            </div>
                         </>
                     )}
                 </nav>
             </header>
-            <main className="app-main">
+            <main className={styles.appMain}>
                 <Outlet />
             </main>
 
-            <footer className="app-footer">
+            <footer className={styles.appFooter}>
                 <p>&copy; 2026 TapIt. All rights reserved. Beta 1 - July 2026</p>
             </footer>
 

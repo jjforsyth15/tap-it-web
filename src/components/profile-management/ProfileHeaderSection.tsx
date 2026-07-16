@@ -138,162 +138,167 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
     return (
         <>
             <section className={styles.profileManagementHeader}>
-                <div>
-                    <div className={styles.avatarSection}>
-                        <div 
-                            className={styles.avatarContainer}
-                            onClick={() => {
-                                if (!isUploadingAvatar)
-                                    fileInputRef.current?.click();
-                            }}
-                        >
-                            {currentAvatar ? (
-                                <img
-                                    src={currentAvatar}
-                                    alt={`${profile.profile_name} avatar`}
-                                    className={styles.profileAvatar}
-                                />
-                            ) : (
-                                <div className={styles.avatarFallback}>
-                                    {profile.profile_name.charAt(0).toUpperCase()}
-                                </div>
-                            )}
+                <div className={styles.profileHeaderContent}>
+                    <div className={styles.headerSection}>
+                        <div className={styles.avatarSection}>
+                            <div 
+                                className={styles.avatarContainer}
+                                onClick={() => {
+                                    if (!isUploadingAvatar)
+                                        fileInputRef.current?.click();
+                                }}
+                            >
+                                {currentAvatar ? (
+                                    <img
+                                        src={currentAvatar}
+                                        alt={`${profile.profile_name} avatar`}
+                                        className={styles.profileAvatar}
+                                    />
+                                ) : (
+                                    <div className={styles.avatarFallback}>
+                                        {profile.profile_name.charAt(0).toUpperCase()}
+                                    </div>
+                                )}
 
-                            <div className={styles.avatarOverlay}>
-                                {isUploadingAvatar ? "Uploading..." : "Change Photo"}
+                                <div className={styles.avatarOverlay}>
+                                    {isUploadingAvatar ? "Uploading..." : "Change Photo"}
+                                </div>
                             </div>
 
-                            
-                        </div>
-
-                        {currentAvatar && (
-                            <button 
-                                type="button"
-                                className={styles.removeAvatarButton}
-                                onClick={() => setShowRemoveAvatarModal(true)}
-                            >
-                                Remove Photo
-                            </button>
-                        )}
-
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            className={styles.hiddenFileInput}
-                            onChange={handleAvatarChange}
-                        />
-                    </div>
-
-                
-                    <h2 className={styles.bioHeader}>Profile Name</h2>
-                    {isEditingName ? (
-                        <input
-                            className={styles.profileNameInput}
-                            value={nameInput}
-                            onChange={(e) => setNameInput(e.target.value)}
-                        />
-                    ) : (
-                        <h1>{profile.profile_name}</h1>
-                    )}
-
-                    <div className={styles.nameActions}>
-                        {isEditingName ? (
-                            <>
-                                <button
-                                    className={styles.editBioButton}
-                                    onClick={handleSaveName}
+                            {currentAvatar && (
+                                <button 
+                                    type="button"
+                                    className={styles.removeAvatarButton}
+                                    onClick={() => setShowRemoveAvatarModal(true)}
                                 >
-                                    Save
+                                    Remove Photo
                                 </button>
+                            )}
 
-                                <button
-                                    className={styles.editBioButton}
-                                    onClick={() => {
-                                        setNameInput(profile.profile_name || "");
-                                        setIsEditingName(false);
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                                
-                                {/* Added character limit info */}
-                                <p className={styles.characterLimitInfo}>
-                                    {nameInput.length} / 100 characters
-                                </p>
-                            </>
-                        ) : (
-                            <button
-                                className={styles.editBioButton}
-                                onClick={() => setIsEditingName(true)}
-                            >
-                                Edit Name
-                            </button>
-                        )}
-                    </div>
-
-                    <h2 className={styles.bioHeader}>Bio</h2>
-                    {isEditingBio ? (
-                            <textarea
-                                className={styles.bioTextarea}
-                                value={bioInput}
-                                onChange={(e) => setBioInput(e.target.value)}
-                                placeholder="Write a short bio to describe your profile..."
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/*"
+                                className={styles.hiddenFileInput}
+                                onChange={handleAvatarChange}
                             />
-                    ) : (
-                        <>
-                            <p className={styles.profileBio}>
-                                {profile.bio || "No bio added yet."}
-                            </p>
-                        </>
-                    )}
-
-                    <div className={styles.bioEditActions}>
-                        {isEditingBio ? (
-                            <>
-                                <button 
-                                    type="button"
-                                    className={styles.editBioButton}
-                                    onClick={handleSaveBio}
-                                >
-                                    Save
-                                </button>
-
-                                <button 
-                                    type="button"
-                                    className={styles.editBioButton}
-                                    onClick={() => {
-                                        setBioInput(profile.bio || "");
-                                        setIsEditingBio(false);
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-
-                                <p className={styles.characterLimitInfo}>
-                                    {bioInput.length} / 1000 characters
-                                </p>
-                            </>
-                        ) : (
-                            <button 
-                                type="button"
-                                className={styles.editBioButton}
-                                onClick={() => setIsEditingBio(true)}
-                            >
-                                {profile.bio ? "Edit Bio" : "Add Bio"}
-                            </button>
-                        )}
+                        </div>
                     </div>
 
-                    <a 
-                        href={`/public/${profile.profile_id}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className={styles.viewPublicProfileButton}
-                        onClick={(e) => e.stopPropagation()}
-                        >
-                            View Public Page
-                    </a>
+                    <div className={styles.headerSection}>
+                        <h2 className={styles.bioHeader}>Profile Name</h2>
+                        {isEditingName ? (
+                            <input
+                                className={styles.profileNameInput}
+                                value={nameInput}
+                                onChange={(e) => setNameInput(e.target.value)}
+                            />
+                        ) : (
+                            <h1>{profile.profile_name}</h1>
+                        )}
+
+                        <div className={styles.nameActions}>
+                            {isEditingName ? (
+                                <>
+                                    <button
+                                        className={styles.editBioButton}
+                                        onClick={handleSaveName}
+                                    >
+                                        Save
+                                    </button>
+
+                                    <button
+                                        className={styles.editBioButton}
+                                        onClick={() => {
+                                            setNameInput(profile.profile_name || "");
+                                            setIsEditingName(false);
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                    
+                                    {/* Added character limit info */}
+                                    <p className={styles.characterLimitInfo}>
+                                        {nameInput.length} / 100 characters
+                                    </p>
+                                </>
+                            ) : (
+                                <button
+                                    className={styles.editBioButton}
+                                    onClick={() => setIsEditingName(true)}
+                                >
+                                    Edit Name
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className={styles.headerSection}>
+                        <h2 className={styles.bioHeader}>Bio</h2>
+                        {isEditingBio ? (
+                                <textarea
+                                    className={styles.bioTextarea}
+                                    value={bioInput}
+                                    onChange={(e) => setBioInput(e.target.value)}
+                                    placeholder="Write a short bio to describe your profile..."
+                                />
+                        ) : (
+                            <>
+                                <p className={styles.profileBio}>
+                                    {profile.bio || "No bio added yet."}
+                                </p>
+                            </>
+                        )}
+
+                        <div className={styles.bioEditActions}>
+                            {isEditingBio ? (
+                                <>
+                                    <button 
+                                        type="button"
+                                        className={styles.editBioButton}
+                                        onClick={handleSaveBio}
+                                    >
+                                        Save
+                                    </button>
+
+                                    <button 
+                                        type="button"
+                                        className={styles.editBioButton}
+                                        onClick={() => {
+                                            setBioInput(profile.bio || "");
+                                            setIsEditingBio(false);
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <p className={styles.characterLimitInfo}>
+                                        {bioInput.length} / 1000 characters
+                                    </p>
+                                </>
+                            ) : (
+                                <button 
+                                    type="button"
+                                    className={styles.editBioButton}
+                                    onClick={() => setIsEditingBio(true)}
+                                >
+                                    {profile.bio ? "Edit Bio" : "Add Bio"}
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className={styles.headerActionSection}>
+                        <a 
+                            href={`/public/${profile.profile_id}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className={styles.viewPublicProfileButton}
+                            onClick={(e) => e.stopPropagation()}
+                            >
+                                View Public Page
+                        </a>
+                    </div>
                 </div>
 
                 <span className={`${styles.statusBadge} ${statusClassMap[profile.profile_status]}`}>
