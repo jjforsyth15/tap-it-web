@@ -1,0 +1,171 @@
+.appHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4.5rem;
+    padding: 0.75rem 2rem;
+    background-color: #ffffff;
+    border-bottom: 0.0625rem solid #e5e7eb;
+    box-shadow: 0 0.125rem 0.5rem rgba(15, 23, 42, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.appBrand {
+    color: #172554;
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -0.04rem;
+    text-decoration: none;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.appBrand:hover {
+    color: #1e40af;
+    transform: translateY(-0.0625rem);
+}
+
+.appNav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.appNavLink {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.appNav a,
+.logoutButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.appNav a {
+    color: #1f2937;
+    border: 0.0625rem solid transparent;
+}
+
+.appNav a:hover {
+    color: #1d4ed8;
+    background-color: #eff6ff;
+    transform: translateY(-0.0625rem);
+}
+
+/* Makes the last logged-out link, Register, the primary action */
+.appNavLink a:last-child {
+    color: #ffffff;
+    background-color: #1e3a8a;
+    border-color: #1e3a8a;
+    box-shadow: 0 0.2rem 0.5rem rgba(30, 58, 138, 0.18);
+}
+
+.appNavLink a:last-child:hover {
+    color: #ffffff;
+    background-color: #172554;
+    border-color: #172554;
+    box-shadow: 0 0.3rem 0.7rem rgba(30, 58, 138, 0.25);
+}
+
+.logoutButton {
+    color: #991b1b;
+    background-color: transparent;
+    border: 0.0625rem solid #fecaca;
+}
+
+.logoutButton:hover {
+    color: #ffffff;
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+    transform: translateY(-0.0625rem);
+}
+
+.appMain {
+    width: 100%;
+    min-height: calc(100vh - 9rem);
+}
+
+.appFooter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4.5rem;
+    padding: 1rem 2rem;
+    color: #64748b;
+    background-color: #0f172a;
+    border-top: 0.0625rem solid #1e293b;
+    text-align: center;
+}
+
+.appFooter p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 40rem) {
+    .appHeader {
+        min-height: 4rem;
+        padding: 0.65rem 1rem;
+    }
+
+    .appBrand {
+        font-size: 1.4rem;
+    }
+
+    .appNav,
+    .appNavLink {
+        gap: 0.4rem;
+    }
+
+    .appNav a,
+    .logoutButton {
+        min-height: 2.25rem;
+        padding: 0.45rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .appFooter {
+        padding: 1rem;
+    }
+
+    .appFooter p {
+        font-size: 0.78rem;
+    }
+}
+
+@media (max-width: 24rem) {
+    .appHeader {
+        padding-inline: 0.75rem;
+    }
+
+    .appBrand {
+        font-size: 1.25rem;
+    }
+
+    .appNav a,
+    .logoutButton {
+        padding-inline: 0.6rem;
+        font-size: 0.8rem;
+    }
+}
