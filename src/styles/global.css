@@ -234,3 +234,28 @@ button {
     transform: none;
     box-shadow: none;
 }
+
+.app-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.app-nav-link a {
+    padding: 0.55rem 1.2rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2937;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.app-nav-link a:hover {
+    background-color: #f3f4f6;
+    color: #1d4ed8;
+    transform: translateY(-1px);
+}
