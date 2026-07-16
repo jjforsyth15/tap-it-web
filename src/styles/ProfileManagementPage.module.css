@@ -4,327 +4,197 @@
     padding: 2.5rem 0;
 }
 
+/* =========================
+   Profile header
+========================= */
+
 .profileManagementHeader {
+    position: relative;
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 1.5rem;
-    align-items: flex-start;
-    padding: 1.5rem;
     margin-bottom: 1.25rem;
-    background: white;
-    border: 0.0625rem solid #e5e7eb;
-    border-radius: 1.25rem;
-    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    border: 0.0625rem solid #dbe3ee;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0.15rem 0.55rem rgba(15, 23, 42, 0.06);
+}
+
+.profileHeaderContent {
+    width: 100%;
+    min-width: 0;
+}
+
+.headerSection {
+    padding: 1.5rem 1.75rem;
+    border-bottom: 0.0625rem solid #e2e8f0;
+}
+
+.headerActionSection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1.25rem 1.75rem;
+    background-color: #f8fafc;
+}
+
+.sectionLabel,
+.bioHeader {
+    margin: 0 0 0.75rem;
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+}
+
+.profileManagementHeader h1,
+.profileName {
+    margin: 0;
+    color: #172554;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.1;
+}
+
+.profileBio {
+    min-height: 2rem;
+    max-width: 45rem;
+    margin: 0;
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.65;
 }
 
 .eyebrow {
     margin: 0 0 0.4rem;
+    color: #000000;
     font-size: 1rem;
     font-weight: 750;
     letter-spacing: 0.04em;
+    text-decoration: underline;
     text-transform: uppercase;
-    color: #000000;
-    text-decoration: underline;
 }
 
-.profileManagementHeader h1 {
-    margin: 0;
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    line-height: 1.1;
-    color: #111827;
-}
+/* =========================
+   Avatar
+========================= */
 
-.profileBio {
-    max-width: 42rem;
-    margin: 0.75rem 0 1rem 0.75rem;
-    color: #4b5563;
-    line-height: 1.6;
-}
-
-.statusBadge {
-    flex-shrink: 0;
-    padding: 0.4rem 0.75rem;
-    border-radius: 999rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: capitalize;
-    background: #f3f4f6;
-    color: #374151;
-}
-
-.statusactive {
-    background: #e8f7ee;
-    color: #176b3a;
-}
-
-.statusinactive {
-    background: #fff7ed;
-    color: #9a3412;
-}
-
-.statusDisabled,
-.statusArchived {
-    background: #f3f4f6;
-    color: #4b5563;
-}
-
-.successMessage {
-    margin: 0 0 1.25rem;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    background: #e8f7ee;
-    color: #176b3a;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.errorMessage {
-    margin: 0 0 1.25rem;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    background: #fef2f2;
-    color: #dc2626;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.itemPanel {
-    padding: 1.5rem;
-    margin-bottom: 1.25rem;
-    background: white;
-    border: 0.0625rem solid #e5e7eb;
-    border-radius: 1.25rem;
-    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.05);
-}
-
-.sectionHeader {
+.avatarSection {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 1.25rem;
+    gap: 0.75rem;
 }
 
-.sectionHeader h2 {
-    margin: 0;
-    font-size: 1.35rem;
-    color: #111827;
-}
-
-.sectionHeader p {
-    margin: 0.35rem 0 0;
-    color: #6b7280;
-    font-size: 0.95rem;
-}
-
-.primaryButton,
-.cancelButton,
-.deleteConfirmButton,
-.saveButton {
-    border: none;
-    border-radius: 999rem;
-    padding: 0.75rem 1rem;
-    font-weight: 700;
+.avatarContainer {
+    position: relative;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    overflow: hidden;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
-.primaryButton,
-.saveButton {
-    background: #111827;
-    color: white;
+.profileAvatar,
+.avatarFallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
-.primaryButton:hover,
-.saveButton:hover {
-    transform: translateY(-0.1rem);
-    box-shadow: 0 0.6rem 1.25rem rgba(0, 0, 0, 0.16);
+.profileAvatar {
+    object-fit: cover;
+    border: 0.125rem solid #e5e7eb;
+    transition: filter 0.2s ease;
 }
 
-.emptyState {
-    padding: 2rem;
-    text-align: center;
-    border: 0.1rem dashed #d1d5db;
-    border-radius: 1rem;
-    background: #fafafa;
-}
-
-.emptyState h3 {
-    margin: 0 0 0.35rem;
-    color: #111827;
-}
-
-.emptyState p {
-    margin: 0;
-    color: #6b7280;
-}
-
-.itemList {
-    display: grid;
-    gap: 0.85rem;
-}
-
-.itemCard {
+.avatarFallback {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
     align-items: center;
-    padding: 1rem;
-    border: 0.0625rem solid #e5e7eb;
-    border-radius: 1rem;
-    background: #ffffff;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    transition: filter 0.2s ease;
 }
 
-.itemCard h3 {
-    margin: 0 0 0.3rem;
-    font-size: 1rem;
-    color: #111827;
+.avatarContainer:hover .profileAvatar,
+.avatarContainer:hover .avatarFallback {
+    filter: brightness(55%);
 }
 
-.itemCard a {
-    display: inline-block;
-    max-width: 100%;
-    color: #2563eb;
-    font-size: 0.9rem;
-    word-break: break-word;
-    text-decoration: none;
+.avatarOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
 }
 
-.itemCard a:hover {
-    text-decoration: underline;
+.avatarContainer:hover .avatarOverlay {
+    opacity: 1;
 }
 
-.dangerTextButton {
+.hiddenFileInput {
+    display: none;
+}
+
+.removeAvatarButton {
+    padding: 0;
     border: none;
     background: transparent;
     color: #dc2626;
-    font-weight: 700;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
     cursor: pointer;
-    padding: 0.5rem;
 }
 
-.dangerTextButton:hover {
+.removeAvatarButton:hover {
+    color: #991b1b;
     text-decoration: underline;
 }
 
-.modalBackdrop {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: 1000;
-}
+/* =========================
+   Name and bio editing
+========================= */
 
-.confirmModal {
-    width: min(100%, 24rem);
-    padding: 1.5rem;
-    background: white;
-    border-radius: 1.125rem;
-    box-shadow: 0 1.125rem 3rem rgba(0, 0, 0, 0.2);
-}
-
-.confirmModal h2 {
-    margin: 0 0 0.5rem;
-    font-size: 1.4rem;
-    color: #111827;
-}
-
-.confirmModal p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #555;
-    line-height: 1.5;
-}
-
-.confirmModal input,
-.confirmModal select {
+.profileNameInput,
+.bioTextarea,
+.inlineEditInput {
     width: 100%;
-    padding: 0.75rem;
-    margin-top: 0.75rem;
-    border: 0.0625rem solid #d1d5db;
-    border-radius: 0.75rem;
-    font-size: 0.95rem;
-    box-sizing: border-box;
-    background: white;
+    border: 0.0625rem solid #cbd5e1;
+    border-radius: 0.65rem;
+    background-color: #ffffff;
+    color: #1e293b;
+    font-family: inherit;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.modalActions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-}
-
-.cancelButton,
-.deleteConfirmButton,
-.saveButton {
-    flex: 1;
-}
-
-.cancelButton {
-    background: #f3f4f6;
-    color: #374151;
-}
-
-.cancelButton:hover {
-    background: #e5e7eb;
-}
-
-.deleteConfirmButton {
-    background: #dc2626;
-    color: white;
-}
-
-.deleteConfirmButton:hover {
-    background: #b91c1c;
-}
-
-.formError {
-    margin-top: 0.75rem;
-    color: #dc2626;
-    font-size: 0.9rem;
+.profileNameInput {
+    max-width: 32rem;
+    padding: 0.7rem 0.85rem;
+    font-size: 1.15rem;
     font-weight: 600;
 }
 
-@media (max-width: 40rem) {
-    .profileManagementHeader,
-    .sectionHeader,
-    .itemCard {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .primaryButton {
-        width: 100%;
-    }
-
-    .statusBadge {
-        width: fit-content;
-    }
-
-    .modalActions {
-        flex-direction: column-reverse;
-    }
-}
-
-.viewPublicProfileButton {
-    align-self: flex-start;
-    margin-top: auto;
-    padding: 1em 1.2em;
-    border-radius: 999rem;
-    background: #111;
-    color: white;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1;
-    text-decoration: none;
-    transition: background 0.2s ease;
-}
-
-.viewPublicProfileButton:hover {
-    background: #333;
+.inlineEditInput {
+    max-width: 20rem;
+    padding: 0.55rem 0.75rem;
+    font: inherit;
 }
 
 .bioEditArea {
@@ -335,43 +205,41 @@
 }
 
 .bioTextarea {
-    width: 40rem;
     max-width: 100%;
     min-height: 8rem;
     max-height: 30rem;
-    padding: 0.875rem;
-    font: inherit;
+    padding: 0.85rem;
+    font-size: 1rem;
     line-height: 1.5;
-    border: 0.0625rem solid #d1d5db;
-    border-radius: 0.75rem;
     resize: vertical;
-    background: #fff;
-    color: #000000;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.bioTextarea:focus {
-    outline: none;
-    border-color: #000000;
-    box-shadow: 0 0 0 0.1875rem rgba(37, 99, 235, 0.15);
+.profileNameInput:focus,
+.bioTextarea:focus,
+.inlineEditInput:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 0.2rem rgba(29, 78, 216, 0.12);
 }
 
+.nameActions,
 .bioEditActions {
     display: flex;
-    gap: 0.75rem;
+    align-items: center;
     flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1rem;
 }
 
-.profileBio {
-    min-height: 2rem;
+.characterLimitInfo {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.8rem;
 }
 
 .editBioButton {
     display: inline-flex;
     align-items: center;
-    padding: 0 0.5rem 2rem;
-    margin-top: auto;
-    margin-bottom: 1rem;
+    padding: 0.35rem 0.5rem;
     border: none;
     border-radius: 0.25rem;
     background: transparent;
@@ -390,205 +258,41 @@
 .editBioButton:focus-visible {
     outline: 0.125rem solid #02060e;
     outline-offset: 0.25rem;
-    border-radius: 0.25rem;
 }
 
-.bioHeader {
-    margin: 1rem 0 0.5rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #111827;
-    text-decoration: underline;
-}
+/* =========================
+   Profile status
+========================= */
 
-.cardCode {
-    margin: 0.25rem 0 0.5rem;
-    font-size: 0.9rem;
-    color: #4b5563;
-}
-
-.dragHandle {
-  border: none;
-  background: transparent;
-  cursor: grab;
-  font-size: 1.25rem;
-  color: #6b7280;
-  padding: 0.5rem;
-}
-
-.dragHandle:active {
-  cursor: grabbing;
-}
-
-.draggingItem {
-  opacity: 0.65;
-  box-shadow: 0 1rem 2rem rgba(15, 23, 42, 0.16);
-  z-index: 10;
-}
-
-.itemCardContent {
-  flex: 1;
-  text-align: left;
-}
-
-.profileNameInput {
-    width: 100%;
-    max-width: 32rem;
-    font-size: 2rem;
-    font-weight: 700;
-    padding: 0.35rem 0.5rem;
-    border: 0.0625rem solid #d1d5db;
-    border-radius: 0.5rem;
-    background: #ffffff;
-    color: #111827;
-}
-
-.nameActions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.characterLimitInfo {
-    font-size: 0.85rem;
-    color: #6b7280;
-}
-
-.avatarSection {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 1.25rem 0;
-}
-
-.profileAvatar,
-.avatarFallback {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.profileAvatar {
-    object-fit: cover;
-    border: 0.125rem solid #e5e7eb;
-}
-
-.avatarFallback {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    color: white;
-
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.hiddenFileInput {
-    display: none;
-}
-
-.profileAvatar,
-.avatarFallback:hover {
-    background: linear-gradient(135deg, #1e40af, #5b21b6);
-    cursor: pointer;
-}
-
-
-
-.avatarContainer {
-    position: relative;
-    width: 7rem;
-    height: 7rem;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.profileAvatar,
-.avatarFallback {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.profileAvatar {
-    object-fit: cover;
-    transition: filter 0.2s ease;
-}
-
-.avatarFallback {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    color: white;
-
-    font-size: 2.5rem;
-    font-weight: 700;
-
-    transition: filter 0.2s ease;
-}
-
-.avatarContainer:hover .profileAvatar,
-.avatarContainer:hover .avatarFallback {
-    filter: brightness(55%);
-}
-
-.avatarOverlay {
+.statusBadge {
     position: absolute;
-    inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: white;
-    font-size: 0.85rem;
-    font-weight: 600;
-
-    opacity: 0;
-    transition: opacity 0.2s ease;
-
-    pointer-events: none;
+    top: 1.25rem;
+    right: 1.25rem;
+    flex-shrink: 0;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999rem;
+    background-color: #f3f4f6;
+    color: #374151;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03rem;
+    text-transform: capitalize;
 }
 
-.avatarContainer:hover .avatarOverlay {
-    opacity: 1;
+.statusactive {
+    background-color: #e8f7ee;
+    color: #176b3a;
 }
 
-.removeAvatarButton {
-    border: none;
-    background: none;
-    color: #dc2626;
-    font-size: 0.875rem;
-    font-weight: 600;
-    cursor: pointer;
+.statusinactive {
+    background-color: #fff7ed;
+    color: #9a3412;
 }
 
-.removeAvatarButton:hover {
-    color: #991b1b;
-    text-decoration: underline;
-}
-
-.avatarSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.inlineEditInput {
-    width: 100%;
-    max-width: 20rem;
-    padding: 0.55rem 0.75rem;
-    border: 0.0625rem solid #d1d5db;
-    border-radius: 0.5rem;
-    font: inherit;
+.statusDisabled,
+.statusArchived {
+    background-color: #f3f4f6;
+    color: #4b5563;
 }
 
 .statusBadgeButton {
@@ -599,6 +303,13 @@
 
 .statusBadgeButton:hover {
     filter: brightness(0.95);
+}
+
+.statusOptionList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
 }
 
 .statusOptionButton {
@@ -633,30 +344,313 @@
     outline-offset: 0.125rem;
 }
 
-.statusOptionList {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin: 1.5rem 0;
+/* =========================
+   Public profile button
+========================= */
+
+.viewPublicProfileButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.6rem;
+    padding: 0.6rem 1.15rem;
+    border-radius: 999rem;
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
-.confirmModal p {
+.viewPublicProfileButton:hover {
+    background-color: #172554;
+    box-shadow: 0 0.25rem 0.6rem rgba(30, 58, 138, 0.2);
+    transform: translateY(-0.0625rem);
+}
+
+/* =========================
+   Messages
+========================= */
+
+.successMessage,
+.errorMessage {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.successMessage {
+    background-color: #e8f7ee;
+    color: #176b3a;
+}
+
+.errorMessage {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.formError {
+    margin-top: 0.75rem;
+    color: #dc2626;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* =========================
+   Links and cards panels
+========================= */
+
+.itemPanel {
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    background-color: #ffffff;
+    border: 0.0625rem solid #e5e7eb;
+    border-radius: 1.25rem;
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.05);
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.sectionHeader h2 {
+    margin: 0;
+    color: #111827;
+    font-size: 1.35rem;
+}
+
+.sectionHeader p {
+    margin: 0.35rem 0 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.itemList {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.itemCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border: 0.0625rem solid #e5e7eb;
+    border-radius: 1rem;
+    background-color: #ffffff;
+}
+
+.itemCardContent {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+.itemCard h3 {
+    margin: 0 0 0.3rem;
+    color: #111827;
     font-size: 1rem;
+}
+
+.itemCard a {
+    display: inline-block;
+    max-width: 100%;
+    color: #2563eb;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+}
+
+.itemCard a:hover {
+    text-decoration: underline;
+}
+
+.cardCode {
+    margin: 0.25rem 0 0.5rem;
+    color: #4b5563;
+    font-size: 0.9rem;
+}
+
+.emptyState {
+    padding: 2rem;
+    border: 0.1rem dashed #d1d5db;
+    border-radius: 1rem;
+    background-color: #fafafa;
+    text-align: center;
+}
+
+.emptyState h3 {
+    margin: 0 0 0.35rem;
+    color: #111827;
+}
+
+.emptyState p {
+    margin: 0;
+    color: #6b7280;
+}
+
+/* =========================
+   Drag and drop
+========================= */
+
+.dragHandle {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-size: 1.25rem;
+    cursor: grab;
+}
+
+.dragHandle:active {
+    cursor: grabbing;
+}
+
+.draggingItem {
+    z-index: 10;
+    opacity: 0.65;
+    box-shadow: 0 1rem 2rem rgba(15, 23, 42, 0.16);
+}
+
+/* =========================
+   Buttons
+========================= */
+
+.primaryButton,
+.cancelButton,
+.deleteConfirmButton,
+.saveButton {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 999rem;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+.primaryButton,
+.saveButton {
+    background-color: #111827;
+    color: #ffffff;
+}
+
+.primaryButton:hover,
+.saveButton:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.6rem 1.25rem rgba(0, 0, 0, 0.16);
+}
+
+.cancelButton {
+    background-color: #f3f4f6;
     color: #374151;
 }
 
-.modalSelect {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    margin-top: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    background-color: #ffffff;
-    color: #111827;
+.cancelButton:hover {
+    background-color: #e5e7eb;
+}
+
+.deleteConfirmButton {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+.deleteConfirmButton:hover {
+    background-color: #b91c1c;
+}
+
+.dangerTextButton {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    color: #dc2626;
     font: inherit;
+    font-weight: 700;
     cursor: pointer;
 }
 
+.dangerTextButton:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   Modals
+========================= */
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.confirmModal {
+    width: min(100%, 24rem);
+    padding: 1.5rem;
+    border-radius: 1.125rem;
+    background-color: #ffffff;
+    box-shadow: 0 1.125rem 3rem rgba(0, 0, 0, 0.2);
+}
+
+.confirmModal h2 {
+    margin: 0 0 0.5rem;
+    color: #111827;
+    font-size: 1.4rem;
+}
+
+.confirmModal h3 {
+    margin: 0 0 1rem;
+    color: #111827;
+    font-size: 1.15rem;
+}
+
+.confirmModal p {
+    margin: 0;
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.confirmModal input,
+.confirmModal select,
+.modalSelect {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+    border: 0.0625rem solid #d1d5db;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    color: #111827;
+    font: inherit;
+    font-size: 0.95rem;
+}
+
+.modalSelect {
+    cursor: pointer;
+}
+
+.confirmModal input:focus,
+.confirmModal select:focus,
 .modalSelect:focus {
     outline: none;
     border-color: #111827;
@@ -664,6 +658,111 @@
 }
 
 .modalSelect:disabled {
-    cursor: not-allowed;
     opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.modalActions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.modalActions .cancelButton,
+.modalActions .deleteConfirmButton,
+.modalActions .saveButton {
+    flex: 1;
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 40rem) {
+    .profileManagementPage {
+        width: min(100% - 1rem, 56rem);
+        padding: 1.25rem 0;
+    }
+
+    .profileManagementHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .headerSection {
+        padding: 1.25rem;
+    }
+
+    .headerActionSection {
+        padding: 1rem 1.25rem;
+    }
+
+    .statusBadge {
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .profileManagementHeader h1,
+    .profileName {
+        padding-right: 5rem;
+        font-size: 1.45rem;
+    }
+
+    .viewPublicProfileButton {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .itemCard {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .dragHandle {
+        align-self: center;
+        padding: 0.35rem;
+        font-size: 1.25rem;
+    }
+
+    .itemCardContent {
+        min-width: 0;
+    }
+
+    .itemCardContent h3 {
+        margin: 0 0 0.25rem;
+    }
+
+    .itemCardContent a {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .dangerTextButton {
+        align-self: center;
+        padding: 0.35rem;
+    }
+
+    .sectionHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .primaryButton {
+        width: 100%;
+    }
+
+    .modalActions {
+        flex-direction: column-reverse;
+    }
+
+    .nameActions,
+    .bioEditActions {
+        align-items: flex-start;
+    }
 }
