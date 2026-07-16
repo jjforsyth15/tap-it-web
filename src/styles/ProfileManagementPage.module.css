@@ -336,7 +336,9 @@
 
 .bioTextarea {
     width: 40rem;
+    max-width: 100%;
     min-height: 8rem;
+    max-height: 30rem;
     padding: 0.875rem;
     font: inherit;
     line-height: 1.5;
