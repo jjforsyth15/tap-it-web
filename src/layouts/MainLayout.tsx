@@ -20,8 +20,6 @@ function MainLayout() {
                     TapIt
                 </Link>
 
-                {/* <h3 className={styles.appSubtitle}>Beta 1</h3> */}
-
                 <nav className={styles.appNav}>
                     {isLoggedIn ? (
                         <>
