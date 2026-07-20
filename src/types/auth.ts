@@ -5,6 +5,11 @@ export type RegisterData = {
     last_name: string;
 };
 
+export type RegisterResponse = {
+    message: string;
+    email: string;
+};
+
 export type LoginResponse = {
     access_token: string;
     token_type: string;

@@ -1,8 +1,8 @@
-import type { RegisterData, LoginResponse } from "../types/auth";
+import type { RegisterData, LoginResponse, RegisterResponse } from "../types/auth";
 import { apiRequest } from "./client";
 
-export async function registerUser(data: RegisterData) {
-    return apiRequest("/auth/register", {
+export async function registerUser(data: RegisterData): Promise<RegisterResponse> {
+    return apiRequest<RegisterResponse>("/auth/register", {
         method: "POST",
         requiresAuth: false,
         body: JSON.stringify(data),
