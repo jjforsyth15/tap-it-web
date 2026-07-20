@@ -66,7 +66,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
 
         } catch (error) {
             setIsSubmitting(false);
-            setError("Failed to update card name. Please try again.");
+            setError(error instanceof Error ? error.message : "Failed to update card name. Please try again.");
             setTimeout(() => setError(""), 3000);
         } finally {
             setIsSubmitting(false);
@@ -110,7 +110,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
             setIsSubmitting(false);
-            setError("Failed to update card status. Please try again.");
+            setError(error instanceof Error ? error.message : "Failed to update card status. Please try again.");
             setTimeout(() => setError(""), 3000);
         } finally {
             setIsSubmitting(false);
@@ -139,7 +139,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
             setIsSubmitting(false);
-            setError("Failed to reassign card. Please try again.");
+            setError(error instanceof Error ? error.message : "Failed to reassign card. Please try again.");
             setTimeout(() => setError(""), 3000);
         } finally {
             setIsSubmitting(false);
