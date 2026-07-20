@@ -8,19 +8,23 @@ import { getActiveProfileCards } from "../api/cardApi";
 import ProfileHeader from "../components/profile-management/ProfileHeaderSection";
 import ProfileLinks from "../components/profile-management/ProfileLinks";
 import ProfileCards from "../components/profile-management/ProfileCards";
+import { useTimeoutMessage } from "../utils/messaging";
 
 export default function ProfileManagementPage() {
     const { profileId } = useParams();
     
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-
 
     const [profile, setProfile] = useState<Profile | null>(null);
     const [links, setLinks] = useState<ProfileLink[]>([]);
     const [cards, setCards] = useState<CardResponse[]>([]);
     const [profiles, setProfiles] = useState<Profile[]>([]);
+
+    const {
+        message: successMessage,
+        showMessage: showSuccessMessage
+    } = useTimeoutMessage(3000);
     
 
     useEffect(() => {
@@ -69,7 +73,7 @@ export default function ProfileManagementPage() {
             <ProfileHeader
                 profile={profile}
                 onProfileUpdated={handleProfileUpdate}
-                setSuccessMessage={setSuccessMessage}
+                setSuccessMessage={showSuccessMessage}
                 setError={setError}
             />
 
@@ -85,7 +89,7 @@ export default function ProfileManagementPage() {
                 profileId={profile.profile_id}
                 links={links}
                 loadProfile={loadProfile}
-                setSuccessMessage={setSuccessMessage}
+                setSuccessMessage={showSuccessMessage}
                 setError={setError}
             />
 
@@ -93,7 +97,7 @@ export default function ProfileManagementPage() {
                 cards={cards} 
                 profiles={profiles}
                 setCards={setCards}
-                setSuccessMessage={setSuccessMessage}
+                setSuccessMessage={showSuccessMessage}
                 setError={setError}
             />
 

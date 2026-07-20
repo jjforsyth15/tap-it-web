@@ -4,11 +4,13 @@ import type { CreateProfileRequest } from "../types/profile";
 import { createProfile, uploadAvatar, updateProfile } from "../api/profileApi";
 import styles from "../styles/CreateProfilePage.module.css";
 import { useSearchParams } from "react-router-dom";
+import { useTimeoutMessage } from "../utils/messaging";
 
 export default function CreateProfilePage() {
     const [profileData, setProfileData] = useState<CreateProfileRequest>({profile_name: "", bio: "", profile_image_url: ""});
     const [error, setError] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const { message: successMessage, showMessage: showSuccessMessage } = useTimeoutMessage(3000);
+
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -29,7 +31,6 @@ export default function CreateProfilePage() {
         e.preventDefault();
         setIsLoading(true);
         setError("");
-        setSuccessMessage("");
 
         try {
             const response = await createProfile(profileData);
@@ -50,7 +51,7 @@ export default function CreateProfilePage() {
             } 
 
             const next = searchParams.get("next")  || `/dashboard/profiles/${response.profile.profile_id}`;
-            setSuccessMessage(`Profile created successfully!`);
+            showSuccessMessage(`Profile created successfully!`);
             navigate(next);
         } catch (err) {
             if (err instanceof Error) {
