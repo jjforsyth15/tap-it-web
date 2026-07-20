@@ -240,6 +240,7 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
                                     className={styles.bioTextarea}
                                     value={bioInput}
                                     onChange={(e) => setBioInput(e.target.value)}
+                                    maxLength={1000}
                                     placeholder="Write a short bio to describe your profile..."
                                 />
                         ) : (
