@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "../../styles/BetaFeedback.module.css";
 import { submitBetafeedback } from "../../api/betaApi";
-import type { User } from "../../types/user";
-import { getCurrentUser } from "../../api/userApi";
+import { useAuth } from "../../context/authContext";
 
 export default function BetaFeedback() {
     const location = useLocation();
@@ -20,7 +19,7 @@ export default function BetaFeedback() {
     const [contactMethod, setContactMethod] = useState<"none" | "email" | "phone">("none");
 
     const currentPage = location.pathname;
-    const [user, setUser] = useState<User | undefined>(undefined);
+    const { user } = useAuth();
 
     useEffect(() => {
         if (currentPage.startsWith("/public/")) {
@@ -30,8 +29,6 @@ export default function BetaFeedback() {
         if (currentPage === "/login") {
             setNotLoggedIn(true);
         }
-
-        loadUser();
     }, [currentPage]);
 
     function handleClose() {
@@ -52,15 +49,6 @@ export default function BetaFeedback() {
             setContactInfo(user?.email ?? "");
         else 
             setContactInfo("");
-    }
-
-    async function loadUser() {
-        try {
-            const userData = await getCurrentUser();
-            setUser(userData);
-        } catch (err) {
-            setNotLoggedIn(true);
-        }
     }
 
     async function handleSubmitFeedback() {

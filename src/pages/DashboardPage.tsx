@@ -1,30 +1,26 @@
 import { useEffect, useState } from "react";
-import { getCurrentUser} from "../api/userApi";
-import type { User } from "../types/user";
 import type { Profile } from "../types/profile";
 import { getMyProfiles, reorderProfiles } from "../api/profileApi";
 import styles from "../styles/DashboardPage.module.css";
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
+import { useAuth } from "../context/authContext";
 
 import SortableProfileCard from "../components/dashboard/SortableProfileCards";
 import CreateProfileCard from "../components/dashboard/CreateProfileCard";
 
 function DashboardPage() {
-    const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
     const [profiles, setProfiles] = useState<Profile[]>([]);
 
+    const { user, isAuthLoading } = useAuth();
+
     useEffect(() => {
         async function loadUser() {
             try {
-                const [userData, profileData] = await Promise.all([
-                    getCurrentUser(),
-                    getMyProfiles()
-                ]);
-                setUser(userData);
+                const profileData = await getMyProfiles();
                 setProfiles(profileData);
             } catch (err) {
                 setError(err instanceof Error ? err.message : "Failed to load dashboard");
@@ -58,7 +54,7 @@ function DashboardPage() {
         }
     }
 
-    if (isLoading) {
+    if (isLoading || isAuthLoading) {
         return <p>Loading...</p>;
     }
 
