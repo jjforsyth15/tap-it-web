@@ -120,17 +120,19 @@ export default function CreateProfilePage() {
                                 className={styles.avatarContainer}
                                 onClick={() => fileInputRef.current?.click()}
                             >
-                                {imagePreview ? (
-                                    <img
-                                        src={imagePreview}
-                                        alt="Profile Image Preview"
-                                        className={styles.profileAvatar}
-                                    />
-                                ) : (
-                                    <div className={styles.avatarFallback}>
-                                        {profileData.profile_name.trim() ? profileData.profile_name.trim().charAt(0).toUpperCase() : "?"}
-                                    </div>
-                                )}
+                                <button type="button" className={styles.avatarButton} aria-label="Select profile image">
+                                    {imagePreview ? (
+                                            <img
+                                                src={imagePreview}
+                                                alt="Profile Image Preview"
+                                                className={styles.profileAvatar}
+                                            />
+                                    ) : (
+                                        <div className={styles.avatarFallback}>
+                                                {profileData.profile_name.trim() ? profileData.profile_name.trim().charAt(0).toUpperCase() : "?"}
+                                        </div>
+                                    )}
+                                </button>
 
                                 <div className={styles.avatarOverlay}>
                                     {selectedImage ? "Change Image" : "Upload Image"}

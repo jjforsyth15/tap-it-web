@@ -59,7 +59,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
                 </div>
             </div>
 
-            <div className={styles.profileCardActions}>
+            <div className={styles.profileCardActions} onKeyDown={(event) => event.stopPropagation() } onPointerDown={(event) => event.stopPropagation()}>
                 <Link 
                     className={styles.primaryButton}
                     to={`/public/${profile.profile_id}`}

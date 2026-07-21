@@ -148,17 +148,19 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
                                         fileInputRef.current?.click();
                                 }}
                             >
-                                {currentAvatar ? (
-                                    <img
-                                        src={currentAvatar}
-                                        alt={`${profile.profile_name} avatar`}
-                                        className={styles.profileAvatar}
-                                    />
-                                ) : (
-                                    <div className={styles.avatarFallback}>
-                                        {profile.profile_name.charAt(0).toUpperCase()}
-                                    </div>
-                                )}
+                                <button type="button" className={styles.avatarButton} aria-label="Select profile image">
+                                    {currentAvatar ? (
+                                        <img
+                                            src={currentAvatar}
+                                            alt={`${profile.profile_name} avatar`}
+                                            className={styles.profileAvatar}
+                                        />
+                                    ) : (
+                                        <div className={styles.avatarFallback}>
+                                            {profile.profile_name.charAt(0).toUpperCase()}
+                                        </div>
+                                    )}
+                                </button>
 
                                 <div className={styles.avatarOverlay}>
                                     {isUploadingAvatar ? "Uploading..." : "Change Photo"}
