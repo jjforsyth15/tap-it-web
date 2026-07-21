@@ -62,7 +62,7 @@ export default function ProfileManagementPage() {
 
 
     if (loading) 
-        return <p>Loading... Profile</p>;
+        return <p>Loading Profile...</p>;
 
     if (!profile)
         return <p>Profile not found</p>;
