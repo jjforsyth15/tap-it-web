@@ -97,18 +97,6 @@ Public Profile Opens
 
 ---
 
-# Screenshots
-
-*(Screenshots will be added here.)*
-
-- Home Page
-- User Dashboard
-- Profile Management
-- Public Profile
-- Card Activation
-
----
-
 # Project Structure
 
 ```
@@ -157,7 +145,7 @@ Additional setup instructions, environment variables, and deployment information
 
 ---
 
-# Documentation
+<!-- # Documentation
 
 Additional project documentation can be found in:
 
@@ -170,7 +158,7 @@ Additional project documentation can be found in:
 - Beta 1 Release Notes
 - Developer Design Notes
 
----
+--- -->
 
 # Current Status
 
