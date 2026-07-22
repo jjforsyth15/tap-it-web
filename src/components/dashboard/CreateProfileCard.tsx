@@ -1,9 +1,7 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../../styles/DashboardPage.module.css";
 
 export default function CreateProfileCard() {
-    const navigate = useNavigate();
-
     return (
         <Link
             className={`${styles.profileCard} ${styles.createProfileCard}`}
