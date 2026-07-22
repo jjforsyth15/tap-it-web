@@ -1,6 +1,6 @@
 import type { ProfileLink, ProfileLinkCreate } from '../../types/profile';
 import styles from '../../styles/ProfileManagementPage.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createProfileLink, deleteProfileLink, reorderProfileLinks } from '../../api/profileApi';
 
 import { DndContext, closestCenter, type DragEndEvent } from '@dnd-kit/core';
@@ -37,9 +37,40 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
     const [customLabel, setCustomLabel] = useState("");
     const [orderedLinks, setOrderedLinks] = useState<ProfileLink[]>(links);
 
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
+
     useEffect(() => {
         setOrderedLinks(links);
     }, [links]);
+
+    useEffect(() => {
+        const modalIsOpen = showAddLinkModal || linkToDelete !== null;
+
+        if (!modalIsOpen) return;
+
+        cancelButtonRef.current?.focus();
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key !== "Escape") return;
+
+            if (linkToDelete) 
+                setLinkToDelete(null);
+
+            if (showAddLinkModal) {
+                setShowAddLinkModal(false);
+                setNewLink({label: "", url: ""});
+                setFormError("");
+                setSelectedLabel(linkLabelOptions[0]);
+                setCustomLabel("");
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [showAddLinkModal, linkToDelete]);
 
     async function handleAddLink() {
         if (isSubmitting) return;
@@ -49,11 +80,13 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
         
         if (!newLink.url.trim()) {
             setFormError("Link URL cannot be empty");
+            setIsSubmitting(false);
             return;
         }
 
         if (!label.trim()) {
             setFormError("Link label cannot be empty");
+            setIsSubmitting(false);
             return;
         }
 
@@ -180,8 +213,13 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
 
                 {showAddLinkModal && (
                     <div className={styles.modalBackdrop}>
-                        <div className={styles.confirmModal}>
-                            <h2>Add New Link</h2>
+                        <div 
+                            className={styles.confirmModal}
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="add-link-modal-title"
+                        >
+                            <h2 id="add-link-modal-title">Add New Link</h2>
 
                             {formError && <p className={styles.formError}>{formError}</p>}
 
@@ -214,6 +252,8 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
 
                             <div className={styles.modalActions}>
                                 <button
+                                    type="button"
+                                    ref={cancelButtonRef}
                                     className={styles.cancelButton}
                                     disabled={isSubmitting}
                                     onClick={() => {
@@ -227,7 +267,12 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                                     Cancel
                                 </button>
 
-                                <button className={styles.saveButton} onClick={handleAddLink}>
+                                <button 
+                                    type="button" 
+                                    className={styles.saveButton} 
+                                    disabled={isSubmitting}
+                                    onClick={handleAddLink}
+                                >
                                     Save Link
                                 </button>
                             </div>
@@ -237,12 +282,18 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
 
                 {linkToDelete && (
                     <div className={styles.modalBackdrop}>
-                        <div className={styles.confirmModal}>
-                            <h2>Delete link?</h2>
+                        <div 
+                            className={styles.confirmModal} 
+                            role="dialog" aria-modal="true" 
+                            aria-labelledby="delete-link-modal-title"
+                        >
+                            <h2 id="delete-link-modal-title">Delete link?</h2>
                             <p>Are you sure you want to delete this link? This action cannot be undone.</p>
 
                             <div className={styles.modalActions}>
                                 <button
+                                    type="button"
+                                    ref={cancelButtonRef}
                                     className={styles.cancelButton}
                                     disabled={isSubmitting}
                                     onClick={() => setLinkToDelete(null)}
@@ -251,6 +302,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                                 </button>
 
                                 <button
+                                    type="button"
                                     className={styles.deleteConfirmButton}
                                     disabled={isSubmitting}
                                     onClick={() => handleDeleteLink(linkToDelete)}
