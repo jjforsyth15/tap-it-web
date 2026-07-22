@@ -1,73 +1,251 @@
-# React + TypeScript + Vite
+# TapIt
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <strong>A modern NFC-powered digital business card platform built with React, FastAPI, and PostgreSQL.</strong>
+</p>
 
-Currently, two official plugins are available:
+TapIt is a full-stack web application that allows users to instantly share professional profiles, contact information, social links, portfolios, and more using a single NFC card—without requiring an app or QR code.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Designed with simplicity and scalability in mind, TapIt provides an intuitive platform for creating multiple public profiles, managing NFC cards, and sharing information seamlessly with a single tap.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Why I Built TapIt
 
-## Expanding the ESLint configuration
+Traditional business cards quickly become outdated, are easy to lose, and often require manual data entry. While QR codes improve accessibility, they still require users to open their camera and scan.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+TapIt was created to make networking faster and more seamless through NFC technology. A single tap immediately opens a customizable public profile where users can share the information they want, exactly how they want.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Beyond solving that problem, TapIt was intentionally built using technologies I had never previously worked with—including React, TypeScript, FastAPI, PostgreSQL, Supabase, and cloud deployment—to challenge myself and gain experience designing, building, deploying, and maintaining a production-style full-stack application from the ground up.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Landing Page
+![Landing Page](docs/images/landing-page.png)
+
+## Dashboad
+![Dashboard](docs/images/dashboard-page.png)
+
+## Profile Management
+![Profile Management](docs/images/profile-management-page.png)
+
+## Public Profile
+![Public Profile](docs/images/public-profile-page.png)
+
+---
+
+# Features
+
+- 📱 NFC-powered profile sharing
+- 👤 Multiple customizable public profiles
+- 🔗 Drag-and-drop profile link management
+- 🪪 NFC card activation workflow
+- 🌐 Public profile pages
+- 🖼️ Profile image uploads
+- 🔒 Secure JWT authentication
+- 📱 Responsive mobile-first design
+- 💬 Built-in Beta Feedback system
+- ⚡ FastAPI REST API backend
+- ☁️ Cloud deployment with Firebase, Render, and Supabase
+
+---
+
+# Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| Frontend | React, TypeScript, React Router, CSS Modules |
+| Backend | FastAPI, SQLAlchemy |
+| Database | PostgreSQL |
+| Authentication | JWT, Passlib |
+| Storage | Supabase Storage |
+| Deployment | Firebase Hosting, Render |
+| Version Control | Git & GitHub |
+
+---
+
+# How It Works
+
+1. Create a TapIt account.
+2. Create one or more public profiles.
+3. Customize each profile with links, images, and information.
+4. Assign an NFC card to a profile.
+5. Activate the card.
+6. Anyone who taps the card is instantly taken to the selected public profile.
+
+```
+Create Account
+      │
+      ▼
+Create Profile
+      │
+      ▼
+Customize Profile
+      │
+      ▼
+Assign NFC Card
+      │
+      ▼
+Activate Card
+      │
+      ▼
+Someone taps the card
+      │
+      ▼
+Public Profile Opens
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Screenshots
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+*(Screenshots will be added here.)*
+
+- Home Page
+- User Dashboard
+- Profile Management
+- Public Profile
+- Card Activation
+
+---
+
+# Project Structure
+
 ```
+tap-it-web/              # React frontend
+│
+├── .firebase        
+│
+├── public       
+│
+├── src                # Project documentation
+│
+└── README.md
+```
+
+---
+
+# Running Locally
+
+### Clone the repository
+
+```bash
+git clone https://github.com/<your-username>/tap-it.git
+```
+
+### Frontend
+
+```bash
+cd tap-it-web
+
+npm install
+
+npm run dev
+```
+
+### Backend
+
+```bash
+cd tap-it-server
+
+pip install -r requirements.txt
+
+uvicorn app.main:app --reload
+```
+
+Additional setup instructions, environment variables, and deployment information are available in the **docs** folder.
+
+---
+
+# Documentation
+
+Additional project documentation can be found in:
+
+- Architecture Overview
+- API Documentation
+- Database Schema
+- Local Development Setup
+- Deployment Guide
+- Environment Variables
+- Beta 1 Release Notes
+- Developer Design Notes
+
+---
+
+# Current Status
+
+**Current Version:** Beta 1
+
+### Completed
+
+- User Authentication
+- Profile Management
+- NFC Card Activation
+- Public Profile Pages
+- Profile Images
+- Link Management
+- Responsive Design
+- Beta Feedback System
+- Production Deployment
+
+### Current Focus
+
+- Documentation
+- Performance Improvements
+- Accessibility
+- Production Polish
+
+---
+
+# Future Roadmap
+
+## Phase 2A
+
+- Admin Dashboard
+- Rich Profile Content
+- Public Profile Themes
+- Analytics Dashboard
+- Enhanced Card Management
+- Additional Contact Modules
+- Performance Improvements
+- User Experience Enhancements
+
+---
+
+# Lessons Learned
+
+Building TapIt has provided hands-on experience across the entire software development lifecycle, including:
+
+- Designing scalable frontend architecture
+- Building REST APIs with FastAPI
+- Database design with PostgreSQL
+- Authentication using JWT
+- File storage with Supabase
+- Cloud deployment
+- Production debugging
+- Accessibility improvements
+- Performance optimization
+- Production logging and rate limiting
+- Full-stack application architecture
+
+---
+
+# Contact
+
+If you'd like to learn more about TapIt or connect with me:
+
+- LinkedIn: https://www.linkedin.com/in/joseph-forsyth-467740247/ 
+- Portfolio Website: https://jgforsyth.com
+- GitHub: https://github.com/jjforsyth15
+
+---
+
+# License
+
+Copyright © 2026 Joseph Forsyth.
+
+All rights reserved.
+
+This project is currently proprietary and is not licensed for public redistribution or commercial use.
+
+
