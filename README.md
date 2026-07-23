@@ -100,15 +100,14 @@ Public Profile Opens
 # Project Structure
 
 ```
-tap-it-web/              # React frontend
+tap-it/              
 │
-├── .firebase        
+├── .tap-it-web       # React Frontend
 │
-├── public       
+├── .tap-it-server    # FastApi Backend
 │
-├── src                # Project documentation
-│
-└── README.md
+├── .tap-it-mobile    # Mobile App - in development
+
 ```
 
 ---
