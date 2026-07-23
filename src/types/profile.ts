@@ -9,6 +9,11 @@ export type CreateProfileResponse = {
     profile: Profile;
 };
 
+export type ProfileAdjustmentResponse = {
+    message: string;
+    profile: Profile;
+};
+
 export type ProfileLink = {
     link_id: string;
     profile_id: string;
@@ -52,4 +57,11 @@ export type DashboardProfile = {
     profile_image_url: string | null;
     link_count?: number;
     card_count?: number;
+}
+
+export type ProfileUpdate = {
+    profile_name?: string;
+    bio?: string | null;
+    profile_status?: ProfileStatus;
+    profile_image_url?: string | null;
 }

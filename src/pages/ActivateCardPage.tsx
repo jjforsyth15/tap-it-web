@@ -5,6 +5,7 @@ import type { Profile } from "../types/profile";
 import { useState, useEffect } from "react";
 import styles from "../styles/ActivateCardPage.module.css";
 import { getMyProfiles } from "../api/profileApi";
+import { useTimeoutMessage } from "../utils/messaging";
 
 
 export default function ActivateCardPage() {
@@ -16,7 +17,11 @@ export default function ActivateCardPage() {
 
     const [card, setCard] = useState<CardActivationStatus | null>(null);
     const [activating, setActivating] = useState(false);
-    const [success, setSuccess] = useState("");
+
+    const {
+        message: successMessage,
+        showMessage: showSuccessMessage
+    } = useTimeoutMessage(3000);
 
     const [profiles, setProfiles] = useState<Profile[] | null>([]);
     const [selectedProfileId, setSelectedProfileId] = useState("");
@@ -80,13 +85,12 @@ export default function ActivateCardPage() {
 
         setActivating(true);
         setError("");
-        setSuccess("");
 
         try {
             setIsLoading(true);
 
             const data = await activateCard({card_code: cardCode, new_profile_id: selectedProfileId});
-            setSuccess("Card activated successfully! Redirecting to your profile...");
+            showSuccessMessage("Card activated successfully! Redirecting to your profile...");
 
             setTimeout(() => {
                 navigate(`/dashboard/profiles/${data.card.profile_id}`);
@@ -109,12 +113,12 @@ export default function ActivateCardPage() {
         );
     }
 
-     if (success) {
+     if (successMessage) {
         return (
             <main className={styles.activatePage}>
                 <section className={styles.activateCard}>
-                    <h1>Card Activated</h1>
-                    <p className={styles.activateSubtitle}>{success}</p>
+                    <h1>Card Activated</h1> 
+                    <p className={styles.activateSubtitle}>{successMessage}</p>
                 </section>
             </main>
         );
@@ -185,7 +189,7 @@ export default function ActivateCardPage() {
                     </div>
                 )}
 
-                {success && <p className={styles.successMessage}>{success}</p>}
+                {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
                 {error && <p className={styles.errorMessage}>{error}</p>}
 
                 {card?.can_activate && (

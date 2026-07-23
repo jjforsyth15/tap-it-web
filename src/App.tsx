@@ -13,6 +13,7 @@ import ActivateCardPage from "./pages/ActivateCardPage";
 import PublicCardPage from "./pages/PublicCardPage";
 import ProfileManagementPage from "./pages/ProfileManagementPage";
 import CreateProfilePage from "./pages/CreateProfilePage";
+import PublicLayout from "./layouts/PublicLayout";
 
 
 function App() {
@@ -21,8 +22,10 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/public/:profileId" element={<PublicProfilePage />} />
-        <Route path="/cards/:card_code" element={<PublicCardPage />} />
+        <Route element={<PublicLayout />}>
+          <Route path="/public/:profileId" element={<PublicProfilePage />} />
+          <Route path="/cards/:card_code" element={<PublicCardPage />} />
+        </Route>
 
       <Route element={<MainLayout />}>   
             {/* // Public Only routes */}

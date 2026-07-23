@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../../styles/DashboardPage.module.css";
 
 export default function CreateProfileCard() {
-    const navigate = useNavigate();
-
     return (
-        <article
+        <Link
             className={`${styles.profileCard} ${styles.createProfileCard}`}
-            onClick={() => navigate("/profiles/new")}
+            to="/profiles/new"
         >
             <div className={styles.createProfileIcon}>+</div>
 
@@ -15,6 +13,6 @@ export default function CreateProfileCard() {
                 <h2>Create New Profile</h2>
                 <p>Start a new TapIt profile</p>
             </div>
-        </article>
+        </Link>
     );
 }

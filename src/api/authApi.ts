@@ -1,23 +1,12 @@
-import type { RegisterData, LoginResponse } from "../types/auth";
+import type { RegisterData, LoginResponse, RegisterResponse } from "../types/auth";
+import { apiRequest } from "./client";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-export async function registerUser(data: RegisterData) {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+export async function registerUser(data: RegisterData): Promise<RegisterResponse> {
+    return apiRequest<RegisterResponse>("/auth/register", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        requiresAuth: false,
         body: JSON.stringify(data),
     });
-    
-    const responseData = await response.json();
-
-    if (!response.ok) {
-        throw new Error(responseData.detail || "Registration failed");
-    }
-
-    return responseData;
 }
 
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
@@ -26,19 +15,12 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     formData.append("username", email);
     formData.append("password", password);
 
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    return apiRequest<LoginResponse>("/auth/login", {
         method: "POST",
+        requiresAuth: false,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: formData.toString(),
+        body: formData,
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.detail || "Login failed");
-    }
-
-    return data;
 }
