@@ -1,42 +1,57 @@
-.dashboardPage {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+.adminDashboard {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
 }
 
 .pageHeader {
-  margin-bottom: 2rem;
-}
-
-.pageHeader h2 {
-  margin: 0.25rem 0 0.5rem;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-}
-
-.pageHeader p {
-  margin: 0;
-  color: #626872;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .eyebrow {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+    margin: 1.5rem 0 0.35rem;
+    color: #69717d;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
-.placeholder {
-  padding: 2rem;
-  background-color: #ffffff;
-  border: 1px solid #e2e5e9;
-  border-radius: 0.75rem;
+.pageHeader h1 {
+    margin: 0;
+    color: #15191e;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    line-height: 1.15;
 }
 
-.placeholder h3 {
-  margin-top: 0;
+.pageDescription {
+    max-width: 700px;
+    margin: 0.65rem 0 0;
+    color: #626a75;
+    line-height: 1.6;
 }
 
-.placeholder p {
-  margin-bottom: 0;
-  color: #626872;
+.dashboardPlaceholder {
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 1px solid #dde2e8;
+    border-radius: 0.85rem;
+    box-shadow: 0 4px 14px rgba(26, 32, 44, 0.04);
+}
+
+.dashboardPlaceholder h2 {
+    margin: 0 0 0.75rem;
+    color: #1b2027;
+    font-size: 1.2rem;
+}
+
+.dashboardPlaceholder p {
+    max-width: 700px;
+    margin: 0;
+    color: #626a75;
+    line-height: 1.6;
 }

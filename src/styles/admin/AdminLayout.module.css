@@ -1,91 +1,160 @@
 .adminLayout {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 250px minmax(0, 1fr);
-  background-color: #f6f7f9;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    background-color: #f5f7fa;
 }
 
 .adminSidebar {
-  min-height: 100vh;
-  padding: 1.5rem 1rem;
-  background-color: #ffffff;
-  border-right: 1px solid #e2e5e9;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    background-color: #ffffff;
+    border-right: 1px solid #dde2e8;
 }
 
 .sidebarHeader {
-  padding: 0 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0 0.75rem 1.5rem;
+    border-bottom: 1px solid #edf0f3;
 }
 
-.sidebarHeader h1 {
-  margin: 0;
-  font-size: 1.3rem;
+.brandName {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #15191e;
+}
+
+.adminLabel {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background-color: #333a45;
+    border-radius: 999px;
 }
 
 .adminNavigation {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-top: 1.25rem;
 }
 
 .navigationLink {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0.7rem 0.85rem;
-  color: #40454d;
-  text-decoration: none;
-  border-radius: 0.5rem;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.7rem 0.85rem;
+    color: #545b65;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0.55rem;
+    transition:
+        color 0.15s ease,
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 
 .navigationLink:hover {
-  background-color: #f0f2f5;
+    color: #1b2027;
+    background-color: #f1f3f6;
 }
 
-.navigationLink:focus-visible {
-  outline: 3px solid currentColor;
-  outline-offset: 2px;
+.navigationLink:active {
+    transform: translateY(1px);
 }
 
-.navigationLink.active {
-  color: #111111;
-  font-weight: 600;
-  background-color: #e8eaee;
+.navigationLink:focus-visible,
+.returnLink:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
 }
 
-.adminContent {
-  min-width: 0;
-  padding: 2rem;
+.activeNavigationLink {
+    color: #15191e;
+    font-weight: 650;
+    background-color: #e7ebf0;
 }
 
-@media (max-width: 768px) {
-  .adminLayout {
-    display: block;
-  }
+.sidebarFooter {
+    padding-top: 1rem;
+    border-top: 1px solid #edf0f3;
+}
 
-  .adminSidebar {
-    min-height: auto;
-    padding: 1rem;
-    border-right: none;
-    border-bottom: 1px solid #e2e5e9;
-  }
+.returnLink {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0.65rem 0.75rem;
+    color: #545b65;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 0.5rem;
+}
 
-  .sidebarHeader {
-    padding: 0 0 1rem;
-  }
+.returnLink:hover {
+    color: #1b2027;
+    background-color: #f1f3f6;
+}
 
-  .adminNavigation {
-    flex-direction: row;
-    overflow-x: auto;
-  }
+.adminMain {
+    min-width: 0;
+    padding: 2rem;
+}
 
-  .navigationLink {
-    flex-shrink: 0;
-  }
+@media (max-width: 900px) {
+    .adminLayout {
+        display: block;
+    }
 
-  .adminContent {
-    padding: 1.25rem;
-  }
+    .adminSidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 1rem;
+        border-right: none;
+        border-bottom: 1px solid #dde2e8;
+    }
+
+    .sidebarHeader {
+        padding: 0 0 1rem;
+    }
+
+    .adminNavigation {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding-top: 1rem;
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+
+    .navigationLink {
+        flex-shrink: 0;
+        min-height: 40px;
+        padding: 0.6rem 0.8rem;
+        white-space: nowrap;
+    }
+
+    .sidebarFooter {
+        display: none;
+    }
+
+    .adminMain {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .adminMain {
+        padding: 1rem;
+    }
 }
