@@ -1,0 +1,42 @@
+.dashboardPage {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  margin-bottom: 2rem;
+}
+
+.pageHeader h2 {
+  margin: 0.25rem 0 0.5rem;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+.pageHeader p {
+  margin: 0;
+  color: #626872;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.placeholder {
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e5e9;
+  border-radius: 0.75rem;
+}
+
+.placeholder h3 {
+  margin-top: 0;
+}
+
+.placeholder p {
+  margin-bottom: 0;
+  color: #626872;
+}

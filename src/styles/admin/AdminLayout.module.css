@@ -1,0 +1,91 @@
+.adminLayout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  background-color: #f6f7f9;
+}
+
+.adminSidebar {
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e5e9;
+}
+
+.sidebarHeader {
+  padding: 0 0.75rem 1.5rem;
+}
+
+.sidebarHeader h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.adminNavigation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.navigationLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.7rem 0.85rem;
+  color: #40454d;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.navigationLink:hover {
+  background-color: #f0f2f5;
+}
+
+.navigationLink:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+.navigationLink.active {
+  color: #111111;
+  font-weight: 600;
+  background-color: #e8eaee;
+}
+
+.adminContent {
+  min-width: 0;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .adminLayout {
+    display: block;
+  }
+
+  .adminSidebar {
+    min-height: auto;
+    padding: 1rem;
+    border-right: none;
+    border-bottom: 1px solid #e2e5e9;
+  }
+
+  .sidebarHeader {
+    padding: 0 0 1rem;
+  }
+
+  .adminNavigation {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .navigationLink {
+    flex-shrink: 0;
+  }
+
+  .adminContent {
+    padding: 1.25rem;
+  }
+}
