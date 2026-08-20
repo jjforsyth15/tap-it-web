@@ -124,7 +124,7 @@ export default function ActivateCardPage() {
                     </p>
 
                     <p className={styles.description}>
-                        This card hasn't been activated yet. Log in or create and account 
+                        This card hasn't been activated yet. Log in or create an account 
                         to activate your card and connect it your TapIt profile.
                     </p>
 

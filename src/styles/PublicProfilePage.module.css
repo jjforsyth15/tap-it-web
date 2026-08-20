@@ -4,7 +4,13 @@
     justify-content: center;
     align-items: flex-start;
     padding: 5rem 1.5rem 3rem;
-    background: #0f172a;
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(55, 110, 255, 0.18),
+            transparent 45%
+        ),
+        #071426;
     color: #111;
 }
 
