@@ -187,3 +187,143 @@
     padding: 0.75rem;
     font-size: 1rem;
 }
+
+.activationPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(76, 113, 255, 0.18),
+            transparent 40%
+        ),
+        linear-gradient(
+            180deg,
+            #f8faff 0%,
+            #eef3ff 100%
+        );
+}
+
+.activationCard {
+    width: 100%;
+    max-width: 440px;
+    padding: 40px 32px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow:
+        0 20px 50px rgba(20, 35, 80, 0.12);
+    text-align: center;
+}
+
+.logo {
+    width: 110px;
+    margin-bottom: 24px;
+}
+
+.iconCircle {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: rgba(63, 105, 255, 0.1);
+    color: #4169ff;
+
+    font-size: 28px;
+}
+
+.activationCard h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #17213a;
+}
+
+.subtitle {
+    margin: 10px 0 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #4169ff;
+}
+
+.description {
+    margin: 20px 0 28px;
+    line-height: 1.6;
+    color: #667085;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.primaryButton,
+.secondaryButton {
+    width: 100%;
+    padding: 14px 20px;
+
+    border-radius: 12px;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.primaryButton {
+    border: none;
+    background: #4169ff;
+    color: white;
+    box-shadow: 0 8px 18px rgba(65, 105, 255, 0.25);
+}
+
+.primaryButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(65, 105, 255, 0.3);
+}
+
+.secondaryButton {
+    border: 1px solid #d9e0f0;
+    background: white;
+    color: #25314d;
+}
+
+.secondaryButton:hover {
+    background: #f7f9fc;
+}
+
+.helperText {
+    margin-top: 20px;
+    margin-bottom: 0;
+
+    font-size: 0.875rem;
+    color: #98a2b3;
+}
+
+@media (max-width: 480px) {
+    .activationPage {
+        padding: 16px;
+    }
+
+    .activationCard {
+        padding: 32px 22px;
+        border-radius: 20px;
+    }
+
+    .activationCard h1 {
+        font-size: 1.7rem;
+    }
+}

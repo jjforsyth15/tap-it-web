@@ -35,11 +35,12 @@ function App() {
               <Route path="/" element={<HomePage/>} />
             </Route>
 
+            <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
+
             {/* // Protected routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/dashboard/profiles/:profileId" element={<ProfileManagementPage />} />
-              <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
               <Route path="/profiles/new" element={<CreateProfilePage />} />
             </Route>
 

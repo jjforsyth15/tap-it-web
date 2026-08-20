@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { activateCard, getCardActivationStatus } from "../api/cardApi";
 import type { CardActivationStatus } from "../types/card";
 import type { Profile } from "../types/profile";
@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import styles from "../styles/ActivateCardPage.module.css";
 import { getMyProfiles } from "../api/profileApi";
 import { useTimeoutMessage } from "../utils/messaging";
+import { useAuth } from "../context/authContext";
 
 
 export default function ActivateCardPage() {
@@ -28,6 +29,9 @@ export default function ActivateCardPage() {
     const [assignedProfile, setAssignedProfile] = useState<Profile | null>(null);
 
     const [loadingProfiles, setLoadingProfiles] = useState(false);
+
+    const { user } = useAuth();
+    const location = useLocation();
 
     useEffect(() => {
         loadProfiles();
@@ -102,6 +106,51 @@ export default function ActivateCardPage() {
             setActivating(false);
         }
     };
+
+    if (!user) {
+        return (
+            <div className={styles.activationPage}>
+                <div className={styles.activationCard}>
+                    <img   
+                        src="/tapit-logo-3.png"
+                        alt="TapIt"
+                        className={styles.logo}
+                    />
+
+                    <h1>Activate your TapIt Card</h1>
+
+                    <p className={styles.subtitle}>
+                        You're almost ready to start sharing.
+                    </p>
+
+                    <p className={styles.description}>
+                        This card hasn't been activated yet. Log in or create and account 
+                        to activate your card and connect it your TapIt profile.
+                    </p>
+
+                    <div className={styles.actions}>
+                        <button 
+                            className={styles.primaryButton}
+                            onClick={() => {
+                                navigate(`/login?next=${encodeURIComponent(location.pathname)}`)
+                            }}
+                        >
+                            Log In
+                        </button>
+
+                        <button
+                            className={styles.secondaryButton}
+                            onClick={() => {
+                                navigate(`/register?next=${encodeURIComponent(location.pathname)}`)
+                            }}
+                        >
+                            Create Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (isLoading || loadingProfiles) {
         return (
