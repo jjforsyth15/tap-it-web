@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getMyProfiles, getProfile, getProfileLinks } from "../api/profileApi";
 import type { Profile, ProfileLink } from "../types/profile";
 import type { CardResponse } from "../types/card";
@@ -27,11 +27,7 @@ export default function ProfileManagementPage() {
     } = useTimeoutMessage(3000);
     
 
-    useEffect(() => {
-        loadProfile();
-    }, [profileId]);
-
-    async function loadProfile() {
+    const loadProfile = useCallback(async () => {
             if(!profileId) {
                 setError("Profile ID is missing");
                 setLoading(false);
@@ -54,7 +50,14 @@ export default function ProfileManagementPage() {
             } finally {
                 setLoading(false);
             }
-    }
+    }, [profileId]);
+
+    useEffect(() => {
+        async function run() {
+            await loadProfile();
+        }
+        void run();
+    }, [loadProfile]);
 
     function handleProfileUpdate(updatedProfile: Profile) {
         setProfile(updatedProfile);
