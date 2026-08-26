@@ -21,14 +21,14 @@ See the root `tap-it/CLAUDE.md` (one directory up) for overall project context, 
 
 ## Current focus (Phase 2A — Administration)
 
-No admin frontend exists yet. The backend already has working admin endpoints (`tap-it-server`'s `/admin/dashboard/*`) with nothing consuming them. This is the next major planned frontend area — new admin pages/components should follow the existing `pages/` + `components/` + CSS Modules pattern, not a different structure.
+The Admin Dashboard frontend is implemented on `develop` but not yet released through `main`. It provides an admin-only route/layout, consumes the backend summary/action-items/health endpoints, and includes placeholder routes for the remaining administration modules. Admin User Management is the next planned feature. New admin pages/components should continue the existing `pages/` + `components/` + CSS Modules structure.
 
 ## Known contract issues (flag for the `tapit-ai` contract reviewer, don't silently "fix" without checking both sides)
 
-- `types/user.ts` is missing `user_type` and `created_at`, both present on the backend's `UserResponse`.
+- On `develop`, `types/user.ts` includes `user_type` for admin authorization but is still missing `created_at`; both are present on the backend's `UserResponse`. The currently released `main` branch is also missing `user_type` until the Admin Dashboard is released.
 - `types/beta.ts`'s `BetaFeedbackResponse.feedback` is typed as `BetaFeedbackRequest` (the input shape), but the backend actually returns a full `FeedbackResponse` (`feedback_id`, `feedback_status`, `created_at`, etc.) from feedback-submission endpoints.
 - Several `BetaFeedback` fields (`contact_info`, `browser_info`, `screen_size`, `version`) are typed as required strings in TS but are optional/nullable in the backend Pydantic schema.
 
 ## Testing
 
-No automated test suite. Quality gates today are `npm run lint` and `npm run build` (must pass `tsc` with no errors). `docs/TESTING.md` is the manual regression checklist — keep it updated when you change user-facing behavior.
+No automated test suite. Quality gates today are `npm run lint` and `npm run build` (must pass `tsc` with no errors); both pass on `develop` as of 2026-08-26. `docs/TESTING.md` is the manual regression checklist — keep it updated when you change user-facing behavior.
