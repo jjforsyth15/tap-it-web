@@ -49,7 +49,9 @@ function PublicCardPage() {
         return (
             <main className={styles.publicCardPage}>
                 <section className={styles.publicCardBox}>
-                    <div className={styles.tapitLogo}>TapIt</div>
+                    <div className={styles.tapitLogo}>
+                        TapIt
+                    </div>
                     <div className={styles.loadingSpinner}/>
                     <h1>Loading card...</h1>
                     <p>Getting this TapIt card ready.</p>
@@ -61,7 +63,9 @@ function PublicCardPage() {
         return (
             <main className={styles.publicCardPage}>
                 <section className={styles.publicCardBox}>
-                    <div className={styles.tapitLogo}>TapIt</div>
+                    <a href="/">
+                        <div className={styles.tapitLogo}>TapIt</div>
+                    </a>
                     <h1>Unable to load card</h1>
                     <p>{error}</p>
                 </section>
@@ -72,7 +76,9 @@ function PublicCardPage() {
         return (
             <main className={styles.publicCardPage}>
                 <section className={styles.publicCardBox}>
-                    <div className={styles.tapitLogo}>TapIt</div>
+                    <a href="/">
+                        <div className={styles.tapitLogo}>TapIt</div>
+                    </a>
                     <h1>This card is unavailable</h1>
 
                     {cardData.card_name && <p className={styles.publicCardName}>{cardData.card_name}</p>}
