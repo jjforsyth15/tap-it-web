@@ -13,6 +13,8 @@ export type RegisterResponse = {
 };
 
 export type LoginResponse = {
+    first_name: string;
+    last_name: string;
     access_token: string;
     token_type: string;
 };
@@ -23,4 +25,13 @@ export type AuthContextType = {
     user: User | null;
     login: (token: string) => void;
     logout: () => void;
+};
+
+export type GoogleAuthRequest = {
+    credential: string;
+};
+
+export type GoogleLinkResponse = {
+    success: boolean;
+    message: string;
 };

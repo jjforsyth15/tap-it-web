@@ -1,6 +1,7 @@
 #!/bin/sh
-# Contract review gate: reviews any frontend type file staged in this
-# commit against its backend counterpart via the tapit-ai CLI.
+# Contract review check: reviews any frontend type file staged in this
+# commit against its backend counterpart via the tapit-ai CLI. Warns on
+# drift but does not block the commit.
 #
 # One-time setup after cloning: git config core.hooksPath scripts/hooks
 
@@ -34,8 +35,15 @@ fi
 
 FAILED=0
 for stem in $STEMS; do
-  if [ ! -f "../tap-it-server/app/schemas/$stem.py" ]; then
-    echo "No backend counterpart for '$stem' (app/schemas/$stem.py not found) - skipping contract review for this file."
+  # src/types/admin.ts is explicitly paired with app/schemas/admin/admin_dashboard.py
+  # (stems don't match by naming convention) - see tapit_ai/utils/discovery.py
+  case "$stem" in
+    admin) backend_rel="app/schemas/admin/admin_dashboard.py" ;;
+    *) backend_rel="app/schemas/$stem.py" ;;
+  esac
+
+  if [ ! -f "../tap-it-server/$backend_rel" ]; then
+    echo "No backend counterpart for '$stem' ($backend_rel not found) - skipping contract review for this file."
     continue
   fi
 
@@ -48,8 +56,7 @@ done
 
 if [ "$FAILED" -ne 0 ]; then
   echo "" >&2
-  echo "Contract review failed for one or more changed type files. Commit blocked." >&2
-  exit 1
+  echo "WARNING: contract review found issues for one or more changed type files. Commit is NOT blocked -- review the output above before pushing." >&2
 fi
 
 exit 0

@@ -1,4 +1,4 @@
-import type { RegisterData, LoginResponse, RegisterResponse } from "../types/auth";
+import type { RegisterData, LoginResponse, RegisterResponse, GoogleAuthRequest, GoogleLinkResponse } from "../types/auth";
 import { apiRequest } from "./client";
 
 export async function registerUser(data: RegisterData): Promise<RegisterResponse> {
@@ -22,5 +22,24 @@ export async function loginUser(email: string, password: string): Promise<LoginR
             "Content-Type": "application/x-www-form-urlencoded",
         },
         body: formData,
+    });
+}
+
+
+
+export async function googleLogin(data: GoogleAuthRequest): Promise<LoginResponse> {
+    return apiRequest<LoginResponse>("/auth/google", {
+        method: "POST",
+        requiresAuth: false,
+        body: JSON.stringify(data),
+    });
+}   
+
+export async function linkGoogleAccount(data: GoogleAuthRequest, authToken?: string): Promise<GoogleLinkResponse> {
+    return apiRequest<GoogleLinkResponse>("/auth/google/link", {
+        method: "POST",
+        requiresAuth: true,
+        authToken,
+        body: JSON.stringify(data),
     });
 }
