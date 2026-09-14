@@ -1,4 +1,4 @@
-import type { RegisterData, LoginResponse, RegisterResponse, GoogleAuthRequest, GoogleLinkResponse } from "../types/auth";
+import type { RegisterData, LoginResponse, RegisterResponse, GoogleAuthRequest, GoogleLinkResponse, EmailVerificationResponse } from "../types/auth";
 import { apiRequest } from "./client";
 
 export async function registerUser(data: RegisterData): Promise<RegisterResponse> {
@@ -41,5 +41,21 @@ export async function linkGoogleAccount(data: GoogleAuthRequest, authToken?: str
         requiresAuth: true,
         authToken,
         body: JSON.stringify(data),
+    });
+}
+
+export async function verifyEmail(token: string): Promise<EmailVerificationResponse> {
+    return apiRequest<EmailVerificationResponse>("/auth/verify-email", {
+        method: "POST",
+        requiresAuth: false,
+        body: JSON.stringify({ token }),
+    });
+}
+
+export async function resendVerification(email: string): Promise<EmailVerificationResponse> {
+    return apiRequest<EmailVerificationResponse>("/auth/resend-verification", {
+        method: "POST",
+        requiresAuth: false,
+        body: JSON.stringify({ email }),
     });
 }

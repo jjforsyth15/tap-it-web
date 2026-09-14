@@ -35,3 +35,7 @@ export type GoogleLinkResponse = {
     success: boolean;
     message: string;
 };
+
+export type EmailVerificationResponse = {
+    message: string;
+};

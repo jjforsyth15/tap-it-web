@@ -8,6 +8,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage";
 import DashboardPage from "./pages/DashboardPage";
 import PublicProfilePage from "./pages/PublicProfilePage";
 import ActivateCardPage from "./pages/ActivateCardPage";
@@ -42,6 +43,7 @@ function App() {
             </Route>
 
             <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
+            <Route path="/verify-email" element={<VerifyEmailPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>

@@ -5,16 +5,19 @@ import { loginUser, linkGoogleAccount } from "../api/authApi";
 import { useAuth } from "../context/authContext";
 import { useSearchParams } from "react-router-dom";
 import GoogleAuthButton, { isGoogleAuthEnabled } from "../components/auth/GoogleAuthButton";
+import styles from "../styles/RegisterPage.module.css";
 
 function RegisterPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [pendingGoogleCredential, setPendingGoogleCredential] = useState<string | null>(null);
+    const [registeredEmail, setRegisteredEmail] = useState<string | null>(null);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const { login } = useAuth();
@@ -23,20 +26,24 @@ function RegisterPage() {
 
     async function handleRegister(e: React.FormEvent) {
         e.preventDefault();
-        setIsLoading(true);
         setError("");
 
+        if (password !== confirmPassword) {
+            setError("Passwords do not match.");
+            return;
+        }
+
+        setIsLoading(true);
+
         try {
-            await registerUser({
+            const data = await registerUser({
                 email,
                 password,
                 first_name: firstName,
                 last_name: lastName
             });
 
-            const loginData = await loginUser(email, password);
-            login(loginData.access_token);
-            navigate(next);
+            setRegisteredEmail(data.email);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to register. Please try again.");
         } finally {
@@ -72,6 +79,25 @@ function RegisterPage() {
         setError("");
     }
 
+
+    if (registeredEmail) {
+        return (
+            <div className="auth-page">
+                <div className="auth-card">
+                    <h1>Check your email</h1>
+
+                    <p className="auth-notice" role="status" aria-live="polite">
+                        We sent a verification link to <strong>{registeredEmail}</strong>. Please check your inbox
+                        to verify your account before logging in.
+                    </p>
+
+                    <p className="auth-footer">
+                        <Link to="/login" className="auth-link">Back to Log in</Link>
+                    </p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="auth-page">
@@ -134,12 +160,24 @@ function RegisterPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <button 
+                    <button
                         type="button"
+                        className={styles.toggleButton}
                         onClick={() => setShowPassword(!showPassword)}
                     >
                         {showPassword ? "Hide" : "Show"}
                     </button>
+
+                    {!pendingGoogleCredential && (
+                        <input
+                            className="auth-input"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Confirm password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    )}
 
                     {error && <p className="auth-error" role="alert">{error}</p>}
 

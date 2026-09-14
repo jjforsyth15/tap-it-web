@@ -1,8 +1,12 @@
 import { useState} from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { loginUser, linkGoogleAccount } from "../api/authApi";
+import { loginUser, linkGoogleAccount, resendVerification } from "../api/authApi";
+import { ApiError } from "../api/client";
 import { useAuth } from "../context/authContext";
 import GoogleAuthButton, { isGoogleAuthEnabled } from "../components/auth/GoogleAuthButton";
+import styles from "../styles/LoginPage.module.css";
+
+type ResendStatus = "idle" | "loading" | "sent";
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -14,6 +18,8 @@ function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [pendingGoogleCredential, setPendingGoogleCredential] = useState<string | null>(null);
+    const [needsVerification, setNeedsVerification] = useState(false);
+    const [resendStatus, setResendStatus] = useState<ResendStatus>("idle");
     const next = searchParams.get("next")  || "/dashboard";
 
     const { login } = useAuth();
@@ -22,6 +28,8 @@ function LoginPage() {
         e.preventDefault();
         setIsLoading(true);
         setError("");
+        setNeedsVerification(false);
+        setResendStatus("idle");
 
         try {
             const data = await loginUser(email, password);
@@ -30,8 +38,22 @@ function LoginPage() {
             navigate(next);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Login failed");
+            setNeedsVerification(err instanceof ApiError && err.status === 403);
         } finally {
             setIsLoading(false);
+        }
+    }
+
+    async function handleResendVerification() {
+        setResendStatus("loading");
+        setError("");
+
+        try {
+            await resendVerification(email);
+            setResendStatus("sent");
+        } catch (err) {
+            setResendStatus("idle");
+            setError(err instanceof Error ? err.message : "Failed to resend verification email.");
         }
     }
 
@@ -106,7 +128,7 @@ function LoginPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
-                        <button className="show-password-button"
+                        <button className={styles.toggleButton}
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
                         >
@@ -120,6 +142,23 @@ function LoginPage() {
                     </p>
 
                     {error && <p className="auth-error" role="alert">{error}</p>}
+
+                    {needsVerification && (
+                        resendStatus === "sent" ? (
+                            <p className="auth-notice" role="status" aria-live="polite">
+                                Verification email sent. Please check your inbox.
+                            </p>
+                        ) : (
+                            <button
+                                type="button"
+                                className={styles.resendButton}
+                                onClick={handleResendVerification}
+                                disabled={resendStatus === "loading"}
+                            >
+                                {resendStatus === "loading" ? "Sending..." : "Resend verification email"}
+                            </button>
+                        )
+                    )}
 
                     <button type="submit" disabled={isLoading}>
                         {pendingGoogleCredential
