@@ -1,4 +1,4 @@
-import type { RegisterData, LoginResponse, RegisterResponse, GoogleAuthRequest, GoogleLinkResponse, EmailVerificationResponse } from "../types/auth";
+import type { RegisterData, LoginResponse, RegisterResponse, GoogleAuthRequest, GoogleLinkResponse, EmailVerificationResponse, ForgotPasswordResponse, ResetPasswordResponse } from "../types/auth";
 import { apiRequest } from "./client";
 
 export async function registerUser(data: RegisterData): Promise<RegisterResponse> {
@@ -57,5 +57,21 @@ export async function resendVerification(email: string): Promise<EmailVerificati
         method: "POST",
         requiresAuth: false,
         body: JSON.stringify({ email }),
+    });
+}
+
+export async function forgotPassword(email: string): Promise<ForgotPasswordResponse> {
+    return apiRequest<ForgotPasswordResponse>("/auth/forgot-password", {
+        method: "POST",
+        requiresAuth: false,
+        body: JSON.stringify({ email }),
+    });
+}
+
+export async function resetPassword(token: string, newPassword: string): Promise<ResetPasswordResponse> {
+    return apiRequest<ResetPasswordResponse>("/auth/reset-password", {
+        method: "POST",
+        requiresAuth: false,
+        body: JSON.stringify({ token, new_password: newPassword }),
     });
 }

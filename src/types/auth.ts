@@ -39,3 +39,11 @@ export type GoogleLinkResponse = {
 export type EmailVerificationResponse = {
     message: string;
 };
+
+export type ForgotPasswordResponse = {
+    message: string;
+};
+
+export type ResetPasswordResponse = {
+    message: string;
+};

@@ -26,6 +26,8 @@ function LoginPage() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+        if (isLoading) return;
+
         setIsLoading(true);
         setError("");
         setNeedsVerification(false);
@@ -59,7 +61,7 @@ function LoginPage() {
 
     async function handleLinkGoogleAccount(e: React.FormEvent) {
         e.preventDefault();
-        if (!pendingGoogleCredential) return;
+        if (!pendingGoogleCredential || isLoading) return;
 
         setIsLoading(true);
         setError("");
@@ -137,7 +139,11 @@ function LoginPage() {
                     </label>
 
                     <p className="auth-footer">
-                        Don't have an account? 
+                        <Link to="/forgot-password" className="auth-link">Forgot password?</Link>
+                    </p>
+
+                    <p className="auth-footer">
+                        Don't have an account?
                         <Link to={`/register${next ? `?next=${encodeURIComponent(next)}` : ""}`} className="auth-link"> Register</Link>
                     </p>
 

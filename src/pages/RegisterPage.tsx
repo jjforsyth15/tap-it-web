@@ -26,6 +26,8 @@ function RegisterPage() {
 
     async function handleRegister(e: React.FormEvent) {
         e.preventDefault();
+        if (isLoading) return;
+
         setError("");
 
         if (password !== confirmPassword) {
@@ -53,7 +55,7 @@ function RegisterPage() {
 
     async function handleLinkGoogleAccount(e: React.FormEvent) {
         e.preventDefault();
-        if (!pendingGoogleCredential) return;
+        if (!pendingGoogleCredential || isLoading) return;
 
         setIsLoading(true);
         setError("");
