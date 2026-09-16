@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { verifyEmail } from "../api/authApi";
+import { confirmEmailChange } from "../api/userApi";
 
-type VerificationStatus = "idle" | "loading" | "success" | "error";
+type ConfirmationStatus = "idle" | "loading" | "success" | "error";
 
-function VerifyEmailPage() {
+function ConfirmEmailChangePage() {
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
 
-    const [status, setStatus] = useState<VerificationStatus>(token ? "loading" : "idle");
+    const [status, setStatus] = useState<ConfirmationStatus>(token ? "loading" : "idle");
     const [error, setError] = useState("");
     const [attempt, setAttempt] = useState(0);
     const firedRequestKey = useRef<string | null>(null);
@@ -22,25 +22,25 @@ function VerifyEmailPage() {
         if (firedRequestKey.current === requestKey) return;
         firedRequestKey.current = requestKey;
 
-        const verificationToken = token;
+        const confirmationToken = token;
         let cancelled = false;
 
-        async function runVerification() {
+        async function runConfirmation() {
             setStatus("loading");
             setError("");
 
             try {
-                await verifyEmail(verificationToken);
+                await confirmEmailChange(confirmationToken);
                 if (!cancelled) setStatus("success");
             } catch (err) {
                 if (!cancelled) {
                     setStatus("error");
-                    setError(err instanceof Error ? err.message : "Failed to verify email. Please try again.");
+                    setError(err instanceof Error ? err.message : "Failed to confirm email change. Please try again.");
                 }
             }
         }
 
-        void runVerification();
+        void runConfirmation();
 
         return () => {
             cancelled = true;
@@ -50,17 +50,17 @@ function VerifyEmailPage() {
     return (
         <div className="auth-page">
             <div className="auth-card">
-                <h1>Verify your email</h1>
+                <h1>Confirm email change</h1>
 
                 {status === "idle" && (
-                    <p>This link is missing a verification token.</p>
+                    <p>This link is missing a confirmation token.</p>
                 )}
 
-                {status === "loading" && <p role="status" aria-live="polite">Verifying your email...</p>}
+                {status === "loading" && <p role="status" aria-live="polite">Confirming your new email address...</p>}
 
                 {status === "success" && (
                     <p className="auth-notice" role="status" aria-live="polite">
-                        Your email has been verified.
+                        Your email address has been changed.
                     </p>
                 )}
 
@@ -84,4 +84,4 @@ function VerifyEmailPage() {
     );
 }
 
-export default VerifyEmailPage;
+export default ConfirmEmailChangePage;

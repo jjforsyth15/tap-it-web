@@ -11,6 +11,8 @@ import RegisterPage from "./pages/RegisterPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ConfirmEmailChangePage from "./pages/ConfirmEmailChangePage";
+import CancelEmailChangePage from "./pages/CancelEmailChangePage";
 import DashboardPage from "./pages/DashboardPage";
 import PublicProfilePage from "./pages/PublicProfilePage";
 import ActivateCardPage from "./pages/ActivateCardPage";
@@ -48,6 +50,8 @@ function App() {
             <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
             <Route path="/verify-email" element={<VerifyEmailPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/confirm-email-change" element={<ConfirmEmailChangePage />} />
+            <Route path="/cancel-email-change" element={<CancelEmailChangePage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
