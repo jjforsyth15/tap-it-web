@@ -47,3 +47,29 @@ export type ForgotPasswordResponse = {
 export type ResetPasswordResponse = {
     message: string;
 };
+
+export type EmailChangeRequest = {
+    new_email: string;
+    current_password?: string;
+    google_credential?: string;
+};
+
+export type EmailChangeResponse = {
+    message: string;
+};
+
+export type EmailChangeConfirmRequest = {
+    token: string;
+};
+
+export type EmailChangeConfirmResponse = {
+    message: string;
+};
+
+export type EmailChangeCancelRequest = {
+    token: string;
+};
+
+export type EmailChangeCancelResponse = {
+    message: string;
+};
