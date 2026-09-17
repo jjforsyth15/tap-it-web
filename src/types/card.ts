@@ -25,7 +25,6 @@ export type CardResponse = {
     profile_id: string;
     card_name: string;
     card_code: string;
-    pointing_url: string;
     card_status: string;
     created_at: string;
     activated_at?: string;
