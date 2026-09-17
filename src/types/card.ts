@@ -57,3 +57,10 @@ export type CardAdjustmentResponse = {
     message: string;
     card: CardResponse;
 }
+
+export type SwapCardProfileResponse = {
+    message: string;
+    card_name: string;
+    new_profile_name: string;
+    profile_id: string;
+}

@@ -7,7 +7,8 @@ import type {
     CardCreateResponse,
     CardUpdateRequest,
     CardActivationRequest,
-    CardAdjustmentResponse
+    CardAdjustmentResponse,
+    SwapCardProfileResponse
 } from "../types/card";
 
 export async function activateCard(activationRequest: CardActivationRequest): Promise<CardAdjustmentResponse> {
@@ -55,8 +56,26 @@ export async function updateCard(cardId: string, cardData: CardUpdateRequest): P
     });
 }
 
-export async function deactivateCard(cardId: string): Promise<string> {
-    return apiRequest<string>(`/cards/${cardId}/deactivate`, {
+export async function deactivateCard(cardId: string): Promise<CardAdjustmentResponse> {
+    return apiRequest<CardAdjustmentResponse>(`/cards/${cardId}/deactivate`, {
+        method: "PATCH",
+    });
+}
+
+export async function reportCardLost(cardId: string): Promise<CardAdjustmentResponse> {
+    return apiRequest<CardAdjustmentResponse>(`/cards/${cardId}/report-lost`, {
+        method: "PATCH",
+    });
+}
+
+export async function reactivateCard(cardId: string): Promise<CardAdjustmentResponse> {
+    return apiRequest<CardAdjustmentResponse>(`/cards/${cardId}/reactivate`, {
+        method: "PATCH",
+    });
+}
+
+export async function swapCardProfile(cardId: string, profileId: string): Promise<SwapCardProfileResponse> {
+    return apiRequest<SwapCardProfileResponse>(`/cards/${cardId}/profile/${profileId}`, {
         method: "PATCH",
     });
 }
