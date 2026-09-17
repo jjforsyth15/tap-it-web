@@ -62,9 +62,11 @@ function RegisterPage() {
 
         try {
             const loginData = await loginUser(email, password);
-            await linkGoogleAccount({ credential: pendingGoogleCredential }, loginData.access_token);
+            const linkResult = await linkGoogleAccount({ credential: pendingGoogleCredential }, loginData.access_token);
 
-            login(loginData.access_token);
+            // Linking rotates the account's token_version server-side, so the
+            // pre-link token above is now stale -- use the one linking just issued.
+            login(linkResult.access_token ?? loginData.access_token);
             navigate(next, { replace: true });
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to link Google account.");

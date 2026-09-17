@@ -34,6 +34,7 @@ export type GoogleAuthRequest = {
 export type GoogleLinkResponse = {
     success: boolean;
     message: string;
+    access_token?: string;
 };
 
 export type EmailVerificationResponse = {
