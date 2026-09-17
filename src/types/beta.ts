@@ -1,16 +1,16 @@
-export type BetaFeedback = {
-    feedback_id: string;
-    user_id: string;
-    feedback_type: string;
-    contact_info: string;
-    page_url: string;
-    feedback_description: string;
-    browser_info: string;
-    screen_size: string;
-    version: string;
-    feedback_status: string;
-    created_at: string;
-}
+// export type BetaFeedback = {
+//     feedback_id: string;
+//     user_id: string;
+//     feedback_type: string;
+//     contact_info: string;
+//     page_url: string;
+//     feedback_description: string;
+//     browser_info: string;
+//     screen_size: string;
+//     version: string;
+//     feedback_status: string;
+//     created_at: string;
+// }
 
 export type BetaFeedbackRequest = {
     feedback_type: string;
