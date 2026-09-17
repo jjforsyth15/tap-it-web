@@ -17,13 +17,16 @@ function CancelEmailChangePage() {
         if (!token) return;
 
         // Guards against React StrictMode's dev-only double-invoke of this effect,
-        // which would otherwise submit this single-use token twice.
+        // which would otherwise submit this single-use token twice. Staleness is
+        // checked against the ref itself (rather than a per-invocation "cancelled"
+        // closure variable) so the original in-flight request can still update
+        // state once it resolves, even though StrictMode's synthetic cleanup runs
+        // before that -- a closure-scoped flag would wrongly look "cancelled" by then.
         const requestKey = `${token}:${attempt}`;
         if (firedRequestKey.current === requestKey) return;
         firedRequestKey.current = requestKey;
 
         const cancellationToken = token;
-        let cancelled = false;
 
         async function runCancellation() {
             setStatus("loading");
@@ -31,9 +34,9 @@ function CancelEmailChangePage() {
 
             try {
                 await cancelEmailChange(cancellationToken);
-                if (!cancelled) setStatus("success");
+                if (firedRequestKey.current === requestKey) setStatus("success");
             } catch (err) {
-                if (!cancelled) {
+                if (firedRequestKey.current === requestKey) {
                     setStatus("error");
                     setError(err instanceof Error ? err.message : "Failed to cancel email change. Please try again.");
                 }
@@ -41,10 +44,6 @@ function CancelEmailChangePage() {
         }
 
         void runCancellation();
-
-        return () => {
-            cancelled = true;
-        };
     }, [token, attempt]);
 
     return (
