@@ -1,12 +1,15 @@
 import { apiRequest } from "./client";
-import type { 
-    Profile, 
-    PublicProfile, 
-    ProfileLink, 
-    ProfileLinkCreate, 
-    CreateProfileRequest, 
-    CreateProfileResponse, 
-    ProfileUpdate, 
+import type {
+    Profile,
+    PublicProfile,
+    ProfileLink,
+    ProfileLinkCreate,
+    ProfileContact,
+    ProfileContactCreate,
+    ProfileContactUpdate,
+    CreateProfileRequest,
+    CreateProfileResponse,
+    ProfileUpdate,
     ProfileAdjustmentResponse } from "../types/profile";
 
 type MessageResponse = {
@@ -87,5 +90,36 @@ export async function reorderProfiles(profiles: { profile_id: string; display_or
     return apiRequest<MessageResponse>(`/profiles/reorder`, {
         method: "PATCH",
         body: JSON.stringify({ profiles }),
+    });
+}
+
+export async function getProfileContacts(profileId: string): Promise<ProfileContact[]> {
+    return apiRequest<ProfileContact[]>(`/profile_contacts/${profileId}/contacts`);
+}
+
+export async function createProfileContact(profileId: string, contactData: ProfileContactCreate): Promise<ProfileContact> {
+    return apiRequest<ProfileContact>(`/profile_contacts/${profileId}/contacts`, {
+        method: "POST",
+        body: JSON.stringify(contactData),
+    });
+}
+
+export async function updateProfileContact(contactId: string, contactData: ProfileContactUpdate): Promise<ProfileContact> {
+    return apiRequest<ProfileContact>(`/profile_contacts/contacts/${contactId}`, {
+        method: "PATCH",
+        body: JSON.stringify(contactData),
+    });
+}
+
+export async function deleteProfileContact(contactId: string): Promise<MessageResponse> {
+    return apiRequest<MessageResponse>(`/profile_contacts/contacts/${contactId}`, {
+        method: "DELETE"
+    });
+}
+
+export async function reorderProfileContacts(contacts: { contact_id: string; display_order: number }[]): Promise<MessageResponse> {
+    return apiRequest<MessageResponse>(`/profile_contacts/reorder`, {
+        method: "PATCH",
+        body: JSON.stringify({ contacts }),
     });
 }
