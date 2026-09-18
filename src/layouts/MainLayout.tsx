@@ -43,7 +43,7 @@ function MainLayout() {
             </main>
 
             <footer className={styles.appFooter}>
-                <p>&copy; 2026 TapIt. All rights reserved. Beta 1 - July 2026</p>
+                <p>&copy; 2026 TapIt. All rights reserved. Beta 2 - September 2026</p>
             </footer>
 
             <BetaFeedback />
