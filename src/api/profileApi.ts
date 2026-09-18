@@ -1,4 +1,4 @@
-import { apiRequest } from "./client";
+import { apiRequest, API_BASE_URL } from "./client";
 import type {
     Profile,
     PublicProfile,
@@ -15,6 +15,10 @@ import type {
 type MessageResponse = {
     message: string;
 };
+
+export function getProfileVCardUrl(profileId: string): string {
+    return `${API_BASE_URL}/profiles/public/${profileId}/vcard`;
+}
 
 export async function getPublicProfile(profileId: string): Promise<PublicProfile> {
     return apiRequest<PublicProfile>(`/profiles/public/${profileId}`,

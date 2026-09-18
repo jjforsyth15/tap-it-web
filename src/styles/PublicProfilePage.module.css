@@ -21,6 +21,24 @@
     background: white;
     border-radius: 1.5rem;
     padding: 2rem 1.5rem;
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .publicProfileContent {
+        animation: cardEnter 0.5s ease-out;
+    }
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .profileAvatar {
@@ -43,6 +61,19 @@
     color: #111;
 }
 
+.profileSubtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.2rem;
+}
+
+.profileOrganization {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0 0 0.75rem;
+}
+
 .profileBio {
     font-size: 0.9375rem;
     color: #444;
@@ -63,11 +94,20 @@
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
 }
 
 .profileMainLink {
     background-color: #111;
     color: white;
+}
+
+.profileMainLink:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.6rem 1.25rem rgba(0, 0, 0, 0.18);
 }
 
 .profileLink {
@@ -77,25 +117,178 @@
 
 .profileLink:hover {
     background-color: #f6f6f6;
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.4rem 0.9rem rgba(15, 23, 42, 0.08);
+}
+
+.profileMainLink:active,
+.profileLink:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.profileLinkButton {
+    font-family: inherit;
+    background: none;
+    cursor: pointer;
+}
+
+.contactItem {
+    margin-bottom: 0.75rem;
+}
+
+.contactItem > .profileLink {
+    margin-bottom: 0.4rem;
+}
+
+.contactValueRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+}
+
+.contactValueLink {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 0.7rem 0.9rem;
+    border: 0.0625rem solid #ddd;
+    border-radius: 999rem;
+    color: #111;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.contactValueLink:hover {
+    background-color: #f6f6f6;
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.4rem 0.9rem rgba(15, 23, 42, 0.08);
+}
+
+.contactValueLink:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.copyButton {
+    flex-shrink: 0;
+    width: 2.35rem;
+    height: 2.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.0625rem solid #ddd;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.copyButton:hover {
+    background-color: #f6f6f6;
+    color: #2563eb;
+}
+
+.copyButton:active {
+    transform: scale(0.92);
+}
+
+.profileSection {
+    margin-bottom: 0.5rem;
+}
+
+.sectionHeadingWrapper {
+    margin: 0;
+}
+
+.sectionHeading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 0 0.6rem;
+    padding: 0.25rem 0;
+    border: none;
+    background: none;
+    color: #8a8a8a;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-color: #000;
+    text-decoration-thickness: 0.09rem;
+    text-underline-offset: 0.3rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s ease, text-shadow 0.15s ease;
+}
+
+.sectionHeading:hover,
+.sectionHeading[aria-expanded="true"] {
+    text-shadow:
+        0 0 0.35rem rgba(37, 99, 235, 0.85),
+        0 0 0.9rem rgba(37, 99, 235, 0.7),
+        0 0 1.75rem rgba(37, 99, 235, 0.5);
+    transform: translateY(-0.1rem);
+}
+
+.collapsible {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+}
+
+.collapsibleOpen {
+    grid-template-rows: 1fr;
+}
+
+.collapsibleInner {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.avatarFrame {
+    width: 9rem;
+    height: 9rem;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    box-shadow: 0 0.75rem 1.75rem rgba(15, 23, 42, 0.18);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.avatarFrame:hover {
+    transform: translateY(-0.15rem) scale(1.02);
+    box-shadow: 0 1rem 2.25rem rgba(15, 23, 42, 0.24);
 }
 
 .publicProfileAvatar,
 .publicProfileAvatarFallback {
-    width: 7rem;
-    height: 7rem;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    margin: 0 auto 1rem;
+    border: 0.125rem solid #e5e7eb;
 }
 
 .publicProfileAvatar {
     object-fit: cover;
-    border: 0.125rem solid #e5e7eb;
 }
 
 .publicProfileAvatarFallback {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: white;

@@ -1,6 +1,6 @@
 import { getAuthToken, clearAuthToken } from "../utils/authStorage";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const AUTH_EXPIRED_EVENT = "auth_expired";
 interface FastApiValidationError {
     msg?: string;
