@@ -1,6 +1,8 @@
 export type CreateProfileRequest = {
     profile_name: string;
     bio?: string;
+    subtitle?: string;
+    organization?: string;
     profile_image_url?: string;
 }
 
@@ -64,6 +66,8 @@ export type PublicProfile = {
     profile_id: string;
     profile_name: string;
     bio?: string;
+    subtitle?: string | null;
+    organization?: string | null;
     profile_image_url?: string;
     links?: ProfileLink[];
     contact_info?: PublicProfileContact[];
@@ -76,6 +80,8 @@ export type Profile = {
     user_id: string;
     profile_name: string;
     bio: string | null;
+    subtitle: string | null;
+    organization: string | null;
     profile_status: ProfileStatus;
     profile_image_url: string | null;
     created_at: string;
@@ -99,6 +105,8 @@ export type DashboardProfile = {
 export type ProfileUpdate = {
     profile_name?: string;
     bio?: string | null;
+    subtitle?: string | null;
+    organization?: string | null;
     profile_status?: ProfileStatus;
     profile_image_url?: string | null;
 }
