@@ -17,6 +17,12 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
     const [isEditingName, setIsEditingName] = useState(false);
     const [nameInput, setNameInput] = useState(profile.profile_name || "");
 
+    const [isEditingSubtitle, setIsEditingSubtitle] = useState(false);
+    const [subtitleInput, setSubtitleInput] = useState(profile.subtitle || "");
+
+    const [isEditingOrganization, setIsEditingOrganization] = useState(false);
+    const [organizationInput, setOrganizationInput] = useState(profile.organization || "");
+
     const [avatarPreview, setAvatarPreview] = useState(profile.profile_image_url || "");
     const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -82,6 +88,48 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to update profile name");
+            setTimeout(() => setError(""), 3000);
+        }
+    }
+
+    async function handleSaveSubtitle() {
+        if (subtitleInput.length > 100) {
+            setError("Subtitle cannot exceed 100 characters");
+            setTimeout(() => setError(""), 3000);
+            return;
+        }
+
+        try {
+            const updatedProfile = await updateProfile(profile.profile_id, { subtitle: subtitleInput || null });
+
+            onProfileUpdated(updatedProfile.profile);
+            setIsEditingSubtitle(false);
+
+            setSuccessMessage("Subtitle updated successfully");
+            setTimeout(() => setSuccessMessage(""), 3000);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to update subtitle");
+            setTimeout(() => setError(""), 3000);
+        }
+    }
+
+    async function handleSaveOrganization() {
+        if (organizationInput.length > 100) {
+            setError("Organization cannot exceed 100 characters");
+            setTimeout(() => setError(""), 3000);
+            return;
+        }
+
+        try {
+            const updatedProfile = await updateProfile(profile.profile_id, { organization: organizationInput || null });
+
+            onProfileUpdated(updatedProfile.profile);
+            setIsEditingOrganization(false);
+
+            setSuccessMessage("Organization updated successfully");
+            setTimeout(() => setSuccessMessage(""), 3000);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to update organization");
             setTimeout(() => setError(""), 3000);
         }
     }
@@ -230,6 +278,114 @@ export default function ProfileHeader({profile, onProfileUpdated, setSuccessMess
                                     onClick={() => setIsEditingName(true)}
                                 >
                                     Edit Name
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className={styles.headerSection}>
+                        <h2 className={styles.bioHeader}>Subtitle</h2>
+                        {isEditingSubtitle ? (
+                            <input
+                                className={styles.inlineEditInput}
+                                value={subtitleInput}
+                                maxLength={100}
+                                placeholder="e.g. Product Designer"
+                                onChange={(e) => setSubtitleInput(e.target.value)}
+                            />
+                        ) : (
+                            <p className={styles.profileBio}>
+                                {profile.subtitle || "No subtitle added yet."}
+                            </p>
+                        )}
+
+                        <div className={styles.nameActions}>
+                            {isEditingSubtitle ? (
+                                <>
+                                    <button
+                                        type="button"
+                                        className={styles.editBioButton}
+                                        onClick={handleSaveSubtitle}
+                                    >
+                                        Save
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className={styles.editBioButton}
+                                        onClick={() => {
+                                            setSubtitleInput(profile.subtitle || "");
+                                            setIsEditingSubtitle(false);
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <p className={styles.characterLimitInfo}>
+                                        {subtitleInput.length} / 100 characters
+                                    </p>
+                                </>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className={styles.editBioButton}
+                                    onClick={() => setIsEditingSubtitle(true)}
+                                >
+                                    {profile.subtitle ? "Edit Subtitle" : "Add Subtitle"}
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className={styles.headerSection}>
+                        <h2 className={styles.bioHeader}>Organization</h2>
+                        {isEditingOrganization ? (
+                            <input
+                                className={styles.inlineEditInput}
+                                value={organizationInput}
+                                maxLength={100}
+                                placeholder="e.g. Acme Inc."
+                                onChange={(e) => setOrganizationInput(e.target.value)}
+                            />
+                        ) : (
+                            <p className={styles.profileBio}>
+                                {profile.organization || "No organization added yet."}
+                            </p>
+                        )}
+
+                        <div className={styles.nameActions}>
+                            {isEditingOrganization ? (
+                                <>
+                                    <button
+                                        type="button"
+                                        className={styles.editBioButton}
+                                        onClick={handleSaveOrganization}
+                                    >
+                                        Save
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className={styles.editBioButton}
+                                        onClick={() => {
+                                            setOrganizationInput(profile.organization || "");
+                                            setIsEditingOrganization(false);
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <p className={styles.characterLimitInfo}>
+                                        {organizationInput.length} / 100 characters
+                                    </p>
+                                </>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className={styles.editBioButton}
+                                    onClick={() => setIsEditingOrganization(true)}
+                                >
+                                    {profile.organization ? "Edit Organization" : "Add Organization"}
                                 </button>
                             )}
                         </div>

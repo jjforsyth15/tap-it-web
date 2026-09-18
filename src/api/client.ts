@@ -1,6 +1,6 @@
 import { getAuthToken, clearAuthToken } from "../utils/authStorage";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const AUTH_EXPIRED_EVENT = "auth_expired";
 interface FastApiValidationError {
     msg?: string;
@@ -12,10 +12,21 @@ interface ApiErrorResponse {
 
 interface ApiRequestOptions extends RequestInit {
     requiresAuth?: boolean;
+    authToken?: string;
 }
 
-function buildHeaders(options: RequestInit, requiresAuth: boolean): HeadersInit {
-    const token = requiresAuth ? getAuthToken() : null;
+export class ApiError extends Error {
+    readonly status: number;
+
+    constructor(message: string, status: number) {
+        super(message);
+        this.name = "ApiError";
+        this.status = status;
+    }
+}
+
+function buildHeaders(options: ApiRequestOptions, requiresAuth: boolean, authToken?: string): HeadersInit {
+    const token = authToken ?? (requiresAuth ? getAuthToken() : null);
 
     const hasCustomContentType = new Headers(options.headers).has("content-type");
 
@@ -63,19 +74,19 @@ function handleUnauthorizedResponse(): never {
 }
 
 export async function apiRequest<T>(endpoint: string, options: ApiRequestOptions = {}): Promise<T> {
-    const { requiresAuth = true, ...requestOptions } = options;
+    const { requiresAuth = true, authToken, ...requestOptions } = options;
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         ...requestOptions,
-        headers: buildHeaders(options, requiresAuth),
+        headers: buildHeaders(requestOptions, requiresAuth, authToken),
     });
 
     const data = await parseResponse(response);
 
-    if (response.status === 401 && requiresAuth) 
+    if (response.status === 401 && requiresAuth && authToken === undefined) 
         handleUnauthorizedResponse();
 
-    if (!response.ok) 
-        throw new Error(getErrorMessage(data));
+    if (!response.ok)
+        throw new ApiError(getErrorMessage(data), response.status);
 
     return data as T;
 }

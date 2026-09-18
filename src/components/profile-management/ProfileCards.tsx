@@ -1,7 +1,7 @@
 import type { CardResponse } from '../../types/card'
 import { useState } from 'react'
 import styles from '../../styles/ProfileManagementPage.module.css'
-import { updateCard } from '../../api/cardApi'
+import { updateCard, deactivateCard, reportCardLost, swapCardProfile } from '../../api/cardApi'
 import type { CardUpdateRequest } from '../../types/card'
 import type { Profile } from '../../types/profile'
 
@@ -83,25 +83,18 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
         if (isSubmitting) return;
         setIsSubmitting(true);
 
-        const cardToUpdate: CardUpdateRequest = {
-            card_status: newStatus,
-        };        
-
         try {
-            const response = await updateCard(cardId, cardToUpdate);
+            if (newStatus === "deactivated") {
+                await deactivateCard(cardId);
+            } else if (newStatus === "lost") {
+                await reportCardLost(cardId);
+            } else {
+                throw new Error(`Unsupported card status: ${newStatus}`);
+            }
 
-            if (newStatus === "deactivated" || newStatus === "lost") {
-                setCards(prevCards =>
-                    prevCards.filter(card => card.card_id !== cardId)
-                );
-            }
-            else {
-                setCards(prevCards =>
-                    prevCards.map(card =>
-                        card.card_id === cardId ? response.card : card
-                    )
-                );
-            }
+            setCards(prevCards =>
+                prevCards.filter(card => card.card_id !== cardId)
+            );
 
             setCardStatusToEdit(null);
             setSuccessMessage("Card status updated successfully.");
@@ -121,13 +114,9 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
     async function handleReassignCard(cardId: string, newProfileId: string) {
         if (isSubmitting) return;
         setIsSubmitting(true);
-        
-        const cardToUpdate: CardUpdateRequest = {
-            profile_id: newProfileId,
-        };
 
         try {
-            await updateCard(cardId, cardToUpdate);
+            const response = await swapCardProfile(cardId, newProfileId);
 
             setCards(currentCards =>
                 currentCards.filter(currentCard =>
@@ -135,7 +124,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                 )
             );
 
-            setSuccessMessage(`Card reassigned to profile successfully.`);
+            setSuccessMessage(`Card reassigned to ${response.new_profile_name} successfully.`);
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
             setIsSubmitting(false);
@@ -266,8 +255,9 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                             >
                                 <option value="">Select a profile</option>
 
-                                {profiles.filter(profile => 
-                                        profile.profile_id !== cardToReassign.profile_id
+                                {profiles.filter(profile =>
+                                        profile.profile_id !== cardToReassign.profile_id &&
+                                        profile.profile_status === "active"
                                     ).map(profile => (
                                         <option 
                                             key={profile.profile_id} 
@@ -321,7 +311,7 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                                     disabled={isSubmitting}
                                     onClick={() => setCardToDeactivate(cardStatusToEdit)}
                                 >
-                                    Inactive
+                                    Deactivate
                                 </button>
 
                                 <button
@@ -379,7 +369,8 @@ export default function ProfileCards({ cards, profiles, setCards, setSuccessMess
                         <div className={styles.confirmModal}>
                             <h3>Mark Card as Lost?</h3>
 
-                            <p>This will mark <strong>{cardLost.card_name}</strong> as lost and stop it from pointing to your profile until it is found.</p>
+                            <p>This will mark <strong>{cardLost.card_name}</strong> as lost and make it unavailable for use.</p>
+                            <p><strong>This cannot be undone.</strong></p>
 
                             <div className={styles.modalActions}>
                                 <button

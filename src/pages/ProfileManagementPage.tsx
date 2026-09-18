@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getMyProfiles, getProfile, getProfileLinks } from "../api/profileApi";
-import type { Profile, ProfileLink } from "../types/profile";
+import { useState, useEffect, useCallback } from "react";
+import { getMyProfiles, getProfile, getProfileLinks, getProfileContacts } from "../api/profileApi";
+import type { Profile, ProfileLink, ProfileContact } from "../types/profile";
 import type { CardResponse } from "../types/card";
 import styles from "../styles/ProfileManagementPage.module.css";
 import { getActiveProfileCards } from "../api/cardApi";
 import ProfileHeader from "../components/profile-management/ProfileHeaderSection";
 import ProfileLinks from "../components/profile-management/ProfileLinks";
+import ProfileContacts from "../components/profile-management/ProfileContacts";
 import ProfileCards from "../components/profile-management/ProfileCards";
 import { useTimeoutMessage } from "../utils/messaging";
 
@@ -18,6 +19,7 @@ export default function ProfileManagementPage() {
 
     const [profile, setProfile] = useState<Profile | null>(null);
     const [links, setLinks] = useState<ProfileLink[]>([]);
+    const [contacts, setContacts] = useState<ProfileContact[]>([]);
     const [cards, setCards] = useState<CardResponse[]>([]);
     const [profiles, setProfiles] = useState<Profile[]>([]);
 
@@ -27,11 +29,7 @@ export default function ProfileManagementPage() {
     } = useTimeoutMessage(3000);
     
 
-    useEffect(() => {
-        loadProfile();
-    }, [profileId]);
-
-    async function loadProfile() {
+    const loadProfile = useCallback(async () => {
             if(!profileId) {
                 setError("Profile ID is missing");
                 setLoading(false);
@@ -39,14 +37,16 @@ export default function ProfileManagementPage() {
             }
 
             try {
-                const [profileData, linksData, cardsData, profilesData] = await Promise.all([
+                const [profileData, linksData, contactsData, cardsData, profilesData] = await Promise.all([
                     getProfile(profileId),
                     getProfileLinks(profileId),
+                    getProfileContacts(profileId),
                     getActiveProfileCards(profileId),
                     getMyProfiles()
                 ]);
                 setProfile(profileData);
                 setLinks(linksData);
+                setContacts(contactsData);
                 setCards(cardsData);
                 setProfiles(profilesData);
             } catch (err) {
@@ -54,7 +54,14 @@ export default function ProfileManagementPage() {
             } finally {
                 setLoading(false);
             }
-    }
+    }, [profileId]);
+
+    useEffect(() => {
+        async function run() {
+            await loadProfile();
+        }
+        void run();
+    }, [loadProfile]);
 
     function handleProfileUpdate(updatedProfile: Profile) {
         setProfile(updatedProfile);
@@ -93,7 +100,15 @@ export default function ProfileManagementPage() {
                 setError={setError}
             />
 
-            <ProfileCards 
+            <ProfileContacts
+                profileId={profile.profile_id}
+                contacts={contacts}
+                loadProfile={loadProfile}
+                setSuccessMessage={showSuccessMessage}
+                setError={setError}
+            />
+
+            <ProfileCards
                 cards={cards} 
                 profiles={profiles}
                 setCards={setCards}

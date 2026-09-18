@@ -1,0 +1,98 @@
+.healthCard {
+    padding: 1.25rem;
+    background-color: #ffffff;
+    border: 1px solid #dde2e8;
+    border-radius: 0.85rem;
+}
+
+.healthHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.healthEyebrow {
+    margin: 0 0 0.25rem;
+    color: #737b86;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.healthHeader h2 {
+    margin: 0;
+    color: #1b2027;
+    font-size: 1.15rem;
+}
+
+.statusBadge {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 999px;
+}
+
+.healthy {
+    color: #21643a;
+    background-color: #e2f5e8;
+}
+
+.degraded {
+    color: #825700;
+    background-color: #fff3ce;
+}
+
+.unhealthy {
+    color: #9c2525;
+    background-color: #fde8e8;
+}
+
+.healthDetails {
+    margin: 0;
+}
+
+.healthRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-top: 1px solid #edf0f3;
+}
+
+.healthRow dt {
+    color: #69717d;
+    font-size: 0.85rem;
+}
+
+.healthRow dd {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    color: #242a31;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: right;
+}
+
+.statusIndicator {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+}
+
+.statusIndicator.healthy {
+    background-color: #319554;
+}
+
+.statusIndicator.degraded {
+    background-color: #cf8b00;
+}
+
+.statusIndicator.unhealthy {
+    background-color: #cf3838;
+}

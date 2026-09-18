@@ -25,7 +25,6 @@ export type CardResponse = {
     profile_id: string;
     card_name: string;
     card_code: string;
-    pointing_url: string;
     card_status: string;
     created_at: string;
     activated_at?: string;
@@ -56,4 +55,11 @@ export type CardActivationRequest = {
 export type CardAdjustmentResponse = {
     message: string;
     card: CardResponse;
+}
+
+export type SwapCardProfileResponse = {
+    message: string;
+    card_name: string;
+    new_profile_name: string;
+    profile_id: string;
 }

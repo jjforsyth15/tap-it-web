@@ -1,0 +1,49 @@
+.placeholderPage {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.pageHeader {
+    margin-bottom: 2rem;
+}
+
+.eyebrow {
+    margin: 0 0 0.35rem;
+    color: #69717d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.pageHeader h1 {
+    margin: 0;
+    color: #15191e;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.pageHeader p {
+    max-width: 700px;
+    margin: 0.65rem 0 0;
+    color: #626a75;
+    line-height: 1.6;
+}
+
+.placeholderCard {
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 1px solid #dde2e8;
+    border-radius: 0.85rem;
+}
+
+.placeholderCard h2 {
+    margin: 0 0 0.75rem;
+    color: #1b2027;
+    font-size: 1.2rem;
+}
+
+.placeholderCard p {
+    margin: 0;
+    color: #626a75;
+}

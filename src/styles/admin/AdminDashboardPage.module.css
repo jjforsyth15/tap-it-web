@@ -1,0 +1,184 @@
+.adminDashboard {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.pageHeader {
+    margin-bottom: 2rem;
+}
+
+.eyebrow {
+    margin: 1rem 0 0.35rem;
+    color: #69717d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.pageHeader h1 {
+    margin: 0;
+    color: #15191e;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    line-height: 1.15;
+}
+
+.pageDescription {
+    max-width: 720px;
+    margin: 0.65rem 0 0;
+    color: #626a75;
+    line-height: 1.6;
+}
+
+.statsSection {
+    margin-bottom: 2rem;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.sectionHeader h2 {
+    margin: 0;
+    color: #1b2027;
+    font-size: 1.15rem;
+}
+
+.sectionHeader p {
+    margin: 0.35rem 0 0;
+    color: #737b86;
+    font-size: 0.85rem;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.dashboardColumns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.75fr);
+    align-items: start;
+    gap: 1rem;
+}
+
+.actionItemsSection {
+    min-width: 0;
+}
+
+.actionTotal {
+    min-width: 2rem;
+    padding: 0.35rem 0.55rem;
+    color: #313740;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    background-color: #e6e9ed;
+    border-radius: 999px;
+}
+
+.actionItemsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.emptyState {
+    padding: 2rem;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px dashed #cfd5dc;
+    border-radius: 0.85rem;
+}
+
+.emptyState h3 {
+    margin: 0;
+    color: #242a31;
+    font-size: 1rem;
+}
+
+.emptyState p {
+    margin: 0.5rem 0 0;
+    color: #737b86;
+    font-size: 0.85rem;
+}
+
+.loadingMessage {
+    margin: 0;
+    padding: 2rem;
+    color: #626a75;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #dde2e8;
+    border-radius: 0.85rem;
+}
+
+.errorState {
+    max-width: 600px;
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 1px solid #e2b4b4;
+    border-radius: 0.85rem;
+}
+
+.errorState h1 {
+    margin: 0;
+    color: #8f2626;
+    font-size: 1.3rem;
+}
+
+.errorState p {
+    margin: 0.65rem 0 1rem;
+    color: #6f4b4b;
+}
+
+.errorState button {
+    min-height: 42px;
+    padding: 0.65rem 1rem;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+    background-color: #333a45;
+    border: none;
+    border-radius: 0.55rem;
+}
+
+.errorState button:hover {
+    background-color: #20252c;
+}
+
+.errorState button:focus-visible {
+    outline: 3px solid #333a45;
+    outline-offset: 3px;
+}
+
+@media (max-width: 1200px) {
+    .statsGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboardColumns {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 430px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+}

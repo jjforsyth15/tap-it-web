@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import { useTimeoutMessage } from "../utils/messaging";
 
 export default function CreateProfilePage() {
-    const [profileData, setProfileData] = useState<CreateProfileRequest>({profile_name: "", bio: "", profile_image_url: ""});
+    const [profileData, setProfileData] = useState<CreateProfileRequest>({profile_name: "", bio: "", subtitle: "", organization: "", profile_image_url: ""});
     const [error, setError] = useState("");
     const { message: successMessage, showMessage: showSuccessMessage } = useTimeoutMessage(3000);
 
@@ -172,6 +172,22 @@ export default function CreateProfilePage() {
                         value={profileData.profile_name}
                         onChange={(e) => setProfileData({...profileData, profile_name: e.target.value})}
                         required
+                    />
+                    <input
+                        className={styles.profileName}
+                        type="text"
+                        placeholder="Subtitle (optional, e.g. Product Designer)"
+                        maxLength={100}
+                        value={profileData.subtitle}
+                        onChange={(e) => setProfileData({...profileData, subtitle: e.target.value})}
+                    />
+                    <input
+                        className={styles.profileName}
+                        type="text"
+                        placeholder="Organization (optional, e.g. Acme Inc.)"
+                        maxLength={100}
+                        value={profileData.organization}
+                        onChange={(e) => setProfileData({...profileData, organization: e.target.value})}
                     />
                     <textarea
                         className={styles.profileBio}

@@ -15,6 +15,16 @@ type ProfileLinksProps = {
     setError: (message: string) => void;
 }
 
+const LINK_LABEL_OPTIONS = [
+    "LinkedIn",
+    "GitHub",
+    "Instagram",
+    "X (Twitter)",
+    "Facebook",
+    "Portfolio",
+    "Other",
+];
+
 export default function ProfileLinks({ links, profileId, loadProfile, setSuccessMessage, setError }: ProfileLinksProps) {
 
     const [linkToDelete, setLinkToDelete] = useState<string | null>(null);
@@ -23,25 +33,17 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
     const [formError, setFormError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const linkLabelOptions = [
-        "LinkedIn",
-        "GitHub",
-        "Instagram",
-        "X (Twitter)",
-        "Facebook",
-        "Portfolio",
-        "Other"
-    ];
-
-    const [selectedLabel, setSelectedLabel] = useState(linkLabelOptions[0]);
+    const [selectedLabel, setSelectedLabel] = useState(LINK_LABEL_OPTIONS[0]);
     const [customLabel, setCustomLabel] = useState("");
     const [orderedLinks, setOrderedLinks] = useState<ProfileLink[]>(links);
+    const [prevLinks, setPrevLinks] = useState(links);
 
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
-    useEffect(() => {
+    if (links !== prevLinks) {
+        setPrevLinks(links);
         setOrderedLinks(links);
-    }, [links]);
+    }
 
     useEffect(() => {
         const modalIsOpen = showAddLinkModal || linkToDelete !== null;
@@ -60,7 +62,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                 setShowAddLinkModal(false);
                 setNewLink({label: "", url: ""});
                 setFormError("");
-                setSelectedLabel(linkLabelOptions[0]);
+                setSelectedLabel(LINK_LABEL_OPTIONS[0]);
                 setCustomLabel("");
             }
         };
@@ -103,7 +105,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
             setShowAddLinkModal(false);
             setNewLink({label: "", url: ""});
             setFormError("");
-            setSelectedLabel(linkLabelOptions[0]);
+            setSelectedLabel(LINK_LABEL_OPTIONS[0]);
             setCustomLabel("");
             setIsSubmitting(false);
 
@@ -227,7 +229,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                                 value={selectedLabel}
                                 onChange={(e) => setSelectedLabel(e.target.value)}
                             >
-                                {linkLabelOptions.map((label) => (
+                                {LINK_LABEL_OPTIONS.map((label) => (
                                     <option key={label} value={label}>
                                         {label}
                                     </option>
@@ -261,7 +263,7 @@ export default function ProfileLinks({ links, profileId, loadProfile, setSuccess
                                         setNewLink({ label: "", url: "" });
                                         setFormError("");
                                         setCustomLabel("");
-                                        setSelectedLabel(linkLabelOptions[0]);
+                                        setSelectedLabel(LINK_LABEL_OPTIONS[0]);
                                     }}
                                 >
                                     Cancel

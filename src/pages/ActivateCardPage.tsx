@@ -26,7 +26,7 @@ export default function ActivateCardPage() {
 
     const [profiles, setProfiles] = useState<Profile[] | null>([]);
     const [selectedProfileId, setSelectedProfileId] = useState("");
-    const [assignedProfile, setAssignedProfile] = useState<Profile | null>(null);
+    const [prevCardProfileId, setPrevCardProfileId] = useState<string | undefined>(undefined);
 
     const [loadingProfiles, setLoadingProfiles] = useState(false);
 
@@ -34,20 +34,7 @@ export default function ActivateCardPage() {
     const location = useLocation();
 
     useEffect(() => {
-        loadProfiles();
-        checkActivationStatus();
-    }, [cardCode]);
-
-    useEffect(() => {
-        if (!card?.profile_id || profiles?.length === 0) return;
-
-        const profileData = profiles?.find(p => p.profile_id === card?.profile_id) || null;
-
-        setAssignedProfile(profileData);
-        setSelectedProfileId(profileData?.profile_id || "");
-    }, [card, profiles]);
-
-    async function loadProfiles() {
+        async function loadProfiles() {
             try {
                 setLoadingProfiles(true);
                 const profileData = await getMyProfiles();
@@ -59,21 +46,34 @@ export default function ActivateCardPage() {
             }
         }
 
-    async function checkActivationStatus() {
-        if (!cardCode) {
-            setError("Missing card code");
-            setIsLoading(false);
-            return;
+        async function checkActivationStatus() {
+            if (!cardCode) {
+                setError("Missing card code");
+                setIsLoading(false);
+                return;
+            }
+
+            try {
+                const activateStatus = await getCardActivationStatus(cardCode);
+                setCard(activateStatus);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : "Unable to load card activation details");
+            } finally {
+                setIsLoading(false);
+            }
         }
 
-        try {
-            const activateStatus = await getCardActivationStatus(cardCode);
-            setCard(activateStatus);
-        } catch (err) {
-            err instanceof Error ? setError(err.message) : setError("Unable to load card activation details");
-        } finally {
-            setIsLoading(false);
-        }
+        void loadProfiles();
+        void checkActivationStatus();
+    }, [cardCode]);
+
+    const assignedProfile: Profile | null = card?.profile_id
+        ? (profiles?.find(p => p.profile_id === card.profile_id) ?? null)
+        : null;
+
+    if (card?.profile_id !== prevCardProfileId) {
+        setPrevCardProfileId(card?.profile_id);
+        setSelectedProfileId(card?.profile_id ?? "");
     }
 
     async function handleActivateCard() {
