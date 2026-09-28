@@ -38,7 +38,8 @@ function App() {
         </Route>
 
       {/* Standard application routes */}
-      <Route element={<MainLayout />}>   
+      <Route element={<MainLayout />}>  
+       
             {/* Public Only routes */}
             <Route element={<PublicOnlyRoute />}>
               <Route path="/login" element={<LoginPage/>}/>
@@ -47,6 +48,7 @@ function App() {
               <Route path="/" element={<HomePage/>} />
             </Route>
 
+            {/* Public routes */}
             <Route path="/activate-card/:cardCode" element={<ActivateCardPage />} />
             <Route path="/verify-email" element={<VerifyEmailPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
@@ -61,22 +63,23 @@ function App() {
             </Route>
 
         </Route>
-        {/* Admin routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<AdminRoute />}>
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<AdminDashboardPage />} />
 
-                <Route path="users" element={<AdminPlaceholderPage title="Users" description="Manage TapIt user accounts and account status." />} />
-                <Route path="profiles" element={<AdminPlaceholderPage title="Profiles" description="Manage TapIt user profiles." />} />
-                <Route path="cards" element={<AdminPlaceholderPage title="Cards" description="Manage TapIt cards." />} />
-                <Route path="feedback" element={<AdminPlaceholderPage title="Beta Feedback" description="Manage beta feedback submitted by users." />} />
-                <Route path="card-requests" element={<AdminPlaceholderPage title="Card Requests" description="Manage card requests submitted by users." />} />
-                <Route path="analytics" element={<AdminPlaceholderPage title="Analytics" description="View analytics and insights for the TapIt platform." />} />
-                <Route path="system" element={<AdminPlaceholderPage title="System" description="Monitor and manage system health and settings." />} />
-              </Route>
+        {/* Admin routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AdminRoute />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboardPage />} />
+
+              <Route path="users" element={<AdminPlaceholderPage title="Users" description="Manage TapIt user accounts and account status." />} />
+              <Route path="profiles" element={<AdminPlaceholderPage title="Profiles" description="Manage TapIt user profiles." />} />
+              <Route path="cards" element={<AdminPlaceholderPage title="Cards" description="Manage TapIt cards." />} />
+              <Route path="feedback" element={<AdminPlaceholderPage title="Beta Feedback" description="Manage beta feedback submitted by users." />} />
+              <Route path="card-requests" element={<AdminPlaceholderPage title="Card Requests" description="Manage card requests submitted by users." />} />
+              <Route path="analytics" element={<AdminPlaceholderPage title="Analytics" description="View analytics and insights for the TapIt platform." />} />
+              <Route path="system" element={<AdminPlaceholderPage title="System" description="Monitor and manage system health and settings." />} />
             </Route>
           </Route>
+        </Route>
 
       </Routes>
     </BrowserRouter>
