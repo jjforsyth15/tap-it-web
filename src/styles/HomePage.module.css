@@ -119,3 +119,44 @@
     padding-top: 1.25rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+.homePage .whatsNew {
+    border-left: 4px solid #ffb400;
+}
+
+.homePage .whatsNew h3 {
+    font-size: 1.15rem;
+    color: #ffb400;
+    margin-bottom: 0;
+}
+
+.homePage .whatsNew ul {
+    margin: 0.75rem 0 1.5rem;
+}
+
+.homePage .whatsNew ul:last-child {
+    margin-bottom: 0;
+}
+
+.homePage .recap {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.25rem 2rem;
+    margin-top: 2rem;
+    backdrop-filter: blur(8px);
+}
+
+.homePage .recap summary {
+    cursor: pointer;
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: #f2f2f2;
+}
+
+.homePage .recap[open] summary {
+    margin-bottom: 1rem;
+}
+
+.homePage .recap p {
+    margin-bottom: 0;
+}

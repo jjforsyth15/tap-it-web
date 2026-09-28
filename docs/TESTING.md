@@ -162,6 +162,16 @@ Optional static analysis tools may also be run when configured.
 
 ---
 
+# Home Page
+
+* The home page loads for logged-out visitors; logged-in users are redirected.
+* The badge shows the current beta (Beta 2).
+* "What's New in Beta 2" lists only features that are live on the web.
+* The Beta 1 Recap is collapsed by default and expands/collapses when its heading is clicked or activated by keyboard.
+* The layout has no horizontal scrolling on mobile.
+
+---
+
 # Dashboard
 
 * The dashboard loads the authenticated user's profiles.
