@@ -1,6 +1,6 @@
 import { useState} from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { loginUser, linkGoogleAccount, resendVerification } from "../api/authApi";
+import { loginUser, loginWithSupabase, linkGoogleAccount, resendVerification } from "../api/authApi";
 import { ApiError } from "../api/client";
 import { useAuth } from "../context/authContext";
 import GoogleAuthButton, { isGoogleAuthEnabled } from "../components/auth/GoogleAuthButton";
@@ -34,8 +34,14 @@ function LoginPage() {
         setResendStatus("idle");
 
         try {
-            const data = await loginUser(email, password);
-            await login(data.access_token);
+            // Supabase first; on any failure fall back to local login, which still
+            // covers every account while both auth systems coexist.
+            if (await loginWithSupabase(email, password)) {
+                await login();
+            } else {
+                const data = await loginUser(email, password);
+                await login(data.access_token);
+            }
 
             navigate(next);
         } catch (err) {
