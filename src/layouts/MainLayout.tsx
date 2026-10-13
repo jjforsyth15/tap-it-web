@@ -8,8 +8,8 @@ function MainLayout() {
     const navigate = useNavigate();
     const { isLoggedIn, logout } = useAuth();
 
-    function handleLogout() {
-        logout();
+    async function handleLogout() {
+        await logout();
         navigate("/login");
     }
 
