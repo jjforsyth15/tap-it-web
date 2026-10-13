@@ -1,5 +1,6 @@
 import type { RegisterData, LoginResponse, RegisterResponse, GoogleAuthRequest, GoogleLinkResponse, EmailVerificationResponse, ForgotPasswordResponse, ResetPasswordResponse } from "../types/auth";
 import { apiRequest } from "./client";
+import { supabase } from "./supabaseClient";
 
 export async function registerUser(data: RegisterData): Promise<RegisterResponse> {
     return apiRequest<RegisterResponse>("/auth/register", {
@@ -23,6 +24,19 @@ export async function loginUser(email: string, password: string): Promise<LoginR
         },
         body: formData,
     });
+}
+
+// Any failure (wrong password, email_not_confirmed, network, rate limit) returns
+// false so the caller falls back to loginUser, whose result decides what the user sees.
+export async function loginWithSupabase(email: string, password: string): Promise<boolean> {
+    if (!supabase) return false;
+
+    try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        return !error;
+    } catch {
+        return false;
+    }
 }
 
 
