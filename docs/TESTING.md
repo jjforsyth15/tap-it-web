@@ -145,6 +145,27 @@ Optional static analysis tools may also be run when configured.
 * The `next` redirect parameter works when present.
 * Too many login attempts trigger rate limiting.
 
+### Supabase Auth Login (migration in progress)
+
+Password login tries Supabase Auth first and falls back to the local backend login on any Supabase failure. Google login, Google account linking, and registration still use local auth only.
+
+In DevTools, `localStorage` holds `tapit_supabase_auth` for a Supabase session and `tapit_token` for a local login — only one should ever be present. To tell which token a request used, decode the `Authorization` JWT header locally (never paste tokens into third-party sites): `ES256`/`RS256` is Supabase, `HS256` is local.
+
+* A migrated, verified account logs in through Supabase: `POST .../auth/v1/token?grant_type=password` returns `200`, no backend `/auth/login` call is made, only `tapit_supabase_auth` is stored, and API requests use the Supabase token.
+* Reloading a protected page restores the Supabase session without redirecting to login.
+* Logout calls `.../auth/v1/logout?scope=local` (`204`), removes both storage keys, and protected routes redirect to login.
+* A wrong password shows the same backend error as before (Supabase `400`, then backend `401`).
+* An account without a Supabase identity (e.g. registered after the migration) falls back to local login: only `tapit_token` is stored and requests use an `HS256` token.
+* An unverified account shows the verification error and resend prompt (backend `403`).
+* Logging in or out in one tab updates other open tabs without a reload.
+* A leftover `tapit_token` is removed when a Supabase session is restored on reload.
+* Logout while offline still removes `tapit_supabase_auth`, and the user stays logged out after reconnecting and reloading.
+* An expired Supabase access token (set `expires_at` to a past value in `tapit_supabase_auth`) is refreshed automatically via `grant_type=refresh_token` without logging the user out.
+* Google login still stores only `tapit_token`.
+* With `VITE_SUPABASE_URL` or `VITE_SUPABASE_PUBLISHABLE_KEY` unset, a console warning appears and all logins use the local path.
+
+Known limitation: a deactivated account whose password Supabase still accepts is briefly signed in, then returned to `/login` with no error message (the backend rejects it on `/users/me`). Access is still blocked; only the message is missing.
+
 ### Logout
 
 * Logout clears the stored token.
@@ -601,7 +622,7 @@ After every production deployment, perform a focused smoke test.
 * Frontend points to the production backend.
 * CORS permits the production frontend origin.
 * HTTPS is used.
-* Production environment variables are loaded.
+* Production environment variables are loaded, including `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`.
 * No development URLs are unintentionally active.
 
 ---
