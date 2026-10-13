@@ -1,4 +1,4 @@
-import { supabase } from "../api/supabaseClient";
+import { supabase, SUPABASE_STORAGE_KEY } from "../api/supabaseClient";
 
 const TOKEN_KEY = "tapit_token";
 
@@ -25,4 +25,22 @@ export async function getAccessToken(): Promise<string | null> {
 
 export function clearAuthToken() {
     localStorage.removeItem(TOKEN_KEY);
+}
+
+export async function clearSupabaseSession(): Promise<void> {
+    if (!supabase) return;
+
+    let signedOut: boolean;
+
+    try {
+        const { error } = await supabase.auth.signOut({ scope: "local" });
+        signedOut = !error;
+    } catch {
+        signedOut = false;
+    }
+
+    // signOut keeps the session if its revoke request fails (e.g. offline),
+    // so drop it from storage directly -- sign-out must always take effect.
+    if (!signedOut)
+        localStorage.removeItem(SUPABASE_STORAGE_KEY);
 }
