@@ -1,4 +1,4 @@
-import { getAuthToken, clearAuthToken } from "../utils/authStorage";
+import { getAccessToken, clearAuthToken } from "../utils/authStorage";
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const AUTH_EXPIRED_EVENT = "auth_expired";
@@ -25,8 +25,8 @@ export class ApiError extends Error {
     }
 }
 
-function buildHeaders(options: ApiRequestOptions, requiresAuth: boolean, authToken?: string): HeadersInit {
-    const token = authToken ?? (requiresAuth ? getAuthToken() : null);
+async function buildHeaders(options: ApiRequestOptions, requiresAuth: boolean, authToken?: string): Promise<HeadersInit> {
+    const token = authToken ?? (requiresAuth ? await getAccessToken() : null);
 
     const hasCustomContentType = new Headers(options.headers).has("content-type");
 
@@ -77,7 +77,7 @@ export async function apiRequest<T>(endpoint: string, options: ApiRequestOptions
     const { requiresAuth = true, authToken, ...requestOptions } = options;
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         ...requestOptions,
-        headers: buildHeaders(requestOptions, requiresAuth, authToken),
+        headers: await buildHeaders(requestOptions, requiresAuth, authToken),
     });
 
     const data = await parseResponse(response);
