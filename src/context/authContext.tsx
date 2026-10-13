@@ -4,6 +4,7 @@ import { AUTH_EXPIRED_EVENT } from "../api/client";
 import type { AuthContextType } from "../types/auth";
 import type { User } from "../types/user";
 import { getCurrentUser } from "../api/userApi";
+import { supabase } from "../api/supabaseClient";
 
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -14,11 +15,14 @@ type AuthProviderProps = {
 
 export function AuthProvider({ children }: AuthProviderProps) {
     const [isLoggedIn, setIsLoggedIn] = useState(() => !!getAuthToken());
-    const [isAuthLoading, setIsAuthLoading] = useState(() => !!getAuthToken());
+    // With Supabase configured, stay loading until its stored session has been checked.
+    const [isAuthLoading, setIsAuthLoading] = useState(() => !!supabase || !!getAuthToken());
     const [user, setUser] = useState<User | null>(null);
 
-    function login(token: string) {
-        saveAuthToken(token);
+    // Supabase sign-in stores its own session, so only local login passes a token.
+    function login(token?: string) {
+        if (token)
+            saveAuthToken(token);
         setIsLoggedIn(true);
     }
 
@@ -27,7 +31,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsLoggedIn(false);
         setUser(null);
         setIsAuthLoading(false);
+        void supabase?.auth.signOut({ scope: "local" });
     }
+
+    useEffect(() => {
+        if (!supabase) return;
+
+        const { data } = supabase.auth.onAuthStateChange((event, session) => {
+            if (event === "INITIAL_SESSION") {
+                if (session)
+                    setIsLoggedIn(true);
+                else if (!getAuthToken())
+                    setIsAuthLoading(false);
+            }
+
+            // signOut() always emits this (even with no session), so it must only
+            // clear state -- calling logout() here would loop.
+            if (event === "SIGNED_OUT") {
+                clearAuthToken();
+                setIsLoggedIn(false);
+                setUser(null);
+                setIsAuthLoading(false);
+            }
+        });
+
+        return () => {
+            data.subscription.unsubscribe();
+        };
+    }, []);
 
     useEffect(() => {
         function handleAuthExpired() {
