@@ -66,7 +66,7 @@ function RegisterPage() {
 
             // Linking rotates the account's token_version server-side, so the
             // pre-link token above is now stale -- use the one linking just issued.
-            login(linkResult.access_token ?? loginData.access_token);
+            await login(linkResult.access_token ?? loginData.access_token);
             navigate(next, { replace: true });
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to link Google account.");

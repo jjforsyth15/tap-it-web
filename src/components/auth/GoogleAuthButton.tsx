@@ -46,7 +46,7 @@ export default function GoogleAuthButton({ variant, next, onError, onLinkRequire
 
                 try {
                     const response = await googleLogin({ credential });
-                    login(response.access_token);
+                    await login(response.access_token);
                     navigate(next, { replace: true });
                 } catch (error) {
                     if (error instanceof ApiError && error.status === 400) {
